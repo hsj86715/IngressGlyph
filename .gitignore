@@ -6,3 +6,6 @@
 .DS_Store
 /build
 /captures
+app/libs/
+app/src/main/java/com/hsj86715/ingress/glyph/PointSeekBar.java
+app/src/main/res/drawable/

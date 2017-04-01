@@ -3,8 +3,11 @@ package com.hsj86715.ingress.glyph;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
@@ -19,6 +22,9 @@ import java.util.List;
 public class IngressGlyphView extends FrameLayout {
     private static final String TAG = "IngressGlyphView";
     private float mDensity;
+    private boolean mDrawPointIdx = true;
+    private boolean mDrawGlyphByStep = true;
+    private boolean isDrawing = false;
 
     private List<Point> mGlyphPoints = new ArrayList<>();
     private int[] mPointsPositions;
@@ -33,18 +39,17 @@ public class IngressGlyphView extends FrameLayout {
     }
 
     public IngressGlyphView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init(context);
+        this(context, attrs, defStyleAttr, 0);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public IngressGlyphView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        init(context);
-    }
-
-    private void init(Context context) {
         mDensity = getResources().getDisplayMetrics().density;
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.IngressGlyphView, defStyleAttr, defStyleRes);
+        mDrawPointIdx = ta.getBoolean(R.styleable.IngressGlyphView_drawPointIdx, true);
+        mDrawGlyphByStep = ta.getBoolean(R.styleable.IngressGlyphView_drawGlyphByStep, true);
+        ta.recycle();
         addView(new HexagramView(context));
     }
 
@@ -54,7 +59,7 @@ public class IngressGlyphView extends FrameLayout {
         mGlyphPoints.clear();
     }
 
-    public void drawPath(int[] pointsPositions) {
+    public void setPath(int[] pointsPositions) {
         if (pointsPositions == null || pointsPositions.length < 2) {
             return;
         }
@@ -63,8 +68,13 @@ public class IngressGlyphView extends FrameLayout {
             mPathView = new GlyphPathView(getContext());
             addView(mPathView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         } else {
+            mPathView.stepIdx = 1;
             mPathView.invalidate();
         }
+    }
+
+    public boolean isDrawing() {
+        return isDrawing;
     }
 
     private class HexagramView extends View {
@@ -107,14 +117,22 @@ public class IngressGlyphView extends FrameLayout {
             canvas.drawCircle(cx, cy, pointRadius * 0.75f, paint);
             mGlyphPoints.add(new Point(cx, cy));
 
-//            paint.setTextAlign(Paint.Align.CENTER);
-//            paint.setTextSize(pointRadius * 0.7f);
-//            paint.setARGB(255, 0, 0, 255);
-//            canvas.drawText(String.valueOf(mGlyphPoints.size()), cx, cy, paint);
+            if (mDrawPointIdx) {
+                paint.setTextAlign(Paint.Align.CENTER);
+                paint.setTypeface(Typeface.DEFAULT_BOLD);
+                paint.setTextSize(pointRadius);
+                paint.setARGB(255, 255, 128, 0);
+                String idxStr = String.valueOf(mGlyphPoints.size());
+                Rect textBounds = new Rect();
+                paint.getTextBounds(idxStr, 0, idxStr.length(), textBounds);
+                canvas.drawText(idxStr, cx, cy - textBounds.centerY(), paint);
+            }
         }
     }
 
     private class GlyphPathView extends View {
+
+        private int stepIdx = 1;
 
         public GlyphPathView(Context context) {
             super(context);
@@ -126,53 +144,30 @@ public class IngressGlyphView extends FrameLayout {
             Paint paint = new Paint();
             paint.setStrokeWidth(getMeasuredWidth() / 40 > 10 ? 10 : getMeasuredWidth() / 40);
             paint.setARGB(255, 0, 0, 0);
-            drawPath(canvas, paint);
-//            drawByStep(canvas, paint);
+            if (mDrawGlyphByStep) {
+                drawByStep(canvas, paint);
+            } else {
+                drawFullPath(canvas, paint);
+            }
         }
 
-        private void drawPath(Canvas canvas, Paint paint) {
-            drawWholeLine(canvas, paint, mPointsPositions.length);
-//            int position = mPointsPositions[0] - 1;
-//            float startX = mGlyphPoints.get(position).x;
-//            float startY = mGlyphPoints.get(position).y;
-//            for (int i = 1; i < mPointsPositions.length; i++) {
-//                position = mPointsPositions[i] - 1;
-//                Log.i(TAG, "drawPath: position=" + position);
-//                Point point = mGlyphPoints.get(position);
-//                canvas.drawLine(startX, startY, point.x, point.y, paint);
-//                startX = point.x;
-//                startY = point.y;
-//            }
+        private void drawFullPath(Canvas canvas, Paint paint) {
+            drawLines(canvas, paint, mPointsPositions.length);
         }
-
-        private int positionIdx = 0;
-        private int stepIdx = 1;
 
         private void drawByStep(Canvas canvas, Paint paint) {
-            int position = mPointsPositions[positionIdx] - 1;
-            Point startP = mGlyphPoints.get(position);
-
-            if (positionIdx < mPointsPositions.length - 1) {
-                Point nextP = mGlyphPoints.get(positionIdx + 1);
-                if (positionIdx > 0) {//whole line
-                    drawWholeLine(canvas, paint, positionIdx);
-                }
-                if (stepIdx < 5) {
-                    drawPartLine(canvas, paint, startP, nextP);
-                } else {
-                    positionIdx++;
-                    stepIdx = 1;
-                }
-            } else if (positionIdx == mPointsPositions.length) {
-                drawPath(canvas, paint);
-                positionIdx++;
+            if (stepIdx < mPointsPositions.length) {
+                isDrawing = true;
+                drawLines(canvas, paint, stepIdx);
+                postInvalidateDelayed(150);
+                stepIdx++;
             } else {
-                positionIdx = 0;
+                drawFullPath(canvas, paint);
+                isDrawing = false;
             }
-            postInvalidateDelayed(500);
         }
 
-        private void drawWholeLine(Canvas canvas, Paint paint, int lineCount) {
+        private void drawLines(Canvas canvas, Paint paint, int lineCount) {
             int position = mPointsPositions[0] - 1;
             float startX = mGlyphPoints.get(position).x;
             float startY = mGlyphPoints.get(position).y;
@@ -183,12 +178,6 @@ public class IngressGlyphView extends FrameLayout {
                 startX = point.x;
                 startY = point.y;
             }
-        }
-
-        private void drawPartLine(Canvas canvas, Paint paint, Point startP, Point endP) {
-            canvas.drawLine(startP.x, startP.y, startP.x + (endP.x - startP.x) * stepIdx / 5,
-                    startP.y + (endP.y - startP.y) * stepIdx / 5, paint);
-            stepIdx++;
         }
     }
 

@@ -12,7 +12,8 @@
         <com.hsj86715.ingress.glyph.IngressGlyphView
             android:id="@+id/glyph_view"
             android:layout_width="350dp"
-            android:layout_height="350dp" />
+            android:layout_height="350dp"
+            android:layout_marginTop="2dp" />
 
         <TextView
             android:id="@+id/text_view"
@@ -25,10 +26,78 @@
 
     </LinearLayout>
 
-    <GridView
-        android:id="@+id/grid_view"
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:background="@color/colorPrimaryDark" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:numColumns="3" />
+        android:orientation="vertical">
 
+
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RadioGroup
+                android:id="@+id/categories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/category_all"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="ALL" />
+
+                <RadioButton
+                    android:id="@+id/category_human"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Human" />
+
+                <RadioButton
+                    android:id="@+id/category_action"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Action" />
+
+                <RadioButton
+                    android:id="@+id/category_thought"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Thought" />
+
+                <RadioButton
+                    android:id="@+id/category_fludire"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="fluctuation/direction" />
+
+                <RadioButton
+                    android:id="@+id/category_ts"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="time/space" />
+
+                <RadioButton
+                    android:id="@+id/category_conenv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="condition/environment" />
+            </RadioGroup>
+        </HorizontalScrollView>
+
+        <GridView
+            android:id="@+id/grid_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:numColumns="3" />
+    </LinearLayout>
 </LinearLayout>
