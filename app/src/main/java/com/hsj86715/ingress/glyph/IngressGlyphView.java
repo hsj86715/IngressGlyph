@@ -59,6 +59,14 @@ public class IngressGlyphView extends FrameLayout {
         mGlyphPoints.clear();
     }
 
+    @Override
+    public void onScreenStateChanged(int screenState) {
+        super.onScreenStateChanged(screenState);
+        if (screenState == SCREEN_STATE_OFF) {
+            mGlyphPoints.clear();
+        }
+    }
+
     public void setPath(int[] pointsPositions) {
         if (pointsPositions == null || pointsPositions.length < 2) {
             return;

@@ -19,6 +19,9 @@ public class GlyphMainActivity extends Activity implements AdapterView.OnItemCli
     private TextView nameTx;
     private GlyphAdapter mGlyphAdapter;
 
+    private int[] mCurrentPath;
+    private String mCurrentName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,12 +40,36 @@ public class GlyphMainActivity extends Activity implements AdapterView.OnItemCli
     }
 
     @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState.containsKey("path") && savedInstanceState.containsKey("name")) {
+            mCurrentPath = savedInstanceState.getIntArray("path");
+            if (mCurrentPath != null) {
+                glyphView.setPath(mCurrentPath);
+            }
+            mCurrentName = savedInstanceState.getString("name");
+            nameTx.setText(mCurrentName);
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        if (mCurrentPath != null) {
+            outState.putIntArray("path", mCurrentPath);
+            outState.putString("name", mCurrentName);
+        }
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (glyphView.isDrawing()) {
             Toast.makeText(this, "上一个图形还未演示完成", Toast.LENGTH_SHORT).show();
         } else {
-            glyphView.setPath(mGlyphAdapter.getItem(position).getPath());
-            nameTx.setText(mGlyphAdapter.getItem(position).getName());
+            mCurrentPath = mGlyphAdapter.getItem(position).getPath();
+            glyphView.setPath(mCurrentPath);
+            mCurrentName = mGlyphAdapter.getItem(position).getName();
+            nameTx.setText(mCurrentName);
         }
     }
 
