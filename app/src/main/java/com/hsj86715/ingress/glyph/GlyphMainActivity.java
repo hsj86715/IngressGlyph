@@ -1,23 +1,24 @@
 package com.hsj86715.ingress.glyph;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.GridView;
-import android.widget.RadioGroup;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.hsj86715.ingress.glyph.view.HackSequenceListener;
+import com.hsj86715.ingress.glyph.view.IngressGlyphView;
+
+import java.util.Map;
 
 /**
  * Created by hushujun on 16/5/16.
  */
-public class GlyphMainActivity extends Activity implements AdapterView.OnItemClickListener,
-        RadioGroup.OnCheckedChangeListener {
-    private IngressGlyphView glyphView;
+public class GlyphMainActivity extends AppCompatActivity implements HackSequenceListener {
+    private IngressGlyphView mGlyphSequenceView;
     private TextView nameTx;
-    private GlyphAdapter mGlyphAdapter;
+
 
     private int[] mCurrentPath;
     private String mCurrentName;
@@ -26,17 +27,8 @@ public class GlyphMainActivity extends Activity implements AdapterView.OnItemCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        glyphView = (IngressGlyphView) findViewById(R.id.glyph_view);
+        mGlyphSequenceView = (IngressGlyphView) findViewById(R.id.glyph_view);
         nameTx = (TextView) findViewById(R.id.text_view);
-
-        GridView gridView = (GridView) findViewById(R.id.grid_view);
-        mGlyphAdapter = new GlyphAdapter();
-        mGlyphAdapter.setGlyphCategory(GLYPH.C_ALL);
-        gridView.setAdapter(mGlyphAdapter);
-        gridView.setOnItemClickListener(this);
-
-        RadioGroup rg = (RadioGroup) findViewById(R.id.categories);
-        rg.setOnCheckedChangeListener(this);
     }
 
     @Override
@@ -45,7 +37,7 @@ public class GlyphMainActivity extends Activity implements AdapterView.OnItemCli
         if (savedInstanceState.containsKey("path") && savedInstanceState.containsKey("name")) {
             mCurrentPath = savedInstanceState.getIntArray("path");
             if (mCurrentPath != null) {
-                glyphView.setPath(mCurrentPath);
+                mGlyphSequenceView.drawPath(mCurrentPath);
             }
             mCurrentName = savedInstanceState.getString("name");
             nameTx.setText(mCurrentName);
@@ -62,44 +54,47 @@ public class GlyphMainActivity extends Activity implements AdapterView.OnItemCli
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (glyphView.isDrawing()) {
-            Toast.makeText(this, "上一个图形还未演示完成", Toast.LENGTH_SHORT).show();
-        } else {
-            mCurrentPath = mGlyphAdapter.getItem(position).getPath();
-            glyphView.setPath(mCurrentPath);
-            mCurrentName = mGlyphAdapter.getItem(position).getName();
-            nameTx.setText(mCurrentName);
-        }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.action_menu, menu);
+        return true;
     }
 
     @Override
-    public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-        String category = null;
-        switch (checkedId) {
-            case R.id.category_human:
-                category = GLYPH.C_HUMAN;
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.base:
+                Toast.makeText(this, "CLICKED", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.category_action:
-                category = GLYPH.C_ACTION;
+            case R.id.pairs:
+
                 break;
-            case R.id.category_thought:
-                category = GLYPH.C_THOUGHT;
+            case R.id.two:
+
                 break;
-            case R.id.category_fludire:
-                category = GLYPH.C_FLU_DIRE;
+            case R.id.three:
+
                 break;
-            case R.id.category_ts:
-                category = GLYPH.C_TIME_SPACE;
+            case R.id.four:
+
                 break;
-            case R.id.category_conenv:
-                category = GLYPH.C_COND_ENV;
+            case R.id.five:
+
                 break;
-            case R.id.category_all:
             default:
-                category = GLYPH.C_ALL;
                 break;
         }
-        mGlyphAdapter.setGlyphCategory(category);
+        return true;
+    }
+
+    @Override
+    public void onSequenceClicked(Map.Entry<String, int[]> sequenceEntry) {
+        if (mGlyphSequenceView.isDrawing()) {
+            Toast.makeText(this, "上一个图形还未演示完成", Toast.LENGTH_SHORT).show();
+        } else {
+            mCurrentPath = sequenceEntry.getValue();
+            mGlyphSequenceView.drawPath(mCurrentPath);
+            mCurrentName = sequenceEntry.getKey();
+            nameTx.setText(mCurrentName);
+        }
     }
 }

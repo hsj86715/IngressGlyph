@@ -7,7 +7,7 @@
     android:orientation="horizontal"
     android:padding="2dp">
 
-    <com.hsj86715.ingress.glyph.IngressGlyphView
+    <com.hsj86715.ingress.glyph.view.IngressGlyphView
         android:id="@+id/item_glyph_pre"
         android:layout_width="40dp"
         android:layout_height="40dp"

@@ -4,4 +4,8 @@
         <attr name="drawPointIdx" format="boolean" />
         <attr name="drawGlyphByStep" format="boolean" />
     </declare-styleable>
+    <declare-styleable name="SequencesView">
+        <attr name="drawPointIndex" format="boolean" />
+        <attr name="drawGlyphBySteps" format="boolean" />
+    </declare-styleable>
 </resources>

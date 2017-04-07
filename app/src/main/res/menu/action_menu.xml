@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/base"
+        android:showAsAction="ifRoom"
+        android:title="Ingress Glyphs" />
+    <item
+        android:id="@+id/pairs"
+        android:showAsAction="ifRoom"
+        android:title="Glyph Pairs" />
+    <item
+        android:id="@+id/two"
+        android:showAsAction="ifRoom"
+        android:title="2 Glyph Hack Sequences" />
+    <item
+        android:id="@+id/three"
+        android:showAsAction="ifRoom"
+        android:title="3 Glyph Hack Sequences" />
+    <item
+        android:id="@+id/four"
+        android:showAsAction="ifRoom"
+        android:title="4 Glyph Hack Sequences" />
+    <item
+        android:id="@+id/five"
+        android:showAsAction="ifRoom"
+        android:title="5 Glyph Hack Sequences" />
+</menu>

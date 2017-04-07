@@ -1,4 +1,4 @@
-package com.hsj86715.ingress.glyph;
+package com.hsj86715.ingress.glyph.view;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -6,12 +6,17 @@ import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Build;
+import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
+
+import com.hsj86715.ingress.glyph.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +32,8 @@ public class IngressGlyphView extends FrameLayout {
     private boolean isDrawing = false;
 
     private List<Point> mGlyphPoints = new ArrayList<>();
-    private int[] mPointsPositions;
+    private int[][] mHackSequences;
+    private int mSequencesIdx = 0;
     private GlyphPathView mPathView = null;
 
     public IngressGlyphView(Context context) {
@@ -60,6 +66,18 @@ public class IngressGlyphView extends FrameLayout {
     }
 
     @Override
+    protected Parcelable onSaveInstanceState() {
+        Log.i(TAG, "onSaveInstanceState");
+        return super.onSaveInstanceState();
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        super.onRestoreInstanceState(state);
+        Log.i(TAG, "onRestoreInstanceState");
+    }
+
+    @Override
     public void onScreenStateChanged(int screenState) {
         super.onScreenStateChanged(screenState);
         if (screenState == SCREEN_STATE_OFF) {
@@ -67,11 +85,16 @@ public class IngressGlyphView extends FrameLayout {
         }
     }
 
-    public void setPath(int[] pointsPositions) {
-        if (pointsPositions == null || pointsPositions.length < 2) {
+    /**
+     * Show hack sequences one by one
+     *
+     * @param pointsPositions
+     */
+    public void drawPath(int[]... pointsPositions) {
+        if (pointsPositions == null) {
             return;
         }
-        mPointsPositions = pointsPositions;
+        mHackSequences = pointsPositions;
         if (mPathView == null) {
             mPathView = new GlyphPathView(getContext());
             addView(mPathView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
@@ -80,6 +103,16 @@ public class IngressGlyphView extends FrameLayout {
             mPathView.invalidate();
         }
     }
+
+//    public void drawPairs(int[]... pairsPath) {
+//        if (pairsPath == null) {
+//            return;
+//        } else if (pairsPath.length < 2) {
+//            drawPath(pairsPath);
+//        } else {
+//
+//        }
+//    }
 
     public boolean isDrawing() {
         return isDrawing;
@@ -104,6 +137,7 @@ public class IngressGlyphView extends FrameLayout {
             drawEmptyCircle(radius, radius, paint, canvas, pointRadius);
 
             float cx, cy;
+            Path path = new Path();
             for (int degree = 30; degree < 360; degree += 60) {
                 if (degree % 90 != 0) {
                     cx = (float) (Math.cos(Math.toRadians(degree)) * radius / 2);
@@ -113,7 +147,18 @@ public class IngressGlyphView extends FrameLayout {
                 cx = (float) (Math.cos(Math.toRadians(degree)) * radius);
                 cy = (float) (Math.sin(Math.toRadians(degree)) * radius);
                 drawEmptyCircle(cx + radius, radius - cy, paint, canvas, pointRadius);
+                if (degree == 30) {
+                    path.moveTo(cx + center, center - cy);
+                } else {
+                    path.lineTo(cx + center, center - cy);
+                }
             }
+
+            path.close();
+            paint.setStyle(Paint.Style.STROKE);
+            paint.setStrokeWidth(2);
+            paint.setARGB(128, 128, 128, 128);
+            canvas.drawPath(path, paint);
         }
 
         private void drawEmptyCircle(float cx, float cy, Paint paint, Canvas canvas, float pointRadius) {
@@ -141,46 +186,53 @@ public class IngressGlyphView extends FrameLayout {
     private class GlyphPathView extends View {
 
         private int stepIdx = 1;
+        private Paint paint;
 
         public GlyphPathView(Context context) {
             super(context);
+            paint = new Paint();
         }
 
         @Override
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
-            Paint paint = new Paint();
             paint.setStrokeWidth(getMeasuredWidth() / 40 > 10 ? 10 : getMeasuredWidth() / 40);
             paint.setARGB(255, 0, 0, 0);
             if (mDrawGlyphByStep) {
-                drawByStep(canvas, paint);
+                drawByStep(canvas);
             } else {
-                drawFullPath(canvas, paint);
+                drawFullPath(canvas);
             }
         }
 
-        private void drawFullPath(Canvas canvas, Paint paint) {
-            drawLines(canvas, paint, mPointsPositions.length);
+        private void drawFullPath(Canvas canvas) {
+            drawLines(canvas, mHackSequences[mSequencesIdx].length);
         }
 
-        private void drawByStep(Canvas canvas, Paint paint) {
-            if (stepIdx < mPointsPositions.length) {
+        private void drawByStep(Canvas canvas) {
+            if (stepIdx < mHackSequences[mSequencesIdx].length) {
                 isDrawing = true;
-                drawLines(canvas, paint, stepIdx);
+                drawLines(canvas, stepIdx);
                 postInvalidateDelayed(150);
                 stepIdx++;
             } else {
-                drawFullPath(canvas, paint);
-                isDrawing = false;
+                drawFullPath(canvas);
+                if (mSequencesIdx < mHackSequences.length - 1) {
+                    mSequencesIdx++;
+                    stepIdx = 1;
+                    drawByStep(canvas);
+                } else {
+                    isDrawing = false;
+                }
             }
         }
 
-        private void drawLines(Canvas canvas, Paint paint, int lineCount) {
-            int position = mPointsPositions[0] - 1;
+        private void drawLines(Canvas canvas, int lineCount) {
+            int position = mHackSequences[mSequencesIdx][0] - 1;
             float startX = mGlyphPoints.get(position).x;
             float startY = mGlyphPoints.get(position).y;
             for (int i = 1; i < lineCount; i++) {
-                position = mPointsPositions[i] - 1;
+                position = mHackSequences[mSequencesIdx][i] - 1;
                 Point point = mGlyphPoints.get(position);
                 canvas.drawLine(startX, startY, point.x, point.y, paint);
                 startX = point.x;

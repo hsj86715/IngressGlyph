@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ingress="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="2dp"
+    android:orientation="vertical">
+
+    <com.hsj86715.ingress.glyph.view.IngressGlyphView
+        android:id="@+id/item_sequence_pre"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
+        ingress:drawGlyphByStep="false"
+        ingress:drawPointIdx="false" />
+
+    <TextView
+        android:id="@+id/item_sequence_name"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:gravity="center"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        android:ellipsize="end"
+        android:text="ingress ingress ingress"
+        android:lines="2" />
+
+</LinearLayout>
