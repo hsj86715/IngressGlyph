@@ -2,7 +2,6 @@ package com.hsj86715.ingress.glyph.view;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -60,12 +59,6 @@ public class IngressGlyphView extends FrameLayout {
     }
 
     @Override
-    protected void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        mGlyphPoints.clear();
-    }
-
-    @Override
     protected Parcelable onSaveInstanceState() {
         Log.i(TAG, "onSaveInstanceState");
         return super.onSaveInstanceState();
@@ -75,14 +68,6 @@ public class IngressGlyphView extends FrameLayout {
     protected void onRestoreInstanceState(Parcelable state) {
         super.onRestoreInstanceState(state);
         Log.i(TAG, "onRestoreInstanceState");
-    }
-
-    @Override
-    public void onScreenStateChanged(int screenState) {
-        super.onScreenStateChanged(screenState);
-        if (screenState == SCREEN_STATE_OFF) {
-            mGlyphPoints.clear();
-        }
     }
 
     /**
@@ -127,6 +112,9 @@ public class IngressGlyphView extends FrameLayout {
         @Override
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
+            if (mGlyphPoints != null && mGlyphPoints.size() > 0) {
+                mGlyphPoints.clear();
+            }
             drawHexagram(canvas, new Paint());
         }
 

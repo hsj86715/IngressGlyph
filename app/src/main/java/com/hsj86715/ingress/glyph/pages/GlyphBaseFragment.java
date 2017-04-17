@@ -14,8 +14,8 @@ import android.widget.RadioGroup;
 
 import com.hsj86715.ingress.glyph.R;
 import com.hsj86715.ingress.glyph.data.BaseGlyphData;
-import com.hsj86715.ingress.glyph.view.GlyphItemDecoration;
 import com.hsj86715.ingress.glyph.view.HackSequenceListener;
+import com.hsj86715.ingress.glyph.view.SimpleItemDecoration;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -44,12 +44,11 @@ public class GlyphBaseFragment extends Fragment implements HackSequenceListener,
         RecyclerView gridView = (RecyclerView) view.findViewById(R.id.grid_view);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 2);
         gridView.setLayoutManager(gridLayoutManager);
-        gridView.addItemDecoration(new GlyphItemDecoration());
+        gridView.addItemDecoration(new SimpleItemDecoration(gridLayoutManager));
         mGlyphAdapter = new GlyphBaseAdapter();
         mGlyphAdapter.setGlyphCategory(BaseGlyphData.C_ALL);
         mGlyphAdapter.setSequenceClickListener(this);
         gridView.setAdapter(mGlyphAdapter);
-
         RadioGroup rg = (RadioGroup) view.findViewById(R.id.categories);
         rg.setOnCheckedChangeListener(this);
     }
