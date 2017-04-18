@@ -2,10 +2,10 @@ package com.hsj86715.ingress.glyph.view;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -14,8 +14,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
-
-import com.hsj86715.ingress.glyph.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +24,6 @@ import java.util.List;
 public class IngressGlyphView extends FrameLayout {
     private static final String TAG = "IngressGlyphView";
     private float mDensity;
-    private boolean mDrawPointIdx = true;
-    private boolean mDrawGlyphByStep = true;
     private boolean isDrawing = false;
 
     private List<Point> mGlyphPoints = new ArrayList<>();
@@ -51,10 +47,6 @@ public class IngressGlyphView extends FrameLayout {
     public IngressGlyphView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         mDensity = getResources().getDisplayMetrics().density;
-        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.IngressGlyphView, defStyleAttr, defStyleRes);
-        mDrawPointIdx = ta.getBoolean(R.styleable.IngressGlyphView_drawPointIdx, true);
-        mDrawGlyphByStep = ta.getBoolean(R.styleable.IngressGlyphView_drawGlyphByStep, true);
-        ta.recycle();
         addView(new HexagramView(context));
     }
 
@@ -88,16 +80,6 @@ public class IngressGlyphView extends FrameLayout {
             mPathView.invalidate();
         }
     }
-
-//    public void drawPairs(int[]... pairsPath) {
-//        if (pairsPath == null) {
-//            return;
-//        } else if (pairsPath.length < 2) {
-//            drawPath(pairsPath);
-//        } else {
-//
-//        }
-//    }
 
     public boolean isDrawing() {
         return isDrawing;
@@ -156,18 +138,16 @@ public class IngressGlyphView extends FrameLayout {
             canvas.drawCircle(cx, cy, pointRadius, paint);
             paint.setARGB(255, 255, 255, 255);
             canvas.drawCircle(cx, cy, pointRadius * 0.75f, paint);
-            mGlyphPoints.add(new Point(cx, cy));
+            mGlyphPoints.add(new Point((int) cx, (int) cy));
 
-            if (mDrawPointIdx) {
-                paint.setTextAlign(Paint.Align.CENTER);
-                paint.setTypeface(Typeface.DEFAULT_BOLD);
-                paint.setTextSize(pointRadius);
-                paint.setARGB(255, 255, 128, 0);
-                String idxStr = String.valueOf(mGlyphPoints.size());
-                Rect textBounds = new Rect();
-                paint.getTextBounds(idxStr, 0, idxStr.length(), textBounds);
-                canvas.drawText(idxStr, cx, cy - textBounds.centerY(), paint);
-            }
+            paint.setTextAlign(Paint.Align.CENTER);
+            paint.setTypeface(Typeface.DEFAULT_BOLD);
+            paint.setTextSize(pointRadius);
+            paint.setARGB(255, 255, 128, 0);
+            String idxStr = String.valueOf(mGlyphPoints.size());
+            Rect textBounds = new Rect();
+            paint.getTextBounds(idxStr, 0, idxStr.length(), textBounds);
+            canvas.drawText(idxStr, cx, cy - textBounds.centerY(), paint);
         }
     }
 
@@ -186,11 +166,7 @@ public class IngressGlyphView extends FrameLayout {
             super.onDraw(canvas);
             paint.setStrokeWidth(getMeasuredWidth() / 40 > 10 ? 10 : getMeasuredWidth() / 40);
             paint.setARGB(255, 0, 0, 0);
-            if (mDrawGlyphByStep) {
-                drawByStep(canvas);
-            } else {
-                drawFullPath(canvas);
-            }
+            drawByStep(canvas);
         }
 
         private void drawFullPath(Canvas canvas) {
@@ -226,16 +202,6 @@ public class IngressGlyphView extends FrameLayout {
                 startX = point.x;
                 startY = point.y;
             }
-        }
-    }
-
-    private class Point {
-        float x;
-        float y;
-
-        public Point(float x, float y) {
-            this.x = x;
-            this.y = y;
         }
     }
 }

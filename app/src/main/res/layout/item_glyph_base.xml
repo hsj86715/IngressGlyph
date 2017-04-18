@@ -1,23 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.hsj86715.ingress.glyph.view.MultiGlyphView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ingress="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_glyph_pre"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="left|center_vertical"
-    android:orientation="horizontal"
-    android:padding="2dp">
-
-    <com.hsj86715.ingress.glyph.view.IngressGlyphView
-        android:id="@+id/item_glyph_pre"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        ingress:drawGlyphByStep="false"
-        ingress:drawPointIdx="false" />
-
-    <TextView
-        android:id="@+id/item_glyph_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
-        android:textSize="16sp" />
-</LinearLayout>
+    android:padding="2dp"
+    ingress:glyphRadius="40dp"
+    ingress:sequencesDivider="5dp"
+    ingress:textColor="@android:color/holo_blue_dark"
+    ingress:textGlyphDivider="2dp"
+    ingress:textSize="14sp" />

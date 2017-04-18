@@ -60,7 +60,7 @@
     </HorizontalScrollView>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/grid_view"
+        android:id="@+id/grid_base"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>

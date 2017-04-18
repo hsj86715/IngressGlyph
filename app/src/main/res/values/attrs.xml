@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="IngressGlyphView">
-        <attr name="drawPointIdx" format="boolean" />
-        <attr name="drawGlyphByStep" format="boolean" />
-    </declare-styleable>
-    <declare-styleable name="SequencesView">
-        <attr name="drawPointIndex" format="boolean" />
-        <attr name="drawGlyphBySteps" format="boolean" />
+    <declare-styleable name="MultiGlyphView">
+        <attr name="textSize" format="dimension" />
+        <attr name="textColor" format="color" />
+        <attr name="glyphRadius" format="dimension" />
+        <attr name="sequencesDivider" format="dimension" />
+        <attr name="textGlyphDivider" format="dimension" />
     </declare-styleable>
 </resources>

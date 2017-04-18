@@ -17,16 +17,11 @@ import com.hsj86715.ingress.glyph.data.BaseGlyphData;
 import com.hsj86715.ingress.glyph.view.HackSequenceListener;
 import com.hsj86715.ingress.glyph.view.SimpleItemDecoration;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Map;
-
 /**
  * Created by hushujun on 2017/4/7.
  */
 
-public class GlyphBaseFragment extends Fragment implements HackSequenceListener,
-        RadioGroup.OnCheckedChangeListener {
+public class GlyphBaseFragment extends Fragment implements RadioGroup.OnCheckedChangeListener {
     private static final String TAG = "GlyphBaseFragment";
 
     private GlyphBaseAdapter mGlyphAdapter;
@@ -41,16 +36,21 @@ public class GlyphBaseFragment extends Fragment implements HackSequenceListener,
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        RecyclerView gridView = (RecyclerView) view.findViewById(R.id.grid_view);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 2);
+        RecyclerView gridView = (RecyclerView) view.findViewById(R.id.grid_base);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 3);
         gridView.setLayoutManager(gridLayoutManager);
         gridView.addItemDecoration(new SimpleItemDecoration(gridLayoutManager));
         mGlyphAdapter = new GlyphBaseAdapter();
         mGlyphAdapter.setGlyphCategory(BaseGlyphData.C_ALL);
-        mGlyphAdapter.setSequenceClickListener(this);
         gridView.setAdapter(mGlyphAdapter);
         RadioGroup rg = (RadioGroup) view.findViewById(R.id.categories);
         rg.setOnCheckedChangeListener(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mGlyphAdapter.setSequenceClickListener(mSequenceListener);
     }
 
     @Override
@@ -58,18 +58,6 @@ public class GlyphBaseFragment extends Fragment implements HackSequenceListener,
         super.onAttach(activity);
         if (activity instanceof HackSequenceListener) {
             mSequenceListener = (HackSequenceListener) activity;
-        }
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
-
-    @Override
-    public void onSequenceClicked(@NotNull Map.Entry<String, int[]> sequenceEntry) {
-        if (mSequenceListener != null) {
-            mSequenceListener.onSequenceClicked(sequenceEntry);
         }
     }
 

@@ -7,10 +7,9 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hsj86715.ingress.glyph.data.BaseGlyphData;
 import com.hsj86715.ingress.glyph.view.HackSequenceListener;
 import com.hsj86715.ingress.glyph.view.IngressGlyphView;
-
-import java.util.Map;
 
 /**
  * Created by hushujun on 16/5/16.
@@ -87,13 +86,13 @@ public class GlyphMainActivity extends AppCompatActivity implements HackSequence
     }
 
     @Override
-    public void onSequenceClicked(Map.Entry<String, int[]> sequenceEntry) {
+    public void onSequenceClicked(@BaseGlyphData.GlyphName String sequenceName) {
         if (mGlyphSequenceView.isDrawing()) {
             Toast.makeText(this, "上一个图形还未演示完成", Toast.LENGTH_SHORT).show();
         } else {
-            mCurrentPath = sequenceEntry.getValue();
+            mCurrentPath = BaseGlyphData.getInstance().getGlyphPath(sequenceName);
             mGlyphSequenceView.drawPath(mCurrentPath);
-            mCurrentName = sequenceEntry.getKey();
+            mCurrentName = sequenceName;
             nameTx.setText(mCurrentName);
         }
     }
