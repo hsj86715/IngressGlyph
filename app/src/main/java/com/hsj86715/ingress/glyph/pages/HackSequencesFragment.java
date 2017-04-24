@@ -16,13 +16,12 @@ import com.hsj86715.ingress.glyph.view.HackSequenceListener;
 import com.hsj86715.ingress.glyph.view.SimpleItemDecoration;
 
 /**
- * Created by hushujun on 2017/4/18.
+ * Created by hushujun on 2017/4/21.
  */
 
-public class GlyphPairsFragment extends Fragment {
-
+public class HackSequencesFragment extends Fragment {
     private HackSequenceListener mSequenceListener;
-    private GlyphPairsAdapter mPairsAdapter;
+    private HackSequencesAdapter mHackAdapter;
 
     @Nullable
     @Override
@@ -34,11 +33,12 @@ public class GlyphPairsFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         RecyclerView gridView = (RecyclerView) view.findViewById(R.id.grid_pairs);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 2);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 1);
         gridView.setLayoutManager(gridLayoutManager);
         gridView.addItemDecoration(new SimpleItemDecoration(gridLayoutManager));
-        mPairsAdapter = new GlyphPairsAdapter(BaseGlyphData.getInstance().getGlyphPairs());
-        gridView.setAdapter(mPairsAdapter);
+        mHackAdapter = new HackSequencesAdapter();
+        mHackAdapter.setHackSequences(BaseGlyphData.getInstance().getFiveSequences());
+        gridView.setAdapter(mHackAdapter);
     }
 
     @Override
@@ -52,6 +52,6 @@ public class GlyphPairsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        mPairsAdapter.setSequenceClickListener(mSequenceListener);
+        mHackAdapter.setHackListener(mSequenceListener);
     }
 }

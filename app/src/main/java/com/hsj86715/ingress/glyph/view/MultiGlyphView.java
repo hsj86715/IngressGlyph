@@ -7,11 +7,16 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.Point;
+import android.graphics.PointF;
 import android.graphics.RectF;
 import android.os.Build;
 import android.support.annotation.Nullable;
+import android.text.Layout;
+import android.text.StaticLayout;
+import android.text.TextPaint;
+import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -66,7 +71,13 @@ public class MultiGlyphView extends View {
         this.mHackListener = listener;
     }
 
-    public void setSequences(String... names) {
+    public void setSequences(String names) {
+        if (!TextUtils.isEmpty(names)) {
+            setSequences(new String[]{names});
+        }
+    }
+
+    public void setSequences(String[] names) {
         this.mSequenceNames = names;
         if (mSequenceNames != null && mSequenceNames.length > 0) {
             mSequenceBounds = new RectF[mSequenceNames.length];
@@ -96,7 +107,9 @@ public class MultiGlyphView extends View {
         for (int i = 0; i < count; i++) {
             cx = getPaddingLeft() + mSequencesDivider * i + width * i + width / 2;
             cy = getPaddingTop() + height / 2;
+            canvas.save();
             drawSequence(canvas, cx, cy, mSequenceNames[i], paint, glyphRadius, pointRadius);
+            canvas.restore();
             if (mHackListener != null) {
                 mSequenceBounds[i] = new RectF(cx - glyphRadius, cy - glyphRadius, cx + glyphRadius,
                         cy + glyphRadius + mTextGlyphDivider + mTextSize * 2);
@@ -106,7 +119,7 @@ public class MultiGlyphView extends View {
 
     private void drawSequence(Canvas canvas, float cx, float cy, String name, Paint paint,
                               float glyRadius, float pointRadius) {
-        List<Point> glyphPoints = new ArrayList<>();
+        List<PointF> glyphPoints = new ArrayList<>();
         drawEmptyCircle(cx, cy, paint, canvas, pointRadius, glyphPoints);
         Path path = new Path();
         float px, py;
@@ -138,34 +151,37 @@ public class MultiGlyphView extends View {
         paint.setTextAlign(Paint.Align.CENTER);
         paint.setTextSize(mTextSize);
         paint.setColor(mTextColor);
-        canvas.drawText(name, cx, cy + glyRadius + mTextGlyphDivider + getPaddingTop() + mTextSize, paint);
+        StaticLayout layout = new StaticLayout(name, new TextPaint(paint), (int) (glyRadius / 0.45f),
+                Layout.Alignment.ALIGN_NORMAL, 1.0f, 0f, true);
+        canvas.translate(cx, cy + glyRadius + mTextGlyphDivider);
+        layout.draw(canvas);
         paint.reset();
     }
 
     private void drawEmptyCircle(float cx, float cy, Paint paint, Canvas canvas, float pointRadius,
-                                 List<Point> glyphPoints) {
+                                 List<PointF> glyphPoints) {
         cx += pointRadius;
         cy += pointRadius;
         paint.setARGB(255, 128, 128, 128);
         canvas.drawCircle(cx, cy, pointRadius, paint);
         paint.setARGB(255, 255, 255, 255);
         canvas.drawCircle(cx, cy, pointRadius * 0.75f, paint);
-        glyphPoints.add(new Point((int) cx, (int) cy));
+        glyphPoints.add(new PointF(cx, cy));
     }
 
-    private void drawPath(Canvas canvas, Paint paint, String name, List<Point> glyphPoints, float glyRadius) {
+    private void drawPath(Canvas canvas, Paint paint, String name, List<PointF> glyphPoints, float glyRadius) {
         paint.setStrokeWidth(glyRadius / 20 > 10 ? 10 : glyRadius / 20);
         paint.setARGB(255, 0, 0, 0);
         drawLines(canvas, BaseGlyphData.getInstance().getGlyphPath(name), glyphPoints, paint);
     }
 
-    private void drawLines(Canvas canvas, int[] path, List<Point> glyphPoints, Paint paint) {
+    private void drawLines(Canvas canvas, int[] path, List<PointF> glyphPoints, Paint paint) {
         int position = path[0] - 1;
         float startX = glyphPoints.get(position).x;
         float startY = glyphPoints.get(position).y;
         for (int i = 1; i < path.length; i++) {
             position = path[i] - 1;
-            Point point = glyphPoints.get(position);
+            PointF point = glyphPoints.get(position);
             canvas.drawLine(startX, startY, point.x, point.y, paint);
             startX = point.x;
             startY = point.y;
@@ -174,13 +190,14 @@ public class MultiGlyphView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        Log.i(TAG, event.toString());
         boolean handler = false;
         if (mHackListener != null && mSequenceBounds != null) {
-            if (event.getAction() == MotionEvent.ACTION_UP) {
-                float ex = event.getX();
-                float ey = event.getY();
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                handler = true;
+            } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 for (int i = 0; i < mSequenceBounds.length; i++) {
-                    if (mSequenceBounds[i].contains(ex, ey)) {
+                    if (mSequenceBounds[i].contains(event.getX(), event.getY())) {
                         mHackListener.onSequenceClicked(mSequenceNames[i]);
                         handler = true;
                         break;
@@ -188,6 +205,6 @@ public class MultiGlyphView extends View {
                 }
             }
         }
-        return super.onTouchEvent(event) | handler;
+        return handler | super.onTouchEvent(event);
     }
 }

@@ -29,13 +29,10 @@
     <View
         android:layout_width="1dp"
         android:layout_height="match_parent"
-        android:layout_marginLeft="2dp"
-        android:layout_marginRight="2dp"
         android:background="@color/colorPrimaryDark" />
 
-    <fragment
+    <FrameLayout
         android:id="@+id/frag_container"
-        android:name="com.hsj86715.ingress.glyph.pages.GlyphBaseFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>

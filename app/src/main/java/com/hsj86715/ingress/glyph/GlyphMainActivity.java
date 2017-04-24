@@ -8,6 +8,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hsj86715.ingress.glyph.data.BaseGlyphData;
+import com.hsj86715.ingress.glyph.pages.GlyphBaseFragment;
+import com.hsj86715.ingress.glyph.pages.GlyphPairsFragment;
+import com.hsj86715.ingress.glyph.pages.HackSequencesFragment;
 import com.hsj86715.ingress.glyph.view.HackSequenceListener;
 import com.hsj86715.ingress.glyph.view.IngressGlyphView;
 
@@ -62,13 +65,13 @@ public class GlyphMainActivity extends AppCompatActivity implements HackSequence
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.base:
-                Toast.makeText(this, "CLICKED", Toast.LENGTH_SHORT).show();
+                getFragmentManager().beginTransaction().replace(R.id.frag_container, new GlyphBaseFragment()).commit();
                 break;
             case R.id.pairs:
-
+                getFragmentManager().beginTransaction().replace(R.id.frag_container, new GlyphPairsFragment()).commit();
                 break;
             case R.id.two:
-
+                getFragmentManager().beginTransaction().replace(R.id.frag_container, new HackSequencesFragment()).commit();
                 break;
             case R.id.three:
 
