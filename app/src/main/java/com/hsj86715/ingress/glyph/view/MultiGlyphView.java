@@ -16,7 +16,6 @@ import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -193,7 +192,6 @@ public class MultiGlyphView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        Log.i(TAG, event.toString());
         boolean handler = false;
         if (mHackListener != null && mSequenceBounds != null) {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {

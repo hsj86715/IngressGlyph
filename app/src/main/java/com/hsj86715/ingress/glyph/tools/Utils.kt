@@ -2,7 +2,6 @@ package com.hsj86715.ingress.glyph.tools
 
 import android.graphics.Color
 import android.support.annotation.ColorInt
-import android.util.Log
 
 /**
  * Created by hushujun on 2017/4/25.
@@ -20,7 +19,7 @@ object Utils {
         var cr = Math.abs(nameH % a / r)
         var cg = Math.abs(nameH % a % r / g)
         var cb = Math.abs(nameH % a % r % g / b)
-        Log.i("Utils", "stringToColor:name=$str,hashCode=$nameH,ca=$ca,cr=$cr,cg=$cg,cb=$cb")
+//        Log.i("Utils", "stringToColor:name=$str,hashCode=$nameH,ca=$ca,cr=$cr,cg=$cg,cb=$cb")
         if (ca < 128) {
             ca += 128
         }
@@ -51,7 +50,7 @@ object Utils {
             sb = "0" + sb
         }
         val colorStr = "#" + sa + sr + sg + sb
-        Log.i("Utils", "stringToColor:colorStr=$colorStr")
+//        Log.i("Utils", "stringToColor:colorStr=$colorStr")
         return Color.parseColor(colorStr)
     }
 }

@@ -7,56 +7,57 @@
     <HorizontalScrollView
         android:id="@+id/category_container"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:scrollbarSize="2dp"
+        android:scrollbarThumbHorizontal="@color/colorPrimary"
+        android:scrollbarTrackHorizontal="@android:color/darker_gray"
+        android:visibility="gone">
 
         <RadioGroup
             android:id="@+id/categories"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:background="@color/colorCategoryBg"
+            android:orientation="horizontal"
+            android:padding="5dp">
 
             <RadioButton
                 android:id="@+id/category_all"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/categoryRBStyle"
+                android:layout_marginLeft="0dp"
                 android:checked="true"
                 android:text="ALL" />
 
             <RadioButton
                 android:id="@+id/category_human"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/categoryRBStyle"
+                android:button="@null"
                 android:text="Human" />
 
             <RadioButton
                 android:id="@+id/category_action"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/categoryRBStyle"
                 android:text="Action" />
 
             <RadioButton
                 android:id="@+id/category_thought"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/categoryRBStyle"
                 android:text="Thought" />
 
             <RadioButton
                 android:id="@+id/category_fludire"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="fluctuation/direction" />
+                style="@style/categoryRBStyle"
+                android:text="Fluctuation/Direction" />
 
             <RadioButton
                 android:id="@+id/category_ts"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="time/space" />
+                style="@style/categoryRBStyle"
+                android:text="Time/Space" />
 
             <RadioButton
                 android:id="@+id/category_conenv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="condition/environment" />
+                style="@style/categoryRBStyle"
+                android:text="Condition/Environment" />
         </RadioGroup>
     </HorizontalScrollView>
 

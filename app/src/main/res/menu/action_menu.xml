@@ -3,7 +3,7 @@
     <item
         android:id="@+id/base"
         android:showAsAction="ifRoom"
-        android:title="Ingress Glyphs" />
+        android:title="Base Glyphs" />
     <item
         android:id="@+id/pairs"
         android:showAsAction="ifRoom"
