@@ -5,22 +5,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.hsj86715.ingress.glyph.R
-import com.hsj86715.ingress.glyph.view.HackSequenceListener
+import com.hsj86715.ingress.glyph.tools.Utils
+import com.hsj86715.ingress.glyph.view.BaseRecyclerAdapter
 import com.hsj86715.ingress.glyph.view.MultiGlyphView
+import com.hsj86715.ingress.glyph.view.SequenceClickListener
 
 /**
  * Created by hushujun on 2017/4/18.
  */
-class GlyphPairsAdapter(glyphPairs: Array<Array<String>>)
-    : RecyclerView.Adapter<GlyphPairsAdapter.ViewHolder>() {
-    var mListener: HackSequenceListener? = null
+class GlyphPairsAdapter(glyphPairs: Array<Array<String>>) : BaseRecyclerAdapter<GlyphPairsAdapter.ViewHolder>() {
+    var mListener: SequenceClickListener? = null
     var mGlyphPairs: Array<Array<String>> = glyphPairs
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.glyphPreView.setSequences(mGlyphPairs[position])
-        holder.glyphPreView.setHackSequenceListener(mListener)
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder is ViewHolder) {
+            holder.glyphPreView.setSequences(mGlyphPairs[position])
+            holder.itemView.setBackgroundColor(Utils.stringToColor(mGlyphPairs[position][0]))
+            holder.glyphPreView.setHackSequenceListener(mListener)
+        }
     }
 
-    fun setSequenceClickListener(listener: HackSequenceListener) {
+    override fun setSequenceClickListener(listener: SequenceClickListener) {
         mListener = listener
     }
 

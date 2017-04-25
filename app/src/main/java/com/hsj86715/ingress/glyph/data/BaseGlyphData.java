@@ -621,7 +621,7 @@ public class BaseGlyphData {
                 {H_SOUL, A_REBEL, H_HUMAN, A_DIE}
         });
         mFourSequences.put(CE_ALL, new String[][]{
-                {C_ALL, CE_CHAOS, TS_NOT_INSIDE, H_BODY}
+                {CE_ALL, CE_CHAOS, TS_NOT_INSIDE, H_BODY}
         });
         mFourSequences.put(TS_CLOSE_ALL, new String[][]{
                 {TS_CLOSE_ALL, TS_OPEN_ALL, A_DISCOVER, T_TRUTH}

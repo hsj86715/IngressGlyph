@@ -9,17 +9,16 @@ import android.util.Log
 /**
  * Created by hushujun on 2017/4/10.
  */
-open class BaseDecoration(layoutManager: RecyclerView.LayoutManager) : RecyclerView.ItemDecoration() {
+open class BaseDecoration : RecyclerView.ItemDecoration() {
     val TAG: String = "BaseDecoration"
-    val mLayoutManager: RecyclerView.LayoutManager = layoutManager
 
-    fun isFirstColumn(position: Int): Boolean {
+    fun isFirstColumn(layoutManager: RecyclerView.LayoutManager, position: Int): Boolean {
         val spanCount: Int
         val orientation: Int
-        val itemCount: Int = mLayoutManager.itemCount
-        if (mLayoutManager is GridLayoutManager) {
-            spanCount = mLayoutManager.spanCount
-            orientation = mLayoutManager.orientation
+        val itemCount: Int = layoutManager.itemCount
+        if (layoutManager is GridLayoutManager) {
+            spanCount = layoutManager.spanCount
+            orientation = layoutManager.orientation
             if (orientation == GridLayoutManager.VERTICAL) {
                 return position % spanCount == 0
             } else {
@@ -35,27 +34,27 @@ open class BaseDecoration(layoutManager: RecyclerView.LayoutManager) : RecyclerV
                     }
                 }
             }
-        } else if (mLayoutManager is LinearLayoutManager) {
-            orientation = mLayoutManager.orientation
+        } else if (layoutManager is LinearLayoutManager) {
+            orientation = layoutManager.orientation
             if (orientation == LinearLayoutManager.VERTICAL) {
                 return true
             } else {
                 return position == 0
             }
-        } else if (mLayoutManager is StaggeredGridLayoutManager) {
+        } else if (layoutManager is StaggeredGridLayoutManager) {
             Log.i(TAG, "isFirstColumn==>mLayoutManager is StaggeredGridLayoutManager")
             // TODO: 2017/4/17
         }
         return false
     }
 
-    fun isLastColumn(position: Int): Boolean {
+    fun isLastColumn(layoutManager: RecyclerView.LayoutManager, position: Int): Boolean {
         val spanCount: Int
         val orientation: Int
-        val itemCount: Int = mLayoutManager.itemCount
-        if (mLayoutManager is GridLayoutManager) {
-            spanCount = mLayoutManager.spanCount
-            orientation = mLayoutManager.orientation
+        val itemCount: Int = layoutManager.itemCount
+        if (layoutManager is GridLayoutManager) {
+            spanCount = layoutManager.spanCount
+            orientation = layoutManager.orientation
             if (orientation == GridLayoutManager.VERTICAL) {
                 return position % spanCount == (spanCount - 1) || position == itemCount - 1
             } else {
@@ -71,14 +70,14 @@ open class BaseDecoration(layoutManager: RecyclerView.LayoutManager) : RecyclerV
                     }
                 }
             }
-        } else if (mLayoutManager is LinearLayoutManager) {
-            orientation = mLayoutManager.orientation
+        } else if (layoutManager is LinearLayoutManager) {
+            orientation = layoutManager.orientation
             if (orientation == LinearLayoutManager.VERTICAL) {
                 return true
             } else {
                 return position == itemCount - 1
             }
-        } else if (mLayoutManager is StaggeredGridLayoutManager) {
+        } else if (layoutManager is StaggeredGridLayoutManager) {
             Log.i(TAG, "isLastColumn==>mLayoutManager is StaggeredGridLayoutManager")
             // TODO: 2017/4/17
 //            spanCount = mLayoutManager.spanCount
@@ -92,13 +91,13 @@ open class BaseDecoration(layoutManager: RecyclerView.LayoutManager) : RecyclerV
         return false
     }
 
-    fun isFirstRow(position: Int): Boolean {
+    fun isFirstRow(layoutManager: RecyclerView.LayoutManager, position: Int): Boolean {
         val spanCount: Int
         val orientation: Int
-        val itemCount: Int = mLayoutManager.itemCount
-        if (mLayoutManager is GridLayoutManager) {
-            spanCount = mLayoutManager.spanCount
-            orientation = mLayoutManager.orientation
+        val itemCount: Int = layoutManager.itemCount
+        if (layoutManager is GridLayoutManager) {
+            spanCount = layoutManager.spanCount
+            orientation = layoutManager.orientation
             if (orientation == GridLayoutManager.VERTICAL) {
                 return position < spanCount
             } else {
@@ -109,27 +108,27 @@ open class BaseDecoration(layoutManager: RecyclerView.LayoutManager) : RecyclerV
                     return position < itemCount / spanCount + 1
                 }
             }
-        } else if (mLayoutManager is LinearLayoutManager) {
-            orientation = mLayoutManager.orientation
+        } else if (layoutManager is LinearLayoutManager) {
+            orientation = layoutManager.orientation
             if (orientation == LinearLayoutManager.VERTICAL) {
                 return position == 0
             } else {
                 return true
             }
-        } else if (mLayoutManager is StaggeredGridLayoutManager) {
+        } else if (layoutManager is StaggeredGridLayoutManager) {
             Log.i(TAG, "isFirstRow==>mLayoutManager is StaggeredGridLayoutManager")
             // TODO: 2017/4/17
         }
         return false
     }
 
-    fun isLastRow(position: Int): Boolean {
+    fun isLastRow(layoutManager: RecyclerView.LayoutManager, position: Int): Boolean {
         val spanCount: Int
         val orientation: Int
-        val itemCount: Int = mLayoutManager.itemCount
-        if (mLayoutManager is GridLayoutManager) {
-            spanCount = mLayoutManager.spanCount
-            orientation = mLayoutManager.orientation
+        val itemCount: Int = layoutManager.itemCount
+        if (layoutManager is GridLayoutManager) {
+            spanCount = layoutManager.spanCount
+            orientation = layoutManager.orientation
             if (orientation == GridLayoutManager.VERTICAL) {
                 return position >= itemCount - spanCount
             } else {
@@ -137,14 +136,14 @@ open class BaseDecoration(layoutManager: RecyclerView.LayoutManager) : RecyclerV
                 val row = position / spanCount + 1
                 return row == spanCount || spanCount * more < position
             }
-        } else if (mLayoutManager is LinearLayoutManager) {
-            orientation = mLayoutManager.orientation
+        } else if (layoutManager is LinearLayoutManager) {
+            orientation = layoutManager.orientation
             if (orientation == LinearLayoutManager.VERTICAL) {
                 return position == itemCount - 1
             } else {
                 return true
             }
-        } else if (mLayoutManager is StaggeredGridLayoutManager) {
+        } else if (layoutManager is StaggeredGridLayoutManager) {
             Log.i(TAG, "isLastRow==>mLayoutManager is StaggeredGridLayoutManager")
             // TODO: 2017/4/17
         }

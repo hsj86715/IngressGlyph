@@ -1,36 +1,39 @@
 package com.hsj86715.ingress.glyph;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hsj86715.ingress.glyph.data.BaseGlyphData;
-import com.hsj86715.ingress.glyph.pages.GlyphBaseFragment;
-import com.hsj86715.ingress.glyph.pages.GlyphPairsFragment;
-import com.hsj86715.ingress.glyph.pages.HackSequencesFragment;
-import com.hsj86715.ingress.glyph.view.HackSequenceListener;
 import com.hsj86715.ingress.glyph.view.IngressGlyphView;
+import com.hsj86715.ingress.glyph.view.SequenceClickListener;
 
 /**
  * Created by hushujun on 16/5/16.
  */
-public class GlyphMainActivity extends AppCompatActivity implements HackSequenceListener {
+public class GlyphMainActivity extends AppCompatActivity implements SequenceClickListener {
+    private View mGlyphContainer;
     private IngressGlyphView mGlyphSequenceView;
     private TextView nameTx;
 
 
     private int[] mCurrentPath;
     private String mCurrentName;
+    private Fragment mSequenceFrag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mGlyphContainer = findViewById(R.id.glyph_container);
         mGlyphSequenceView = (IngressGlyphView) findViewById(R.id.glyph_view);
         nameTx = (TextView) findViewById(R.id.text_view);
+        mSequenceFrag = getFragmentManager().findFragmentById(R.id.frag);
     }
 
     @Override
@@ -43,6 +46,7 @@ public class GlyphMainActivity extends AppCompatActivity implements HackSequence
             }
             mCurrentName = savedInstanceState.getString("name");
             nameTx.setText(mCurrentName);
+//            mGlyphContainer.setBackgroundColor(Utils.stringToColor(mCurrentName));
         }
     }
 
@@ -63,40 +67,19 @@ public class GlyphMainActivity extends AppCompatActivity implements HackSequence
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.base:
-                getFragmentManager().beginTransaction().replace(R.id.frag_container, new GlyphBaseFragment()).commit();
-                break;
-            case R.id.pairs:
-                getFragmentManager().beginTransaction().replace(R.id.frag_container, new GlyphPairsFragment()).commit();
-                break;
-            case R.id.two:
-                getFragmentManager().beginTransaction().replace(R.id.frag_container, new HackSequencesFragment()).commit();
-                break;
-            case R.id.three:
-
-                break;
-            case R.id.four:
-
-                break;
-            case R.id.five:
-
-                break;
-            default:
-                break;
-        }
-        return true;
+        return mSequenceFrag.onOptionsItemSelected(item) | super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onSequenceClicked(@BaseGlyphData.GlyphName String sequenceName) {
         if (mGlyphSequenceView.isDrawing()) {
-            Toast.makeText(this, "上一个图形还未演示完成", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.toast_last_is_drawing, Toast.LENGTH_SHORT).show();
         } else {
             mCurrentPath = BaseGlyphData.getInstance().getGlyphPath(sequenceName);
             mGlyphSequenceView.drawPath(mCurrentPath);
             mCurrentName = sequenceName;
             nameTx.setText(mCurrentName);
+//            mGlyphContainer.setBackgroundColor(Utils.stringToColor(mCurrentName));
         }
     }
 }

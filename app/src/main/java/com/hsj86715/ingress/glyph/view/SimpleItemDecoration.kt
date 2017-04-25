@@ -11,7 +11,8 @@ import com.hsj86715.ingress.glyph.BaseDecoration
 /**
  * Created by hushujun on 2017/4/7.
  */
-class SimpleItemDecoration(layoutManager: RecyclerView.LayoutManager) : BaseDecoration(layoutManager) {
+class SimpleItemDecoration : BaseDecoration() {
+
     val dividerPaint: Paint = Paint()
 
     init {
@@ -20,16 +21,17 @@ class SimpleItemDecoration(layoutManager: RecyclerView.LayoutManager) : BaseDeco
 
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State?) {
         val position = parent.getChildLayoutPosition(view)
-        outRect.set(getOutRect(position))
+        outRect.set(getOutRect(parent.layoutManager, position))
     }
 
     override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State?) {
         super.onDraw(c, parent, state)
         val childCount = parent.childCount
+        val layoutManager = parent.layoutManager
         var i = 0
         while (i < childCount) {
             val view = parent.getChildAt(i)
-            val outRect = getOutRect(i)
+            val outRect = getOutRect(layoutManager, i)
             //draw HORIZONTAL divider
             var rect = Rect()
             rect.left = view.left
@@ -48,21 +50,13 @@ class SimpleItemDecoration(layoutManager: RecyclerView.LayoutManager) : BaseDeco
         }
     }
 
-    fun getOutRect(position: Int): Rect {
-//        var left = 0
-//        var top = 0
+    fun getOutRect(layoutManager: RecyclerView.LayoutManager, position: Int): Rect {
         var right = 1
         var bottom = 2
-//        if (isFirstColumn(position)) {
-//            left = 0
-//        }
-//        if (isFirstRow(position)) {
-//            top = 0
-//        }
-        if (isLastColumn(position)) {
+        if (isLastColumn(layoutManager, position)) {
             right = 0
         }
-        if (isLastRow(position)) {
+        if (isLastRow(layoutManager, position)) {
             bottom = 0
         }
         return Rect(0, 0, right, bottom)

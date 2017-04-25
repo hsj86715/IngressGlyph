@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="toast_last_is_drawing">上一个序列还未演示完成</string>
+</resources>

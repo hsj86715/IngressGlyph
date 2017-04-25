@@ -4,31 +4,38 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.hsj86715.ingress.glyph.view.IngressGlyphView
-        android:id="@+id/glyph_view"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="2dp" />
-
-    <TextView
-        android:id="@+id/text_view"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/glyph_container"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="5dp"
-        android:textColor="@android:color/holo_red_light"
-        android:textSize="18sp" />
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <com.hsj86715.ingress.glyph.view.IngressGlyphView
+            android:id="@+id/glyph_view"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="2dp" />
+
+        <TextView
+            android:id="@+id/text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:textColor="@android:color/holo_red_light"
+            android:textSize="18sp" />
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginBottom="2dp"
-        android:layout_marginTop="2dp"
         android:background="@color/colorPrimaryDark" />
 
-    <FrameLayout
-        android:id="@+id/frag_container"
+    <fragment
+        android:id="@+id/frag"
+        android:name="com.hsj86715.ingress.glyph.pages.GlyphSequencesFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>

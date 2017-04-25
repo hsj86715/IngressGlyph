@@ -127,7 +127,7 @@ public class IngressGlyphView extends FrameLayout {
             path.close();
             paint.setStyle(Paint.Style.STROKE);
             paint.setStrokeWidth(2);
-            paint.setARGB(128, 128, 128, 128);
+            paint.setARGB(128, 0, 0, 0);
             canvas.drawPath(path, paint);
         }
 

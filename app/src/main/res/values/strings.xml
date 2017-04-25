@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Ingress Glyph</string>
+
+    <string name="toast_last_is_drawing">The last sequence has not draw completely</string>
 </resources>

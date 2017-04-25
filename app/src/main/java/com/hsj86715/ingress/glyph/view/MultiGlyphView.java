@@ -39,7 +39,7 @@ public class MultiGlyphView extends View {
     private float mSequencesDivider;
     private float mTextGlyphDivider;
 
-    private HackSequenceListener mHackListener;
+    private SequenceClickListener mHackListener;
     private String[] mSequenceNames;
     private RectF[] mSequenceBounds;
 
@@ -67,7 +67,7 @@ public class MultiGlyphView extends View {
         ta.recycle();
     }
 
-    public void setHackSequenceListener(HackSequenceListener listener) {
+    public void setHackSequenceListener(SequenceClickListener listener) {
         this.mHackListener = listener;
     }
 
@@ -142,7 +142,7 @@ public class MultiGlyphView extends View {
         path.close();
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(2);
-        paint.setARGB(128, 128, 128, 128);
+        paint.setARGB(128, 0, 0, 0);
         canvas.drawPath(path, paint);
         paint.reset();
 
@@ -176,6 +176,9 @@ public class MultiGlyphView extends View {
     }
 
     private void drawLines(Canvas canvas, int[] path, List<PointF> glyphPoints, Paint paint) {
+        if (path == null || path.length < 1) {
+            return;
+        }
         int position = path[0] - 1;
         float startX = glyphPoints.get(position).x;
         float startY = glyphPoints.get(position).y;

@@ -7,15 +7,17 @@ import android.view.ViewGroup
 import com.hsj86715.ingress.glyph.R
 import com.hsj86715.ingress.glyph.data.BaseGlyphData
 import com.hsj86715.ingress.glyph.data.BaseGlyphData.Category
-import com.hsj86715.ingress.glyph.view.HackSequenceListener
+import com.hsj86715.ingress.glyph.tools.Utils
+import com.hsj86715.ingress.glyph.view.BaseRecyclerAdapter
 import com.hsj86715.ingress.glyph.view.MultiGlyphView
+import com.hsj86715.ingress.glyph.view.SequenceClickListener
 
 /**
  * Created by hushujun on 16/5/17.
  */
-class GlyphBaseAdapter : RecyclerView.Adapter<GlyphBaseAdapter.ViewHolder>() {
+class GlyphBaseAdapter : BaseRecyclerAdapter<GlyphBaseAdapter.ViewHolder>() {
     private var mGlyphs: Array<Map.Entry<String, IntArray>>? = null
-    private var mClickListener: HackSequenceListener? = null
+    private var mClickListener: SequenceClickListener? = null
 
     fun setGlyphCategory(@Category category: String) {
         mGlyphs = arrayOf<Map.Entry<String, IntArray>>()
@@ -23,7 +25,7 @@ class GlyphBaseAdapter : RecyclerView.Adapter<GlyphBaseAdapter.ViewHolder>() {
         notifyDataSetChanged()
     }
 
-    fun setSequenceClickListener(listener: HackSequenceListener) {
+    override fun setSequenceClickListener(listener: SequenceClickListener) {
         mClickListener = listener
     }
 
@@ -33,10 +35,13 @@ class GlyphBaseAdapter : RecyclerView.Adapter<GlyphBaseAdapter.ViewHolder>() {
         return holder
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.glyphPreView.setSequences(mGlyphs!![position].key)
-        if (mClickListener != null) {
-            holder.itemView.setOnClickListener { mClickListener!!.onSequenceClicked(mGlyphs!![position].key) }
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder is ViewHolder) {
+            holder.glyphPreView.setSequences(mGlyphs!![position].key)
+            holder.itemView.setBackgroundColor(Utils.stringToColor(mGlyphs!![position].key))
+            if (mClickListener != null) {
+                holder.itemView.setOnClickListener { mClickListener!!.onSequenceClicked(mGlyphs!![position].key) }
+            }
         }
     }
 
