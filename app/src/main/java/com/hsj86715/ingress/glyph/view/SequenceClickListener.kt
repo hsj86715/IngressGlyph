@@ -5,4 +5,6 @@ package com.hsj86715.ingress.glyph.view
  */
 interface SequenceClickListener {
     fun onSequenceClicked(sequenceName: String)
+
+    fun clearSequence()
 }

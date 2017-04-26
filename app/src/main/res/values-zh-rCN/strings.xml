@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">Ingress Glyph</string>
-    <string name="toast_last_is_drawing">上一个序列还未演示完成</string>
-</resources>

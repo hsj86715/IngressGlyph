@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.RadioGroup;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.hsj86715.ingress.glyph.R;
 import com.hsj86715.ingress.glyph.data.BaseGlyphData;
 import com.hsj86715.ingress.glyph.view.BaseRecyclerAdapter;
@@ -45,9 +46,9 @@ public class GlyphSequencesFragment extends Fragment implements RadioGroup.OnChe
     private RecyclerView mRecyclerView;
 
     private RecyclerView.LayoutManager mLayoutManager;
-//    private PinnedSectionDecoration mSectionDecoration;
+    //    private PinnedSectionDecoration mSectionDecoration;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
-    @GlyphPage
     private String mWhichPage = PAGE_BASE;
 
     @Override
@@ -65,7 +66,8 @@ public class GlyphSequencesFragment extends Fragment implements RadioGroup.OnChe
         mCategoryRG.setOnCheckedChangeListener(this);
 
         if (savedInstanceState != null && savedInstanceState.containsKey("whichPage")) {
-            initPage(savedInstanceState.getString("whichPage"));
+            mWhichPage = savedInstanceState.getString("whichPage");
+            initPage(mWhichPage);
         } else {
             mCategoryContainer.setVisibility(View.VISIBLE);
             mLayoutManager = new GridLayoutManager(view.getContext(), 3);
@@ -108,19 +110,26 @@ public class GlyphSequencesFragment extends Fragment implements RadioGroup.OnChe
         if (activity instanceof SequenceClickListener) {
             mSequenceListener = (SequenceClickListener) activity;
         }
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(activity);
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
         if (outState == null) {
             outState = new Bundle();
         }
         outState.putString("whichPage", mWhichPage);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(item.getItemId()));
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, item.getTitle().toString());
+        bundle.putString(FirebaseAnalytics.Param.GROUP_ID, "OptionMenu");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
         switch (item.getItemId()) {
             case R.id.base:
                 mWhichPage = PAGE_BASE;
@@ -157,6 +166,9 @@ public class GlyphSequencesFragment extends Fragment implements RadioGroup.OnChe
             return;
         } else {
 //                    mRecyclerView.removeItemDecoration(mSectionDecoration);
+            if (mSequenceListener != null) {
+                mSequenceListener.clearSequence();
+            }
             mCategoryContainer.setVisibility(View.VISIBLE);
             if (mLayoutManager != null && mLayoutManager instanceof GridLayoutManager) {
                 ((GridLayoutManager) mLayoutManager).setSpanCount(3);
@@ -176,6 +188,9 @@ public class GlyphSequencesFragment extends Fragment implements RadioGroup.OnChe
         if (mGlyphAdapter != null && mGlyphAdapter instanceof GlyphPairsAdapter) {
             return;
         } else {
+            if (mSequenceListener != null) {
+                mSequenceListener.clearSequence();
+            }
             if (mGlyphAdapter != null && mGlyphAdapter instanceof GlyphBaseAdapter) {
                 mCategoryContainer.setVisibility(View.GONE);
             }
@@ -217,11 +232,17 @@ public class GlyphSequencesFragment extends Fragment implements RadioGroup.OnChe
             if (((HackSequencesAdapter) mGlyphAdapter).getSequencesLength() == sequenceLength) {
                 return;
             } else {
+                if (mSequenceListener != null) {
+                    mSequenceListener.clearSequence();
+                }
                 ((HackSequencesAdapter) mGlyphAdapter).setHackSequences(data, sequenceLength);
             }
         } else {
             if (mGlyphAdapter != null && mGlyphAdapter instanceof GlyphBaseAdapter) {
                 mCategoryContainer.setVisibility(View.GONE);
+            }
+            if (mSequenceListener != null) {
+                mSequenceListener.clearSequence();
             }
             mGlyphAdapter = new HackSequencesAdapter();
 //            if (mSectionDecoration == null) {
@@ -239,6 +260,7 @@ public class GlyphSequencesFragment extends Fragment implements RadioGroup.OnChe
 
     @Override
     public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+
         String category = null;
         switch (checkedId) {
             case R.id.category_human:
@@ -267,6 +289,11 @@ public class GlyphSequencesFragment extends Fragment implements RadioGroup.OnChe
         if (mGlyphAdapter instanceof GlyphBaseAdapter) {
             ((GlyphBaseAdapter) mGlyphAdapter).setGlyphCategory(category);
         }
+
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(checkedId));
+        bundle.putString(FirebaseAnalytics.Param.ITEM_CATEGORY, category);
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
     }
 
     @StringDef({PAGE_BASE, PAGE_PAIRS, PAGE_2HACK, PAGE_3HACK, PAGE_4HACK, PAGE_5HACK})

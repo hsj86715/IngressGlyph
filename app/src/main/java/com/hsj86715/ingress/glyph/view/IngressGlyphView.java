@@ -9,9 +9,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Build;
-import android.os.Parcelable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 
@@ -50,18 +48,6 @@ public class IngressGlyphView extends FrameLayout {
         addView(new HexagramView(context));
     }
 
-    @Override
-    protected Parcelable onSaveInstanceState() {
-        Log.i(TAG, "onSaveInstanceState");
-        return super.onSaveInstanceState();
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Parcelable state) {
-        super.onRestoreInstanceState(state);
-        Log.i(TAG, "onRestoreInstanceState");
-    }
-
     /**
      * Show hack sequences one by one
      *
@@ -79,6 +65,14 @@ public class IngressGlyphView extends FrameLayout {
             mPathView.stepIdx = 1;
             mPathView.invalidate();
         }
+    }
+
+    public void clear() {
+        if (mPathView != null) {
+            removeView(mPathView);
+            mPathView = null;
+        }
+        invalidate();
     }
 
     public boolean isDrawing() {
@@ -164,9 +158,11 @@ public class IngressGlyphView extends FrameLayout {
         @Override
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
-            paint.setStrokeWidth(getMeasuredWidth() / 40 > 10 ? 10 : getMeasuredWidth() / 40);
-            paint.setARGB(255, 0, 0, 0);
-            drawByStep(canvas);
+            if (mHackSequences != null && mHackSequences.length > 0) {
+                paint.setStrokeWidth(getMeasuredWidth() / 40 > 10 ? 10 : getMeasuredWidth() / 40);
+                paint.setARGB(255, 0, 0, 0);
+                drawByStep(canvas);
+            }
         }
 
         private void drawFullPath(Canvas canvas) {

@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android' //添加这行代码
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 24
@@ -8,13 +9,18 @@ android {
     defaultConfig {
         applicationId "com.hsj86715.ingress.glyph"
         minSdkVersion 15
-        targetSdkVersion 24
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
     }
     buildTypes {
+        debug {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -30,4 +36,5 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     //直接使用build.gradle中的kotlin版本
     compile 'com.android.support:recyclerview-v7:25.3.1'
+    compile 'com.google.firebase:firebase-core:10.2.1'
 }
