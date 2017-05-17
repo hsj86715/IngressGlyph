@@ -9,12 +9,10 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
-import com.hsj86715.ingress.glyph.data.BaseGlyphData;
-import com.hsj86715.ingress.glyph.view.IngressGlyphView;
-import com.hsj86715.ingress.glyph.view.SequenceClickListener;
-
-import java.util.Date;
+import com.hsj86715.ingress.glyph.pages.GlyphSequencesFragment;
+import com.hsj86715.ingress.glyphres.data.BaseGlyphData;
+import com.hsj86715.ingress.glyphres.view.IngressGlyphView;
+import com.hsj86715.ingress.glyphres.view.SequenceClickListener;
 
 /**
  * Created by hushujun on 16/5/16.
@@ -28,32 +26,33 @@ public class GlyphMainActivity extends AppCompatActivity implements SequenceClic
     private String mCurrentName;
     private Fragment mSequenceFrag;
 
-    private FirebaseAnalytics mFirebaseAnalytics;
+//    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+//        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         mGlyphContainer = findViewById(R.id.glyph_container);
         mGlyphSequenceView = (IngressGlyphView) findViewById(R.id.glyph_view);
         nameTx = (TextView) findViewById(R.id.text_view);
-        mSequenceFrag = getFragmentManager().findFragmentById(R.id.frag);
+        mSequenceFrag = new GlyphSequencesFragment();
+        getFragmentManager().beginTransaction().add(R.id.frag_container, mSequenceFrag).commit();
 
         resumeSavedInstance(savedInstanceState);
 
-        Bundle bundle = new Bundle();
-        bundle.putString(FirebaseAnalytics.Param.START_DATE, new Date().toString());
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, bundle);
+//        Bundle bundle = new Bundle();
+//        bundle.putString(FirebaseAnalytics.Param.START_DATE, new Date().toString());
+//        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, bundle);
     }
 
     @Override
     protected void onDestroy() {
-        Bundle bundle = new Bundle();
-        bundle.putString(FirebaseAnalytics.Param.END_DATE, new Date().toString());
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.BEGIN_CHECKOUT, bundle);
+//        Bundle bundle = new Bundle();
+//        bundle.putString(FirebaseAnalytics.Param.END_DATE, new Date().toString());
+//        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.BEGIN_CHECKOUT, bundle);
         super.onDestroy();
     }
 
@@ -108,10 +107,10 @@ public class GlyphMainActivity extends AppCompatActivity implements SequenceClic
             nameTx.setText(mCurrentName);
 //            mGlyphContainer.setBackgroundColor(Utils.stringToColor(mCurrentName));
 
-            Bundle bundle = new Bundle();
-            bundle.putString(FirebaseAnalytics.Param.CONTENT, sequenceName);
-            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Sequence");
-            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
+//            Bundle bundle = new Bundle();
+//            bundle.putString(FirebaseAnalytics.Param.CONTENT, sequenceName);
+//            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Sequence");
+//            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
         }
     }
 

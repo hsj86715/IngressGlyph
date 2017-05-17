@@ -7,6 +7,7 @@ import android.graphics.Rect
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.hsj86715.ingress.glyph.BaseDecoration
+import com.hsj86715.ingress.glyphres.view.DecorationCallback
 
 
 /**
@@ -16,12 +17,6 @@ class PinnedSectionDecoration(context: Context, callback: DecorationCallback) : 
     var mCallBack: DecorationCallback = callback
     var paint: Paint = Paint()
     var topGap: Int = (context.resources.displayMetrics.density * 40).toInt()
-
-    interface DecorationCallback {
-        fun getGroupName(position: Int): String
-
-        fun isFirstInGroup(position: Int): Boolean
-    }
 
     init {
         paint.setARGB(255, 8, 112, 117)
