@@ -51,12 +51,17 @@ public class MultiGlyphView extends View {
     }
 
     public MultiGlyphView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        this(context, attrs, defStyleAttr, 0);
+        super(context, attrs, defStyleAttr);
+        init(context, attrs, defStyleAttr, 0);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public MultiGlyphView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+        init(context, attrs, defStyleAttr, defStyleRes);
+    }
+
+    private void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.MultiGlyphView, defStyleAttr, defStyleRes);
         mTextSize = ta.getDimensionPixelSize(R.styleable.MultiGlyphView_textSize, 14);
         mTextColor = ta.getColor(R.styleable.MultiGlyphView_textColor, Color.BLACK);

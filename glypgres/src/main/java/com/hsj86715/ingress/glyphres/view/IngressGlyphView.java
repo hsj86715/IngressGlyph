@@ -39,12 +39,17 @@ public class IngressGlyphView extends FrameLayout {
     }
 
     public IngressGlyphView(Context context, AttributeSet attrs, int defStyleAttr) {
-        this(context, attrs, defStyleAttr, 0);
+        super(context, attrs, defStyleAttr);
+        init(context);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public IngressGlyphView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+        init(context);
+    }
+
+    private void init(Context context) {
         mDensity = getResources().getDisplayMetrics().density;
         addView(new HexagramView(context));
     }

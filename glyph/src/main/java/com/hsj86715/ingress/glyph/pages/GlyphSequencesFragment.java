@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.RadioGroup;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.hsj86715.ingress.glyph.R;
 import com.hsj86715.ingress.glyph.view.BaseRecyclerAdapter;
 import com.hsj86715.ingress.glyph.view.SimpleItemDecoration;
@@ -46,7 +47,7 @@ public class GlyphSequencesFragment extends Fragment implements RadioGroup.OnChe
 
     private RecyclerView.LayoutManager mLayoutManager;
     //    private PinnedSectionDecoration mSectionDecoration;
-//    private FirebaseAnalytics mFirebaseAnalytics;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     private String mWhichPage = PAGE_BASE;
 
@@ -109,7 +110,7 @@ public class GlyphSequencesFragment extends Fragment implements RadioGroup.OnChe
         if (activity instanceof SequenceClickListener) {
             mSequenceListener = (SequenceClickListener) activity;
         }
-//        mFirebaseAnalytics = FirebaseAnalytics.getInstance(activity);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(activity);
     }
 
     @Override
@@ -123,11 +124,11 @@ public class GlyphSequencesFragment extends Fragment implements RadioGroup.OnChe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//        Bundle bundle = new Bundle();
-//        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(item.getItemId()));
-//        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, item.getTitle().toString());
-//        bundle.putString(FirebaseAnalytics.Param.GROUP_ID, "OptionMenu");
-//        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(item.getItemId()));
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, item.getTitle().toString());
+        bundle.putString(FirebaseAnalytics.Param.GROUP_ID, "OptionMenu");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
         switch (item.getItemId()) {
             case R.id.base:
@@ -259,7 +260,6 @@ public class GlyphSequencesFragment extends Fragment implements RadioGroup.OnChe
 
     @Override
     public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-
         String category = null;
         switch (checkedId) {
             case R.id.category_human:
@@ -289,10 +289,10 @@ public class GlyphSequencesFragment extends Fragment implements RadioGroup.OnChe
             ((GlyphBaseAdapter) mGlyphAdapter).setGlyphCategory(category);
         }
 
-//        Bundle bundle = new Bundle();
-//        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(checkedId));
-//        bundle.putString(FirebaseAnalytics.Param.ITEM_CATEGORY, category);
-//        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(checkedId));
+        bundle.putString(FirebaseAnalytics.Param.ITEM_CATEGORY, category);
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
     }
 
     @StringDef({PAGE_BASE, PAGE_PAIRS, PAGE_2HACK, PAGE_3HACK, PAGE_4HACK, PAGE_5HACK})

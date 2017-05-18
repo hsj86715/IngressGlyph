@@ -19,8 +19,9 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.hsj86715.ingress.glyph.R;
-import com.hsj86715.ingress.glyph.data.BaseGlyphData;
+import com.hsj86715.ingress.glyphres.R;
+import com.hsj86715.ingress.glyphres.data.BaseGlyphData;
+import com.hsj86715.ingress.glyphres.view.SequenceClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
