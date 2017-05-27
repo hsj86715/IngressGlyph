@@ -1,1 +1,1 @@
-include ':app', ':glyph', ':glypgres'
+include ':app', ':glyph', ':glypgres', ':glyphiconcreater'

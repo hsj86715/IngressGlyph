@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/glypgres" />
             <option value="$PROJECT_DIR$/glyph" />
+            <option value="$PROJECT_DIR$/glyphiconcreater" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
