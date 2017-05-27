@@ -105,7 +105,7 @@ public class MultiGlyphView extends IconView {
             cx = getPaddingLeft() + mSequencesDivider * i + width * i + width / 2;
             cy = getPaddingTop() + height / 2;
             canvas.save();
-            drawSequence(canvas, cx, cy, mSequenceNames[i], paint, glyphRadius, pointRadius);
+            drawSequence(canvas, cx - pointRadius, cy - pointRadius, mSequenceNames[i], paint, glyphRadius, pointRadius);
             canvas.restore();
             if (mHackListener != null) {
                 mSequenceBounds[i] = new RectF(cx - glyphRadius, cy - glyphRadius, cx + glyphRadius,

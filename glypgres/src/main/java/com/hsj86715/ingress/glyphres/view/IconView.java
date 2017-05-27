@@ -22,7 +22,7 @@ import java.util.List;
  */
 
 public class IconView extends View {
-    private static final float sValidRegion = 0.75f;
+    private static final float sValidRegion = 0.8f;
     private static final String sIconPath = BaseGlyphData.H_ENLIGHTENMENT;
     private float mBorderWidth = 20;
 
@@ -49,17 +49,17 @@ public class IconView extends View {
         final float height = getMeasuredHeight();
         final float width = getMeasuredWidth();
         float diameter = Math.min(height, width);
-        mBorderWidth = diameter * 0.1f;
+        mBorderWidth = diameter * 0.05f;
         final float borderRadius = (diameter - mBorderWidth) / 2;
         final float glyphRadius = (diameter - mBorderWidth) * sValidRegion / 2;
         final float pointRadius = glyphRadius * 0.05f;
         float cx, cy;
         Paint paint = new Paint();
-        cx = (width - mBorderWidth) / 2;
-        cy = (height - mBorderWidth) / 2;
+        cx = width / 2;
+        cy = height / 2;
         canvas.save();
-        drawIconBg(canvas, cx, cy, paint, borderRadius);
-        drawSequence(canvas, cx, cy, sIconPath, paint, glyphRadius, pointRadius);
+        drawIconBg(canvas, cx - mBorderWidth / 2, cy - mBorderWidth / 2, paint, borderRadius);
+        drawSequence(canvas, cx - pointRadius, cy - pointRadius, sIconPath, paint, glyphRadius, pointRadius);
         canvas.restore();
     }
 
