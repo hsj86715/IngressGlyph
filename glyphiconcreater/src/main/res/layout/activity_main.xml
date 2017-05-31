@@ -8,7 +8,6 @@
     <com.hsj86715.ingress.glyphres.view.IconView
         android:id="@+id/app_icon_view"
         android:layout_width="350dp"
-        android:layout_height="350dp"
-        android:background="@android:color/darker_gray" />
+        android:layout_height="350dp" />
 
 </android.support.constraint.ConstraintLayout>

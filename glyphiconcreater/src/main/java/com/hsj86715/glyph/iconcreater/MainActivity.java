@@ -7,6 +7,7 @@ import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
                     //当指定压缩格式为JPEG时保存下来的图片背景为黑色
 //				 bitmap.compress(CompressFormat.JPEG, 100, fos);
                     fos.flush();
+                    Toast.makeText(MainActivity.this, "Save icon success", Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
