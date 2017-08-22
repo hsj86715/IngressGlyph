@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                     //当指定压缩格式为JPEG时保存下来的图片背景为黑色
 //				 bitmap.compress(CompressFormat.JPEG, 100, fos);
                     fos.flush();
-                    Toast.makeText(MainActivity.this, "Save icon success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Save icon success，Path：" + file.getAbsolutePath(), Toast.LENGTH_LONG).show();
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {

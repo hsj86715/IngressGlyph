@@ -24,7 +24,7 @@ abstract class BaseRecyclerAdapter : RecyclerView.Adapter<BaseRecyclerAdapter.Vi
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var glyphPreView: MultiGlyphView = itemView.findViewById(R.id.item_glyph_pre) as MultiGlyphView
+        var glyphPreView: MultiGlyphView = itemView.findViewById(R.id.item_glyph_pre)
     }
 
 }

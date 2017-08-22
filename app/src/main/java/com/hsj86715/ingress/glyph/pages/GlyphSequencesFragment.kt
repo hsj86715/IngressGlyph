@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.HorizontalScrollView
 import android.widget.RadioGroup
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.hsj86715.ingress.glyph.R
 import com.hsj86715.ingress.glyph.view.BaseRecyclerAdapter
 import com.hsj86715.ingress.glyph.view.SimpleItemDecoration
@@ -34,7 +35,7 @@ class GlyphSequencesFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
 
     private var mLayoutManager: RecyclerView.LayoutManager? = null
     //    private PinnedSectionDecoration mSectionDecoration;
-    //    private FirebaseAnalytics mFirebaseAnalytics;
+    private var mFirebaseAnalytics: FirebaseAnalytics? = null
 
     private var mWhichPage = PAGE_BASE
 
@@ -44,10 +45,10 @@ class GlyphSequencesFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mRecyclerView = view.findViewById(R.id.grid_base) as RecyclerView
+        mRecyclerView = view.findViewById(R.id.grid_base)
         mRecyclerView!!.addItemDecoration(SimpleItemDecoration())
-        mCategoryContainer = view.findViewById(R.id.category_container) as HorizontalScrollView
-        mCategoryRG = view.findViewById(R.id.categories) as RadioGroup
+        mCategoryContainer = view.findViewById(R.id.category_container)
+        mCategoryRG = view.findViewById(R.id.categories)
         mCategoryRG!!.setOnCheckedChangeListener(this)
 
         if (savedInstanceState != null && savedInstanceState.containsKey("whichPage")) {
@@ -82,7 +83,7 @@ class GlyphSequencesFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
         if (activity is SequenceClickListener) {
             mSequenceListener = activity
         }
-        //        mFirebaseAnalytics = FirebaseAnalytics.getInstance(activity);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(activity)
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
@@ -95,11 +96,11 @@ class GlyphSequencesFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        //        Bundle bundle = new Bundle();
-        //        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(item.getItemId()));
-        //        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, item.getTitle().toString());
-        //        bundle.putString(FirebaseAnalytics.Param.GROUP_ID, "OptionMenu");
-        //        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+        var bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, item.getItemId().toString())
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, item.getTitle().toString())
+        bundle.putString(FirebaseAnalytics.Param.GROUP_ID, "OptionMenu");
+        mFirebaseAnalytics!!.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
 
         when (item.itemId) {
             R.id.base -> {
@@ -238,10 +239,10 @@ class GlyphSequencesFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
             (mGlyphAdapter as GlyphBaseAdapter).setGlyphCategory(category)
         }
 
-        //        Bundle bundle = new Bundle();
-        //        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(checkedId));
-        //        bundle.putString(FirebaseAnalytics.Param.ITEM_CATEGORY, category);
-        //        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+        var bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, checkedId.toString())
+        bundle.putString(FirebaseAnalytics.Param.ITEM_CATEGORY, category)
+        mFirebaseAnalytics!!.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
     }
 
 //    @StringDef(PAGE_BASE, PAGE_PAIRS, PAGE_2HACK, PAGE_3HACK, PAGE_4HACK, PAGE_5HACK)
