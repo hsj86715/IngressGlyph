@@ -1,16 +1,16 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android' //添加这行代码
+//apply plugin: 'kotlin-android' //添加这行代码
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '25.0.3'
+    compileSdkVersion compileSdk
+    buildToolsVersion buildTools
 
     defaultConfig {
         applicationId "com.hsj86715.ingress.glyph"
-        minSdkVersion 15
-        targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion minSdk
+        targetSdkVersion targetSdk
+        versionCode appVersionCode
+        versionName appVersionName
     }
     buildTypes {
         debug {
@@ -34,7 +34,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testCompile 'junit:junit:4.12'
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+//    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     //直接使用build.gradle中的kotlin版本
     compile project(':glypgres')
 }

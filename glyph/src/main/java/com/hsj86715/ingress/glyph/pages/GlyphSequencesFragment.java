@@ -280,6 +280,12 @@ public class GlyphSequencesFragment extends Fragment implements RadioGroup.OnChe
             case R.id.category_conenv:
                 category = BaseGlyphData.C_COND_ENV;
                 break;
+            case R.id.category_new:
+                category = BaseGlyphData.C_NEW_ADDED;
+                break;
+            case R.id.category_no:
+                category = BaseGlyphData.C_NO_CAREGORY;
+                break;
             case R.id.category_all:
             default:
                 category = BaseGlyphData.C_ALL;
