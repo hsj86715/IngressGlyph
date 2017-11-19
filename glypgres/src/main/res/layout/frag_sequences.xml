@@ -71,6 +71,11 @@
         </RadioGroup>
     </HorizontalScrollView>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/colorPrimaryDark"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/grid_base"
         android:layout_width="match_parent"

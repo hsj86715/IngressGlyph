@@ -5,12 +5,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.hsj86715.ingress.glyph.pages.GlyphSequencesFragment;
+import com.hsj86715.ingress.glyph.tools.Utils;
 import com.hsj86715.ingress.glyphres.data.BaseGlyphData;
 import com.hsj86715.ingress.glyphres.view.IngressGlyphView;
 import com.hsj86715.ingress.glyphres.view.SequenceClickListener;
@@ -21,9 +22,9 @@ import java.util.Date;
  * Created by hushujun on 16/5/16.
  */
 public class GlyphMainActivity extends AppCompatActivity implements SequenceClickListener {
-    private View mGlyphContainer;
+    private ViewGroup mGlyphContainer;
     private IngressGlyphView mGlyphSequenceView;
-    private TextView nameTx;
+    private TextView mNameTx;
 
     private int[] mCurrentPath;
     private String mCurrentName;
@@ -39,8 +40,8 @@ public class GlyphMainActivity extends AppCompatActivity implements SequenceClic
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         mGlyphContainer = findViewById(R.id.glyph_container);
-        mGlyphSequenceView = (IngressGlyphView) findViewById(R.id.glyph_view);
-        nameTx = (TextView) findViewById(R.id.text_view);
+        mGlyphSequenceView = findViewById(R.id.glyph_view);
+        mNameTx = findViewById(R.id.text_view);
         mSequenceFrag = new GlyphSequencesFragment();
         getFragmentManager().beginTransaction().add(R.id.frag_container, mSequenceFrag).commit();
 
@@ -73,8 +74,8 @@ public class GlyphMainActivity extends AppCompatActivity implements SequenceClic
             mCurrentPath = savedInstanceState.getIntArray("path");
             mGlyphSequenceView.drawPath(mCurrentPath);
             mCurrentName = savedInstanceState.getString("name");
-            nameTx.setText(mCurrentName);
-//            mGlyphContainer.setBackgroundColor(Utils.stringToColor(mCurrentName));
+            mNameTx.setText(mCurrentName);
+            mGlyphContainer.setBackgroundColor(Utils.stringToColor(mCurrentName));
         }
     }
 
@@ -107,8 +108,9 @@ public class GlyphMainActivity extends AppCompatActivity implements SequenceClic
             mCurrentPath = BaseGlyphData.getInstance().getGlyphPath(sequenceName);
             mGlyphSequenceView.drawPath(mCurrentPath);
             mCurrentName = sequenceName;
-            nameTx.setText(mCurrentName);
-//            mGlyphContainer.setBackgroundColor(Utils.stringToColor(mCurrentName));
+            mNameTx.setText(mCurrentName);
+            mNameTx.setSelected(true);
+            mGlyphContainer.setBackgroundColor(Utils.stringToColor(mCurrentName));
 
             Bundle bundle = new Bundle();
             bundle.putString(FirebaseAnalytics.Param.CONTENT, sequenceName);
@@ -121,8 +123,8 @@ public class GlyphMainActivity extends AppCompatActivity implements SequenceClic
     public void clearSequence() {
 //        mCurrentPath = null;
 //        mCurrentName = "";
-//        if (nameTx != null) {
-//            nameTx.setText(mCurrentName);
+//        if (mNameTx != null) {
+//            mNameTx.setText(mCurrentName);
 //        }
 //        if (mGlyphSequenceView != null) {
 //            mGlyphSequenceView.clear();

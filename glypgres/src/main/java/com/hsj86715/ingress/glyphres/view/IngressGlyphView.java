@@ -6,8 +6,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
-import android.graphics.Rect;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
@@ -118,16 +116,19 @@ public class IngressGlyphView extends FrameLayout {
                 cy = (float) (Math.sin(Math.toRadians(degree)) * radius);
                 drawEmptyCircle(cx + radius, radius - cy, paint, canvas, pointRadius);
                 if (degree == 30) {
-                    path.moveTo(cx + center, center - cy);
+                    path.moveTo((float) (cx + center + Math.cos(Math.toRadians(degree)) * pointRadius),
+                            (float) (center - cy - Math.sin(Math.toRadians(degree)) * pointRadius));
                 } else {
-                    path.lineTo(cx + center, center - cy);
+                    path.lineTo((float) (cx + center + Math.cos(Math.toRadians(degree)) * pointRadius),
+                            (float) (center - cy - Math.sin(Math.toRadians(degree)) * pointRadius));
                 }
             }
 
             path.close();
             paint.setStyle(Paint.Style.STROKE);
-            paint.setStrokeWidth(2);
-            paint.setARGB(128, 0, 0, 0);
+            paint.setStrokeCap(Paint.Cap.ROUND);
+            paint.setStrokeWidth(6);
+            paint.setARGB(255, 120, 70, 0);
             canvas.drawPath(path, paint);
         }
 
@@ -140,14 +141,14 @@ public class IngressGlyphView extends FrameLayout {
             canvas.drawCircle(cx, cy, pointRadius * 0.75f, paint);
             mGlyphPoints.add(new Point((int) cx, (int) cy));
 
-            paint.setTextAlign(Paint.Align.CENTER);
-            paint.setTypeface(Typeface.DEFAULT_BOLD);
-            paint.setTextSize(pointRadius);
-            paint.setARGB(255, 255, 128, 0);
-            String idxStr = String.valueOf(mGlyphPoints.size());
-            Rect textBounds = new Rect();
-            paint.getTextBounds(idxStr, 0, idxStr.length(), textBounds);
-            canvas.drawText(idxStr, cx, cy - textBounds.centerY(), paint);
+//            paint.setTextAlign(Paint.Align.CENTER);
+//            paint.setTypeface(Typeface.DEFAULT_BOLD);
+//            paint.setTextSize(pointRadius);
+//            paint.setARGB(255, 255, 128, 0);
+//            String idxStr = String.valueOf(mGlyphPoints.size());
+//            Rect textBounds = new Rect();
+//            paint.getTextBounds(idxStr, 0, idxStr.length(), textBounds);
+//            canvas.drawText(idxStr, cx, cy - textBounds.centerY(), paint);
         }
     }
 
@@ -159,13 +160,14 @@ public class IngressGlyphView extends FrameLayout {
         public GlyphPathView(Context context) {
             super(context);
             paint = new Paint();
+            paint.setStrokeCap(Paint.Cap.ROUND);
         }
 
         @Override
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
             if (mHackSequences != null && mHackSequences.length > 0) {
-                paint.setStrokeWidth(getMeasuredWidth() / 40 > 10 ? 10 : getMeasuredWidth() / 40);
+                paint.setStrokeWidth(getMeasuredWidth() / 40 > 15 ? 15 : getMeasuredWidth() / 40);
                 paint.setARGB(255, 0, 0, 0);
                 drawByStep(canvas);
             }
@@ -176,10 +178,11 @@ public class IngressGlyphView extends FrameLayout {
         }
 
         private void drawByStep(Canvas canvas) {
-            if (stepIdx < mHackSequences[mSequencesIdx].length) {
+            int pathLength = mHackSequences[mSequencesIdx].length;
+            if (stepIdx < pathLength) {
                 isDrawing = true;
                 drawLines(canvas, stepIdx);
-                postInvalidateDelayed(150);
+                postInvalidateDelayed(getInvalidateInterval(pathLength));
                 stepIdx++;
             } else {
                 drawFullPath(canvas);
@@ -204,6 +207,19 @@ public class IngressGlyphView extends FrameLayout {
                 startX = point.x;
                 startY = point.y;
             }
+        }
+
+        private int getInvalidateInterval(int pathLength) {
+            final int[] delay = {150, 140, 130, 120, 110, 100, 90, 80, 70, 60};
+            final int minPathLength = 2;
+            if (pathLength <= minPathLength) {
+                return 150;
+            }
+            int idx = pathLength - minPathLength;
+            if (idx >= delay.length) {
+                idx = delay.length - 1;
+            }
+            return delay[idx];
         }
     }
 }

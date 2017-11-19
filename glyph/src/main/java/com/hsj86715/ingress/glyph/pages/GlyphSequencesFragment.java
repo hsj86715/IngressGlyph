@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringDef;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -59,10 +60,10 @@ public class GlyphSequencesFragment extends Fragment implements RadioGroup.OnChe
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.grid_base);
+        mRecyclerView = view.findViewById(R.id.grid_base);
         mRecyclerView.addItemDecoration(new SimpleItemDecoration());
-        mCategoryContainer = (HorizontalScrollView) view.findViewById(R.id.category_container);
-        mCategoryRG = (RadioGroup) view.findViewById(R.id.categories);
+        mCategoryContainer = view.findViewById(R.id.category_container);
+        mCategoryRG = view.findViewById(R.id.categories);
         mCategoryRG.setOnCheckedChangeListener(this);
 
         if (savedInstanceState != null && savedInstanceState.containsKey("whichPage")) {
@@ -70,12 +71,7 @@ public class GlyphSequencesFragment extends Fragment implements RadioGroup.OnChe
             initPage(mWhichPage);
         } else {
             mCategoryContainer.setVisibility(View.VISIBLE);
-            mLayoutManager = new GridLayoutManager(view.getContext(), 3);
-            mRecyclerView.setLayoutManager(mLayoutManager);
-            mGlyphAdapter = new GlyphBaseAdapter();
-            mGlyphAdapter.setSequenceClickListener(mSequenceListener);
-            mRecyclerView.setAdapter(mGlyphAdapter);
-            ((GlyphBaseAdapter) mGlyphAdapter).setGlyphCategory(BaseGlyphData.C_ALL);
+            showBaseSequences();
         }
     }
 
@@ -165,6 +161,7 @@ public class GlyphSequencesFragment extends Fragment implements RadioGroup.OnChe
         if (mGlyphAdapter != null && mGlyphAdapter instanceof GlyphBaseAdapter) {
             return;
         } else {
+            updateToolBarSubTitle("Base Glyphs");
 //                    mRecyclerView.removeItemDecoration(mSectionDecoration);
             if (mSequenceListener != null) {
                 mSequenceListener.clearSequence();
@@ -188,6 +185,7 @@ public class GlyphSequencesFragment extends Fragment implements RadioGroup.OnChe
         if (mGlyphAdapter != null && mGlyphAdapter instanceof GlyphPairsAdapter) {
             return;
         } else {
+            updateToolBarSubTitle("Glyph Pairs");
             if (mSequenceListener != null) {
                 mSequenceListener.clearSequence();
             }
@@ -235,6 +233,7 @@ public class GlyphSequencesFragment extends Fragment implements RadioGroup.OnChe
                 if (mSequenceListener != null) {
                     mSequenceListener.clearSequence();
                 }
+                updateToolBarSubTitle(sequenceLength + " Glyph Hack Sequences");
                 ((HackSequencesAdapter) mGlyphAdapter).setHackSequences(data, sequenceLength);
             }
         } else {
@@ -244,6 +243,7 @@ public class GlyphSequencesFragment extends Fragment implements RadioGroup.OnChe
             if (mSequenceListener != null) {
                 mSequenceListener.clearSequence();
             }
+            updateToolBarSubTitle(sequenceLength + " Glyph Hack Sequences");
             mGlyphAdapter = new HackSequencesAdapter();
 //            if (mSectionDecoration == null) {
 //                mSectionDecoration = new PinnedSectionDecoration(getContext(),
@@ -256,6 +256,10 @@ public class GlyphSequencesFragment extends Fragment implements RadioGroup.OnChe
             ((HackSequencesAdapter) mGlyphAdapter).setHackSequences(data, sequenceLength);
             mRecyclerView.setAdapter(mGlyphAdapter);
         }
+    }
+
+    private void updateToolBarSubTitle(String title) {
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(title);
     }
 
     @Override

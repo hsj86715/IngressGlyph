@@ -31,7 +31,7 @@ public abstract class BaseRecyclerAdapter extends RecyclerView.Adapter<BaseRecyc
 
         public ViewHolder(View itemView) {
             super(itemView);
-            glyphPreView = (MultiGlyphView) itemView.findViewById(R.id.item_glyph_pre);
+            glyphPreView = itemView.findViewById(R.id.item_glyph_pre);
         }
     }
 }

@@ -3,14 +3,25 @@ package com.hsj86715.ingress.glyph.tools;
 import android.graphics.Color;
 import android.support.annotation.ColorInt;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by hushujun on 2017/5/16.
  */
 
 public class Utils {
+    static final Map<String, Integer> sColorCache = new HashMap<>();
+
     @ColorInt
     public static int stringToColor(String str) {
-        final int nameH = str.hashCode();
+        if (sColorCache.containsKey(str)) {
+            return sColorCache.get(str);
+        }
+        byte[] strB = str.getBytes();
+//        System.out.println(str + ": " + Arrays.toString(strB));
+        final int nameH = str.hashCode() * countBytes(strB);
+        final int halfColor = 128;
         final int b = 255;
         final int g = b * 255;
         final int r = g * 255;
@@ -19,18 +30,17 @@ public class Utils {
         int cr = Math.abs(nameH % a / r);
         int cg = Math.abs(nameH % a % r / g);
         int cb = Math.abs(nameH % a % r % g / b);
-//        Log.i("Utils", "stringToColor:name=$str,hashCode=$nameH,ca=$ca,cr=$cr,cg=$cg,cb=$cb")
-        if (ca < 128) {
-            ca += 128;
+        if (ca < halfColor) {
+            ca = (int) (Math.sqrt(ca + halfColor) * 16);
         }
-        if (cb < 128) {
-            cb = (int) (Math.sqrt(cb) * 16);
+        if (cb < halfColor) {
+            cb = (int) (Math.sqrt(cb + halfColor) * 16);
         }
-        if (cr < 128) {
-            cr = (int) (Math.sqrt(cr) * 16);
+        if (cr < halfColor) {
+            cr = (int) (Math.sqrt(cr + halfColor) * 16);
         }
-        if (cg < 128) {
-            cg = (int) (Math.sqrt(cg) * 16);
+        if (cg < halfColor) {
+            cg = (int) (Math.sqrt(cg + halfColor) * 16);
         }
 
         String sa = Integer.toHexString(ca);
@@ -50,8 +60,17 @@ public class Utils {
             sb = "0" + sb;
         }
         String colorStr = "#" + sa + sr + sg + sb;
-//        Log.i("Utils", "stringToColor:colorStr=$colorStr")
-        return Color.parseColor(colorStr);
+        int color = Color.parseColor(colorStr);
+        sColorCache.put(str, color);
+        System.out.println(str + " color: " + colorStr);
+        return color;
     }
 
+    private static int countBytes(byte[] strBytes) {
+        int sum = 0;
+        for (byte b : strBytes) {
+            sum += b;
+        }
+        return sum;
+    }
 }

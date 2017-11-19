@@ -42,5 +42,4 @@ public class GlyphBaseAdapter extends BaseRecyclerAdapter {
     public int getItemCount() {
         return mGlyphKeys.size();
     }
-
 }

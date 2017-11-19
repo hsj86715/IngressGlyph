@@ -55,6 +55,7 @@ public class IconView extends View {
         final float pointRadius = glyphRadius * 0.05f;
         float cx, cy;
         Paint paint = new Paint();
+        paint.setStrokeCap(Paint.Cap.ROUND);
         cx = width / 2;
         cy = height / 2;
         canvas.save();
@@ -113,7 +114,7 @@ public class IconView extends View {
         path.close();
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(4);
-        paint.setARGB(128, 128, 128, 128);
+        paint.setARGB(128, 120, 70, 0);
         canvas.drawPath(path, paint);
         paint.reset();
 
