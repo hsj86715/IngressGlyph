@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class BaseGlyphData {
     private static final String H_BODY_SHELL = "Body/Shell";
-    public static final String H_ENLIGHTENMENT = "Enlightenment";
+    private static final String H_ENLIGHTENMENT = "Enlightenment";
     private static final String H_BEING_HUMAN = "Being/Human";
     private static final String H_MIND = "Mind";
     private static final String H_RESISTANCE_STRUGGLE = "Resistance/Struggle";
@@ -130,7 +130,7 @@ public class BaseGlyphData {
     private static final String TS_DESTINATION = "Destination";
     private static final String FD_LEGACY = "Legacy";
     private static final String CE_NZEER = "N'Zeer";
-    private static final String T_KNOWLEDGE = "Knowledge";
+    public static final String T_KNOWLEDGE = "Knowledge";
     private static final String T_PERSPECTIVE = "Perspective";
     private static final String H_US_WE = "Us/We";
     private static final String CE_ADAPT = "Adapt";

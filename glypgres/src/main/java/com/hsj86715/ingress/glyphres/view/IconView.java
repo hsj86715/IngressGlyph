@@ -23,7 +23,7 @@ import java.util.List;
 
 public class IconView extends View {
     private static final float sValidRegion = 0.8f;
-    private static final String sIconPath = BaseGlyphData.H_ENLIGHTENMENT;
+    private static final String sIconPath = BaseGlyphData.T_KNOWLEDGE;
     private float mBorderWidth = 20;
 
     public IconView(Context context) {
@@ -113,7 +113,8 @@ public class IconView extends View {
 
         path.close();
         paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(4);
+        paint.setStrokeWidth(6);
+        paint.setStrokeCap(Paint.Cap.ROUND);
         paint.setARGB(128, 120, 70, 0);
         canvas.drawPath(path, paint);
         paint.reset();
@@ -133,7 +134,8 @@ public class IconView extends View {
     }
 
     private void drawPath(Canvas canvas, Paint paint, String name, List<PointF> glyphPoints, float glyRadius) {
-        paint.setStrokeWidth(glyRadius / 20 > 10 ? 10 : glyRadius / 20);
+        paint.setStrokeWidth(glyRadius / 20 > 15 ? 15 : glyRadius / 20);
+        paint.setStrokeCap(Paint.Cap.ROUND);
         paint.setARGB(255, 0, 0, 0);
         drawLines(canvas, BaseGlyphData.getInstance().getGlyphPath(name), glyphPoints, paint);
     }

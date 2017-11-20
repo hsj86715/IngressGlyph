@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/IngressGlyph.iml" filepath="$PROJECT_DIR$/IngressGlyph.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/glypgres/glypgres.iml" filepath="$PROJECT_DIR$/glypgres/glypgres.iml" />
       <module fileurl="file://$PROJECT_DIR$/glyph/glyph.iml" filepath="$PROJECT_DIR$/glyph/glyph.iml" />
       <module fileurl="file://$PROJECT_DIR$/glyphiconcreater/glyphiconcreater.iml" filepath="$PROJECT_DIR$/glyphiconcreater/glyphiconcreater.iml" />

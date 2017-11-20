@@ -3,13 +3,13 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         release {
-            v2SigningEnabled false
+            v2SigningEnabled true
         }
     }
     compileSdkVersion compileSdk
     buildToolsVersion buildTools
     defaultConfig {
-        applicationId "com.hsj86715.ingress.glyph"
+        applicationId "cn.com.farmcode.ingress.sequence"
         minSdkVersion minSdk
         targetSdkVersion targetSdk
         versionCode appVersionCode
@@ -22,6 +22,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            minifyEnabled false
             signingConfig signingConfigs.release
         }
     }
