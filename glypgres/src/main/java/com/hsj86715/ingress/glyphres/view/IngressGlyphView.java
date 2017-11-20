@@ -178,7 +178,14 @@ public class IngressGlyphView extends FrameLayout {
         }
 
         private void drawByStep(Canvas canvas) {
-            int pathLength = mHackSequences[mSequencesIdx].length;
+            if (mSequencesIdx >= mHackSequences.length) {
+                return;
+            }
+            int[] path = mHackSequences[mSequencesIdx];
+            if (path == null || path.length == 0) {
+                return;
+            }
+            int pathLength = path.length;
             if (stepIdx < pathLength) {
                 isDrawing = true;
                 drawLines(canvas, stepIdx);

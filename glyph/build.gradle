@@ -16,7 +16,7 @@ android {
         versionName appVersionName
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+        setProperty("archivesBaseName", archivesBaseName + "-" + versionName)
     }
     buildTypes {
         release {
