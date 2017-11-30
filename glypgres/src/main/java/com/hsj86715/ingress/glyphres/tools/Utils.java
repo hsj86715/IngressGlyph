@@ -1,4 +1,4 @@
-package com.hsj86715.ingress.glyph.tools;
+package com.hsj86715.ingress.glyphres.tools;
 
 import android.graphics.Color;
 import android.support.annotation.ColorInt;

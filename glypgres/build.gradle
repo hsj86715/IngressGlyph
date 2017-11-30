@@ -23,12 +23,10 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    compile 'com.android.support:appcompat-v7:27.0.1'
+    compile "com.android.support:appcompat-v7:27.0.1"
     compile 'com.android.support:recyclerview-v7:27.0.1'
     compile 'com.google.firebase:firebase-core:11.6.0'
     compile 'com.google.firebase:firebase-crash:11.6.0'
+    compile 'com.google.guava:guava:23.5-android'
     testCompile 'junit:junit:4.12'
 }

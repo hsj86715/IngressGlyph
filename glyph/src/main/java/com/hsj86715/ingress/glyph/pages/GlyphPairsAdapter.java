@@ -1,7 +1,7 @@
 package com.hsj86715.ingress.glyph.pages;
 
-import com.hsj86715.ingress.glyph.tools.Utils;
 import com.hsj86715.ingress.glyph.view.BaseRecyclerAdapter;
+import com.hsj86715.ingress.glyphres.tools.Utils;
 
 /**
  * Created by hushujun on 2017/5/16.

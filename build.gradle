@@ -3,11 +3,11 @@
 buildscript {
     ext {
 //        kotlin_version = '1.1.51-release-Studio3.0-1' //kotlin版本
-        compileSdk = 26
+        compileSdk = 27
         buildTools = '27.0.1'
         minSdk = 15
-        targetSdk = 26
-//        supportLibsVersion = '27.0.1'
+        targetSdk = 27
+//        supportLibsVersion = "27.0.1"
         appVersionCode = 1
         appVersionName = "1.0.0"
     }
@@ -16,7 +16,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.0'
+        classpath 'com.android.tools.build:gradle:3.0.1'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
