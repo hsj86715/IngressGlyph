@@ -59,15 +59,15 @@
                 style="@style/categoryRBStyle"
                 android:text="Condition/Environment"/>
 
-            <RadioButton
-                android:id="@+id/category_new"
-                style="@style/categoryRBStyle"
-                android:text="NewAdded"/>
+            <!--<RadioButton-->
+            <!--android:id="@+id/category_new"-->
+            <!--style="@style/categoryRBStyle"-->
+            <!--android:text="NewAdded"/>-->
 
-            <RadioButton
-                android:id="@+id/category_no"
-                style="@style/categoryRBStyle"
-                android:text="Unknown"/>
+            <!--<RadioButton-->
+            <!--android:id="@+id/category_no"-->
+            <!--style="@style/categoryRBStyle"-->
+            <!--android:text="Unknown"/>-->
         </RadioGroup>
     </HorizontalScrollView>
 

@@ -122,8 +122,8 @@ public class BaseGlyphData {
     public static final String C_TIME_SPACE = "time/space";
     public static final String C_COND_ENV = "condition/environment";
     //new Added 2017.11.18
-    public static final String C_NEW_ADDED = "New Added";
-    public static final String C_NO_CAREGORY = "Unknown Category";
+//    public static final String C_NEW_ADDED = "New Added";
+//    public static final String C_NO_CAREGORY = "Unknown Category";
 
     private static final String A_ABANDON = "Abandon";
     private static final String TS_BEGIN = "Begin";
@@ -352,14 +352,14 @@ public class BaseGlyphData {
                 CE_SAFETY, CE_SIMPLE, CE_STABILITY_STAY, CE_STRONG, CE_WEAK, CE_ADAPT, CE_CONSEQUENCE,
                 CE_NZEER, CE_UNBOUNDED});
 
-        mCategoryGlyphs.put(C_NEW_ADDED, new String[]{A_ABANDON, TS_BEGIN, TS_DESTINATION, FD_LEGACY,
-                CE_NZEER, T_KNOWLEDGE, T_PERSPECTIVE, H_US_WE, CE_ADAPT, TS_AFTER, TS_BEFORE,
-                CE_CONSEQUENCE, H_CREATIVITY, /*H_ENLIGHTENED,*/ H_I_ME, T_INTELLIGENCE, A_INTERRUPT,
-                A_LIVE_AGAIN, T_MYSTERY, A_PRESENCE, A_CHASE, /*H_RESIST,*/ A_SUSTAIN, A_SUSTAIN_ALL,
-                T_TECHNOLOGY, H_THEM, CE_UNBOUNDED, FD_VICTORY, FD_WORTH, H_OTHER_YOU_YOUR});
-
-        mCategoryGlyphs.put(C_NO_CAREGORY, new String[]{UNKNOWN_FISH, UNKNOWN_BOMB, UNKNOWN_PLOUGH,
-                UNKNOWN_SOWN});
+//        mCategoryGlyphs.put(C_NEW_ADDED, new String[]{A_ABANDON, TS_BEGIN, TS_DESTINATION, FD_LEGACY,
+//                CE_NZEER, T_KNOWLEDGE, T_PERSPECTIVE, H_US_WE, CE_ADAPT, TS_AFTER, TS_BEFORE,
+//                CE_CONSEQUENCE, H_CREATIVITY, /*H_ENLIGHTENED,*/ H_I_ME, T_INTELLIGENCE, A_INTERRUPT,
+//                A_LIVE_AGAIN, T_MYSTERY, A_PRESENCE, A_CHASE, /*H_RESIST,*/ A_SUSTAIN, A_SUSTAIN_ALL,
+//                T_TECHNOLOGY, H_THEM, CE_UNBOUNDED, FD_VICTORY, FD_WORTH, H_OTHER_YOU_YOUR});
+//
+//        mCategoryGlyphs.put(C_NO_CAREGORY, new String[]{UNKNOWN_FISH, UNKNOWN_BOMB, UNKNOWN_PLOUGH,
+//                UNKNOWN_SOWN});
     }
 
     private void initTwoSequences() {
@@ -1233,6 +1233,36 @@ public class BaseGlyphData {
         }
     }
 
+    protected String[] getCategoryGlyph(@Category String category) {
+        return mCategoryGlyphs.get(category);
+    }
+
+    protected void clearData() {
+        if (mFiveSequences != null) {
+            mFiveSequences.clear();
+            mFiveSequences = null;
+        }
+        if (mFourSequences != null) {
+            mFourSequences.clear();
+            mFourSequences = null;
+        }
+        if (mThreeSequences != null) {
+            mThreeSequences.clear();
+            mThreeSequences = null;
+        }
+        if (mTwoSequences != null) {
+            mTwoSequences.clear();
+            mTwoSequences = null;
+        }
+        if (mCategoryGlyphs != null) {
+            mCategoryGlyphs.clear();
+            mCategoryGlyphs = null;
+        }
+        if (mGlyphPairs != null) {
+            mGlyphPairs = null;
+        }
+    }
+
     public Map<String, String[][]> getTwoSequences() {
         if (mTwoSequences == null) {
             initTwoSequences();
@@ -1297,8 +1327,8 @@ public class BaseGlyphData {
 
     }
 
-    @StringDef({C_ALL, C_HUMAN, C_ACTION, C_THOUGHT, C_FLU_DIRE, C_TIME_SPACE, C_COND_ENV, C_NEW_ADDED,
-            C_NO_CAREGORY})
+    @StringDef({C_ALL, C_HUMAN, C_ACTION, C_THOUGHT, C_FLU_DIRE, C_TIME_SPACE, C_COND_ENV/*, C_NEW_ADDED,
+            C_NO_CAREGORY*/})
     public @interface Category {
 
     }

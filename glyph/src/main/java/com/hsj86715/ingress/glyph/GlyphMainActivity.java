@@ -2,17 +2,17 @@ package com.hsj86715.ingress.glyph;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.hsj86715.ingress.glyph.pages.GlyphSequencesFragment;
-import com.hsj86715.ingress.glyph.tools.Utils;
 import com.hsj86715.ingress.glyphres.data.BaseGlyphData;
+import com.hsj86715.ingress.glyphres.tools.Utils;
 import com.hsj86715.ingress.glyphres.view.IngressGlyphView;
 import com.hsj86715.ingress.glyphres.view.SequenceClickListener;
 
@@ -50,6 +50,14 @@ public class GlyphMainActivity extends AppCompatActivity implements SequenceClic
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.START_DATE, new Date().toString());
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, bundle);
+//
+//        AsyncTask asyncTask=new AsyncTask() {
+//            @Override
+//            protected Object doInBackground(Object[] objects) {
+//                return GlyphModel.getGlyphPairs(GlyphMainActivity.this);
+//            }
+//        };
+//        asyncTask.execute();
     }
 
     @Override
@@ -103,7 +111,8 @@ public class GlyphMainActivity extends AppCompatActivity implements SequenceClic
     @Override
     public void onSequenceClicked(@BaseGlyphData.GlyphName String sequenceName) {
         if (mGlyphSequenceView.isDrawing()) {
-            Toast.makeText(this, R.string.toast_last_is_drawing, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, R.string.toast_last_is_drawing, Toast.LENGTH_SHORT).show();
+            Snackbar.make(mGlyphSequenceView, R.string.toast_last_is_drawing, Snackbar.LENGTH_SHORT).show();
         } else {
             mCurrentPath = BaseGlyphData.getInstance().getGlyphPath(sequenceName);
             mGlyphSequenceView.drawPath(mCurrentPath);

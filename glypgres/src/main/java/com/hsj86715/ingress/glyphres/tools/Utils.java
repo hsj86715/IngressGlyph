@@ -1,7 +1,8 @@
-package com.hsj86715.ingress.glyph.tools;
+package com.hsj86715.ingress.glyphres.tools;
 
 import android.graphics.Color;
 import android.support.annotation.ColorInt;
+import android.text.TextUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +16,9 @@ public class Utils {
 
     @ColorInt
     public static int stringToColor(String str) {
+        if (TextUtils.isEmpty(str)) {
+            return Color.BLUE;
+        }
         if (sColorCache.containsKey(str)) {
             return sColorCache.get(str);
         }

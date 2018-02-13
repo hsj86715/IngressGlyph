@@ -2,10 +2,10 @@ package com.hsj86715.ingress.glyph.pages;
 
 import android.view.View;
 
-import com.hsj86715.ingress.glyph.tools.Utils;
 import com.hsj86715.ingress.glyph.view.BaseRecyclerAdapter;
 import com.hsj86715.ingress.glyphres.data.BaseGlyphData;
 import com.hsj86715.ingress.glyphres.data.BaseGlyphData.Category;
+import com.hsj86715.ingress.glyphres.tools.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
