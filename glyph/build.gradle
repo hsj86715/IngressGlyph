@@ -27,15 +27,15 @@ android {
         }
         debug {
 //            minifyEnabled true
-            signingConfig signingConfigs.release
+//            signingConfig signingConfigs.release
         }
     }
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile project(':glypgres')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation project(':glypgres')
     //    compile 'com.google.firebase:firebase-ads:10.2.1'
-    testCompile 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'

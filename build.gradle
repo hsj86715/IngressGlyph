@@ -5,9 +5,9 @@ buildscript {
 //        kotlin_version = '1.1.51-release-Studio3.0-1' //kotlin版本
         compileSdk = 27
         buildTools = '27.0.3'
-        minSdk = 15
+        minSdk = 16
         targetSdk = 27
-//        supportLibsVersion = "27.0.1"
+        supportLibsVersion = '27.1.1'
         appVersionCode = 10
         appVersionName = "1.0.1"
     }
@@ -16,7 +16,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.android.tools.build:gradle:3.1.2'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -35,16 +35,16 @@ allprojects {
     }
 }
 
-subprojects {
-    project.configurations.all {
-        resolutionStrategy.eachDependency { details ->
-            if (details.requested.group == 'com.android.support'
-                    && !details.requested.name.contains('multidex') ) {
-                details.useVersion "27.0.2"
-            }
-        }
-    }
-}
+//subprojects {
+//    project.configurations.all {
+//        resolutionStrategy.eachDependency { details ->
+//            if (details.requested.group == 'com.android.support'
+//                    && !details.requested.name.contains('multidex') ) {
+//                details.useVersion "27.1.1"
+//            }
+//        }
+//    }
+//}
 
 task clean(type: Delete) {
     delete rootProject.buildDir

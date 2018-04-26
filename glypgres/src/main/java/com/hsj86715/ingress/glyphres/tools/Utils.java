@@ -77,4 +77,19 @@ public class Utils {
         }
         return sum;
     }
+
+    public static String arrayToString(int[] array) {
+        if (array == null || array.length == 0) {
+            return "";
+        }
+        StringBuilder b = new StringBuilder();
+        int max = array.length - 1;
+        for (int i = 0; ; i++) {
+            b.append(array[i]);
+            if (i == max) {
+                return b.toString();
+            }
+            b.append(", ");
+        }
+    }
 }
