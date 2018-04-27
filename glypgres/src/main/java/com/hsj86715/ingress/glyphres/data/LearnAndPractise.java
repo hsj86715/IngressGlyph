@@ -1,9 +1,9 @@
 package com.hsj86715.ingress.glyphres.data;
 
 class LearnAndPractise {
-    private int learnCount;
-    private int practiseCount;
-    private int practiseCorrect;
+    protected int learnCount;
+    protected int practiseCount;
+    protected int practiseCorrect;
 
     public int getLearnCount() {
         return learnCount;

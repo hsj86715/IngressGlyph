@@ -89,7 +89,23 @@ public class Utils {
             if (i == max) {
                 return b.toString();
             }
-            b.append(", ");
+            b.append(",");
         }
+    }
+
+    public static int[] stringToArray(String path) {
+        if (TextUtils.isEmpty(path) || !path.contains(",")) {
+            return null;
+        }
+        String[] numbers = path.split(",");
+        int[] arrayPath = new int[numbers.length];
+        for (int i = 0; i < numbers.length; i++) {
+            try {
+                arrayPath[i] = Integer.valueOf(numbers[i]);
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
+        return arrayPath;
     }
 }

@@ -29,7 +29,7 @@ allprojects {
     repositories {
         jcenter()
         google()
-        maven{
+        maven {
             url "https://maven.google.com"
         }
     }

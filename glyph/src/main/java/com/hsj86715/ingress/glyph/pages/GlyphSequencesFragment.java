@@ -2,6 +2,7 @@ package com.hsj86715.ingress.glyph.pages;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
@@ -21,10 +22,13 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import com.hsj86715.ingress.glyph.R;
 import com.hsj86715.ingress.glyph.view.BaseRecyclerAdapter;
 import com.hsj86715.ingress.glyph.view.SimpleItemDecoration;
-import com.hsj86715.ingress.glyphres.data.BaseGlyphData;
+import com.hsj86715.ingress.glyphres.data.Constants;
+import com.hsj86715.ingress.glyphres.data.GlyphInfo;
+import com.hsj86715.ingress.glyphres.data.GlyphModel;
+import com.hsj86715.ingress.glyphres.data.HackList;
 import com.hsj86715.ingress.glyphres.view.SequenceClickListener;
 
-import java.util.Map;
+import java.util.List;
 
 /**
  * Created by hushujun on 2017/5/17.
@@ -38,18 +42,13 @@ public class GlyphSequencesFragment extends Fragment implements RadioGroup.OnChe
     private static final String PAGE_3HACK = "3Hacks";
     private static final String PAGE_4HACK = "4Hacks";
     private static final String PAGE_5HACK = "5Hacks";
-
     private SequenceClickListener mSequenceListener;
-
     private BaseRecyclerAdapter mGlyphAdapter;
     private HorizontalScrollView mCategoryContainer;
     private RadioGroup mCategoryRG;
     private RecyclerView mRecyclerView;
-
     private RecyclerView.LayoutManager mLayoutManager;
-    //    private PinnedSectionDecoration mSectionDecoration;
     private FirebaseAnalytics mFirebaseAnalytics;
-
     private String mWhichPage = PAGE_BASE;
 
     @Override
@@ -162,7 +161,6 @@ public class GlyphSequencesFragment extends Fragment implements RadioGroup.OnChe
             return;
         } else {
             updateToolBarSubTitle("Base Glyphs");
-//                    mRecyclerView.removeItemDecoration(mSectionDecoration);
             if (mSequenceListener != null) {
                 mSequenceListener.clearSequence();
             }
@@ -192,50 +190,27 @@ public class GlyphSequencesFragment extends Fragment implements RadioGroup.OnChe
             if (mGlyphAdapter != null && mGlyphAdapter instanceof GlyphBaseAdapter) {
                 mCategoryContainer.setVisibility(View.GONE);
             }
-//                    mRecyclerView.removeItemDecoration(mSectionDecoration);
             if (mLayoutManager != null && mLayoutManager instanceof GridLayoutManager) {
                 ((GridLayoutManager) mLayoutManager).setSpanCount(2);
             } else {
                 mLayoutManager = new GridLayoutManager(getActivity(), 2);
                 mRecyclerView.setLayoutManager(mLayoutManager);
             }
-            mGlyphAdapter = new GlyphPairsAdapter(BaseGlyphData.getInstance().getGlyphPairs());
-            mGlyphAdapter.setSequenceClickListener(mSequenceListener);
-            mRecyclerView.setAdapter(mGlyphAdapter);
+            new PairsGlyphTask().execute();
         }
     }
 
     private void updateSequences(int sequenceLength) {
-        Map<String, String[][]> data;
-        switch (sequenceLength) {
-            case 3:
-                data = BaseGlyphData.getInstance().getThreeSequences();
-                break;
-            case 4:
-                data = BaseGlyphData.getInstance().getFourSequences();
-                break;
-            case 5:
-                data = BaseGlyphData.getInstance().getFiveSequences();
-                break;
-            case 2:
-            default:
-                data = BaseGlyphData.getInstance().getTwoSequences();
-                break;
-        }
+        new HackSequencesTask().execute(sequenceLength);
         if (mLayoutManager == null || mLayoutManager instanceof GridLayoutManager) {
             mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
             mRecyclerView.setLayoutManager(mLayoutManager);
         }
         if (mGlyphAdapter != null && mGlyphAdapter instanceof HackSequencesAdapter) {
-            if (((HackSequencesAdapter) mGlyphAdapter).getSequencesLength() == sequenceLength) {
-                return;
-            } else {
-                if (mSequenceListener != null) {
-                    mSequenceListener.clearSequence();
-                }
-                updateToolBarSubTitle(sequenceLength + " Glyph Hack Sequences");
-                ((HackSequencesAdapter) mGlyphAdapter).setHackSequences(data, sequenceLength);
+            if (mSequenceListener != null) {
+                mSequenceListener.clearSequence();
             }
+            updateToolBarSubTitle(sequenceLength + " Glyph Hack Sequences");
         } else {
             if (mGlyphAdapter != null && mGlyphAdapter instanceof GlyphBaseAdapter) {
                 mCategoryContainer.setVisibility(View.GONE);
@@ -244,17 +219,6 @@ public class GlyphSequencesFragment extends Fragment implements RadioGroup.OnChe
                 mSequenceListener.clearSequence();
             }
             updateToolBarSubTitle(sequenceLength + " Glyph Hack Sequences");
-            mGlyphAdapter = new HackSequencesAdapter();
-//            if (mSectionDecoration == null) {
-//                mSectionDecoration = new PinnedSectionDecoration(getContext(),
-//                        (PinnedSectionDecoration.DecorationCallback) mGlyphAdapter);
-//            } else {
-//                mSectionDecoration.setDecorationCallback((PinnedSectionDecoration.DecorationCallback) mGlyphAdapter);
-//            }
-//            mRecyclerView.addItemDecoration(mSectionDecoration);
-            mGlyphAdapter.setSequenceClickListener(mSequenceListener);
-            ((HackSequencesAdapter) mGlyphAdapter).setHackSequences(data, sequenceLength);
-            mRecyclerView.setAdapter(mGlyphAdapter);
         }
     }
 
@@ -267,22 +231,22 @@ public class GlyphSequencesFragment extends Fragment implements RadioGroup.OnChe
         String category = null;
         switch (checkedId) {
             case R.id.category_human:
-                category = BaseGlyphData.C_HUMAN;
+                category = Constants.C_HUMAN;
                 break;
             case R.id.category_action:
-                category = BaseGlyphData.C_ACTION;
+                category = Constants.C_ACTION;
                 break;
             case R.id.category_thought:
-                category = BaseGlyphData.C_THOUGHT;
+                category = Constants.C_THOUGHT;
                 break;
             case R.id.category_fludire:
-                category = BaseGlyphData.C_FLU_DIRE;
+                category = Constants.C_FLU_DIRE;
                 break;
             case R.id.category_ts:
-                category = BaseGlyphData.C_TIME_SPACE;
+                category = Constants.C_TIME_SPACE;
                 break;
             case R.id.category_conenv:
-                category = BaseGlyphData.C_COND_ENV;
+                category = Constants.C_COND_ENV;
                 break;
 //            case R.id.category_new:
 //                category = BaseGlyphData.C_NEW_ADDED;
@@ -292,12 +256,10 @@ public class GlyphSequencesFragment extends Fragment implements RadioGroup.OnChe
 //                break;
             case R.id.category_all:
             default:
-                category = BaseGlyphData.C_ALL;
+                category = Constants.C_ALL;
                 break;
         }
-        if (mGlyphAdapter instanceof GlyphBaseAdapter) {
-            ((GlyphBaseAdapter) mGlyphAdapter).setGlyphCategory(category);
-        }
+        new BaseGlyphTask().execute(category);
 
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(checkedId));
@@ -308,5 +270,50 @@ public class GlyphSequencesFragment extends Fragment implements RadioGroup.OnChe
     @StringDef({PAGE_BASE, PAGE_PAIRS, PAGE_2HACK, PAGE_3HACK, PAGE_4HACK, PAGE_5HACK})
     @interface GlyphPage {
 
+    }
+
+    private class BaseGlyphTask extends AsyncTask<String, Void, List<GlyphInfo>> {
+
+        @Override
+        protected List<GlyphInfo> doInBackground(String... strings) {
+            return GlyphModel.getInstance(getActivity()).getGlyphInfoByCategory(strings[0]);
+        }
+
+        @Override
+        protected void onPostExecute(List<GlyphInfo> glyphInfos) {
+            if (mGlyphAdapter instanceof GlyphBaseAdapter) {
+                ((GlyphBaseAdapter) mGlyphAdapter).setGlyphCategory(glyphInfos);
+            }
+        }
+    }
+
+    private class PairsGlyphTask extends AsyncTask<Void, Void, List<GlyphInfo[]>> {
+
+        @Override
+        protected List<GlyphInfo[]> doInBackground(Void... voids) {
+            return GlyphModel.getInstance(getActivity()).getGlyphPairs();
+        }
+
+        @Override
+        protected void onPostExecute(List<GlyphInfo[]> glyphInfos) {
+            mGlyphAdapter = new GlyphPairsAdapter(glyphInfos);
+            mGlyphAdapter.setSequenceClickListener(mSequenceListener);
+            mRecyclerView.setAdapter(mGlyphAdapter);
+        }
+    }
+
+    private class HackSequencesTask extends AsyncTask<Integer, Void, List<HackList>> {
+        @Override
+        protected List<HackList> doInBackground(Integer... integers) {
+            return GlyphModel.getInstance(getActivity()).getHackList(integers[0]);
+        }
+
+        @Override
+        protected void onPostExecute(List<HackList> hackLists) {
+            mGlyphAdapter = new HackSequencesAdapter();
+            mGlyphAdapter.setSequenceClickListener(mSequenceListener);
+            ((HackSequencesAdapter) mGlyphAdapter).setHackSequences(hackLists);
+            mRecyclerView.setAdapter(mGlyphAdapter);
+        }
     }
 }

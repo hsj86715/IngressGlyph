@@ -8,8 +8,8 @@ import java.util.Map;
 /**
  * Created by hushujun on 2017/5/17.
  */
-
-public class BaseGlyphData {
+class BaseGlyphData {
+    public static final String T_KNOWLEDGE = "Knowledge";
     private static final String H_BODY_SHELL = "Body/Shell";
     private static final String H_ENLIGHTENMENT = "Enlightenment";
     private static final String H_BEING_HUMAN = "Being/Human";
@@ -113,24 +113,15 @@ public class BaseGlyphData {
     private static final String CE_SIMPLE = "Simple";
     private static final String CE_STABILITY_STAY = "Stability/Stay";
     private static final String CE_STRONG = "Strong";
-    private static final String CE_WEAK = "Weak";
-    public static final String C_ALL = "all";
-    public static final String C_HUMAN = "human";
-    public static final String C_ACTION = "action";
-    public static final String C_THOUGHT = "thought";
-    public static final String C_FLU_DIRE = "fluctuation/direction";
-    public static final String C_TIME_SPACE = "time/space";
-    public static final String C_COND_ENV = "condition/environment";
     //new Added 2017.11.18
 //    public static final String C_NEW_ADDED = "New Added";
 //    public static final String C_NO_CAREGORY = "Unknown Category";
-
+    private static final String CE_WEAK = "Weak";
     private static final String A_ABANDON = "Abandon";
     private static final String TS_BEGIN = "Begin";
     private static final String TS_DESTINATION = "Destination";
     private static final String FD_LEGACY = "Legacy";
     private static final String CE_NZEER = "N'Zeer";
-    public static final String T_KNOWLEDGE = "Knowledge";
     private static final String T_PERSPECTIVE = "Perspective";
     private static final String H_US_WE = "Us/We";
     private static final String CE_ADAPT = "Adapt";
@@ -167,13 +158,9 @@ public class BaseGlyphData {
     private Map<String, String[][]> mFiveSequences;
     private String[][] mGlyphPairs;
 
-    private BaseGlyphData() {
+    protected BaseGlyphData() {
         initBaseGlyphs();
         initGlyphCategories();
-    }
-
-    public static BaseGlyphData getInstance() {
-        return GlyphDataHolder.HOLDER;
     }
 
     private void initBaseGlyphs() {
@@ -322,30 +309,30 @@ public class BaseGlyphData {
 
     private void initGlyphCategories() {
         mCategoryGlyphs = new LinkedHashMap<>();
-        mCategoryGlyphs.put(C_HUMAN, new String[]{H_BODY_SHELL, H_ENLIGHTENMENT, H_BEING_HUMAN, H_MIND,
+        mCategoryGlyphs.put(Constants.C_HUMAN, new String[]{H_BODY_SHELL, H_ENLIGHTENMENT, H_BEING_HUMAN, H_MIND,
                 H_RESISTANCE_STRUGGLE, H_PORTAL, H_INDIVIDUAL_SELF, H_COLLECTIVE_SHAPERS, H_SOUL_SPIRIT,
                 H_XM, H_CREATIVITY, /*H_ENLIGHTENED,*/ H_I_ME, /*H_RESIST,*/ H_THEM, H_US_WE, H_OTHER_YOU_YOUR});
 
-        mCategoryGlyphs.put(C_ACTION, new String[]{A_ADVANCE, A_ATTACK_WAR, A_AVOID, A_BREATHE_LIVE,
+        mCategoryGlyphs.put(Constants.C_ACTION, new String[]{A_ADVANCE, A_ATTACK_WAR, A_AVOID, A_BREATHE_LIVE,
                 A_CAPTURE, A_CHANGE_MODIFY, A_CREATE_CREATION, A_DEFEND, A_DESTROY_DESTRUCTION, A_DIE_DEATH,
                 A_DISCOVER, A_ESCAPE, A_HIDE, A_JOURNEY, A_LIBERATE, A_NOURISH, A_PURSUE_ASPIRATION,
                 A_REACT, A_REBEL, A_RETREAT, A_RECHARGE_REPAIR, A_RESTRAINT, A_SAVE_RESCUE,
                 A_SEARCH_SEEK, A_SEE, A_SEPERATE, A_SHARE, A_TOGETHER, A_USE, A_ABANDON, A_INTERRUPT,
                 A_LIVE_AGAIN, A_PRESENCE, A_CHASE, A_SUSTAIN, A_SUSTAIN_ALL});
 
-        mCategoryGlyphs.put(C_THOUGHT, new String[]{T_ANSWER, T_CONTEMPLATE, T_COURAGE, T_DATA,
+        mCategoryGlyphs.put(Constants.C_THOUGHT, new String[]{T_ANSWER, T_CONTEMPLATE, T_COURAGE, T_DATA,
                 T_DESTINY, T_FEAR, T_FORGET, T_IDEA_THOUGHT, T_IGNORE, T_LIE, T_MESSAGE, T_QUESTION,
                 T_TRUTH, T_WANT_DESIRE, T_INTELLIGENCE, T_KNOWLEDGE, T_MYSTERY, T_PERSPECTIVE, T_TECHNOLOGY});
 
-        mCategoryGlyphs.put(C_FLU_DIRE, new String[]{FD_DETERIORATE_ERODE, FD_EQUAL, FD_EVOLUTION_PROGRESS_SUCCESS,
+        mCategoryGlyphs.put(Constants.C_FLU_DIRE, new String[]{FD_DETERIORATE_ERODE, FD_EQUAL, FD_EVOLUTION_PROGRESS_SUCCESS,
                 FD_FAILURE, FD_FOLLOW, FD_GAIN, FD_GROW, FD_IMPROVE, FD_LEAD, FD_LESS, FD_LOSE_LOSS,
                 FD_MORE, FD_CONTRACT_REDUCE, FD_LEGACY, FD_VICTORY, FD_WORTH});
 
-        mCategoryGlyphs.put(C_TIME_SPACE, new String[]{TS_AGAIN_REPEAT, TS_CLOSE_CLEAR_ALL, TS_DISTANCE_OUTSIDE,
+        mCategoryGlyphs.put(Constants.C_TIME_SPACE, new String[]{TS_AGAIN_REPEAT, TS_CLOSE_CLEAR_ALL, TS_DISTANCE_OUTSIDE,
                 TS_CLOSE_END_FINALITY, TS_FUTURE, TS_NEW, TS_INSIDE_NOT, TS_NOW_PRESENT, TS_OLD, TS_OPEN_ACCEPT,
                 TS_OPEN_ALL, TS_PAST, TS_AFTER, TS_BEFORE, TS_BEGIN, TS_DESTINATION});
 
-        mCategoryGlyphs.put(C_COND_ENV, new String[]{CE_ALL, CE_BALANCE_PERFECTION, CE_BARRIER_OBSTACLE,
+        mCategoryGlyphs.put(Constants.C_COND_ENV, new String[]{CE_ALL, CE_BALANCE_PERFECTION, CE_BARRIER_OBSTACLE,
                 CE_CHAOS_DISORDER, CE_CIVILIZATION_CITY_GOVERNMENT_STRUCTURE, CE_CLEAR, CE_COMPLEX,
                 CE_CONFLICT, CE_DANGER, CE_DIFFICULT, CE_EASY, CE_HARM, CE_HARMONY_PEACE, CE_HAVE,
                 A_HELP, CE_IMPERFECT, CE_IMPURE, CE_NATURE, CE_PATH, CE_POTENTIAL, CE_PURE_PURITY,
@@ -1220,8 +1207,8 @@ public class BaseGlyphData {
                 {CE_ALL, TS_CLOSE_CLEAR_ALL, TS_OPEN_ALL}};
     }
 
-    public Map<String, int[]> getGlyphByCategory(@Category String category) {
-        if (category.equals(C_ALL)) {
+    protected Map<String, int[]> getGlyphByCategory(@Constants.Category String category) {
+        if (category.equals(Constants.C_ALL)) {
             return mBaseGlyphs;
         } else {
             String[] glyphKeys = mCategoryGlyphs.get(category);
@@ -1233,7 +1220,7 @@ public class BaseGlyphData {
         }
     }
 
-    protected String[] getCategoryGlyph(@Category String category) {
+    protected String[] getCategoryGlyph(@Constants.Category String category) {
         return mCategoryGlyphs.get(category);
     }
 
@@ -1263,43 +1250,39 @@ public class BaseGlyphData {
         }
     }
 
-    public Map<String, String[][]> getTwoSequences() {
+    protected Map<String, String[][]> getTwoSequences() {
         if (mTwoSequences == null) {
             initTwoSequences();
         }
         return mTwoSequences;
     }
 
-    public Map<String, String[][]> getThreeSequences() {
+    protected Map<String, String[][]> getThreeSequences() {
         if (mThreeSequences == null) {
             initThreeSequences();
         }
         return mThreeSequences;
     }
 
-    public Map<String, String[][]> getFourSequences() {
+    protected Map<String, String[][]> getFourSequences() {
         if (mFourSequences == null) {
             initFourSequences();
         }
         return mFourSequences;
     }
 
-    public Map<String, String[][]> getFiveSequences() {
+    protected Map<String, String[][]> getFiveSequences() {
         if (mFiveSequences == null) {
             initFiveSequences();
         }
         return mFiveSequences;
     }
 
-    public String[][] getGlyphPairs() {
+    protected String[][] getGlyphPairs() {
         if (mGlyphPairs == null) {
             initGlyphPairs();
         }
         return mGlyphPairs;
-    }
-
-    public int[] getGlyphPath(@GlyphName String name) {
-        return mBaseGlyphs.get(name);
     }
 
     @StringDef({H_BODY_SHELL, H_ENLIGHTENMENT, H_BEING_HUMAN, H_MIND, H_RESISTANCE_STRUGGLE, H_PORTAL,
@@ -1325,15 +1308,5 @@ public class BaseGlyphData {
             UNKNOWN_BOMB, UNKNOWN_PLOUGH, UNKNOWN_SOWN})
     public @interface GlyphName {
 
-    }
-
-    @StringDef({C_ALL, C_HUMAN, C_ACTION, C_THOUGHT, C_FLU_DIRE, C_TIME_SPACE, C_COND_ENV/*, C_NEW_ADDED,
-            C_NO_CAREGORY*/})
-    public @interface Category {
-
-    }
-
-    private static final class GlyphDataHolder {
-        private static final BaseGlyphData HOLDER = new BaseGlyphData();
     }
 }

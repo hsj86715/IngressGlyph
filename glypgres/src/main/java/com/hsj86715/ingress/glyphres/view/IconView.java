@@ -11,7 +11,7 @@ import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.hsj86715.ingress.glyphres.data.BaseGlyphData;
+import com.hsj86715.ingress.glyphres.data.GlyphInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,6 @@ import java.util.List;
 
 public class IconView extends View {
     private static final float sValidRegion = 0.8f;
-    private static final String sIconPath = BaseGlyphData.T_KNOWLEDGE;
     private float mBorderWidth = 20;
 
     public IconView(Context context) {
@@ -60,7 +59,7 @@ public class IconView extends View {
         cy = height / 2;
         canvas.save();
         drawIconBg(canvas, cx - mBorderWidth / 2, cy - mBorderWidth / 2, paint, borderRadius);
-        drawSequence(canvas, cx - pointRadius, cy - pointRadius, sIconPath, paint, glyphRadius, pointRadius);
+//        drawSequence(canvas, cx - pointRadius, cy - pointRadius, sIconPath, paint, glyphRadius, pointRadius);
         canvas.restore();
     }
 
@@ -89,7 +88,7 @@ public class IconView extends View {
         paint.reset();
     }
 
-    protected void drawSequence(Canvas canvas, float cx, float cy, String name, Paint paint,
+    protected void drawSequence(Canvas canvas, float cx, float cy, GlyphInfo glyphInfo, Paint paint,
                                 float glyRadius, float pointRadius) {
         List<PointF> glyphPoints = new ArrayList<>();
         drawEmptyCircle(cx, cy, paint, canvas, pointRadius, glyphPoints);
@@ -119,7 +118,7 @@ public class IconView extends View {
         canvas.drawPath(path, paint);
         paint.reset();
 
-        drawPath(canvas, paint, name, glyphPoints, glyRadius);
+        drawPath(canvas, paint, glyphInfo, glyphPoints, glyRadius);
     }
 
     private void drawEmptyCircle(float cx, float cy, Paint paint, Canvas canvas, float pointRadius,
@@ -133,11 +132,11 @@ public class IconView extends View {
         glyphPoints.add(new PointF(cx, cy));
     }
 
-    private void drawPath(Canvas canvas, Paint paint, String name, List<PointF> glyphPoints, float glyRadius) {
+    private void drawPath(Canvas canvas, Paint paint, GlyphInfo glyphInfo, List<PointF> glyphPoints, float glyRadius) {
         paint.setStrokeWidth(glyRadius / 20 > 15 ? 15 : glyRadius / 20);
         paint.setStrokeCap(Paint.Cap.ROUND);
         paint.setARGB(255, 0, 0, 0);
-        drawLines(canvas, BaseGlyphData.getInstance().getGlyphPath(name), glyphPoints, paint);
+        drawLines(canvas, glyphInfo.getPath(), glyphPoints, paint);
     }
 
     private void drawLines(Canvas canvas, int[] path, List<PointF> glyphPoints, Paint paint) {

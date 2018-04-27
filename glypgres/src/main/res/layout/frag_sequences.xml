@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <HorizontalScrollView
         android:id="@+id/category_container"
@@ -26,38 +26,38 @@
                 style="@style/categoryRBStyle"
                 android:layout_marginLeft="0dp"
                 android:checked="true"
-                android:text="ALL"/>
+                android:text="ALL" />
 
             <RadioButton
                 android:id="@+id/category_human"
                 style="@style/categoryRBStyle"
                 android:button="@null"
-                android:text="Human"/>
+                android:text="Human" />
 
             <RadioButton
                 android:id="@+id/category_action"
                 style="@style/categoryRBStyle"
-                android:text="Action"/>
+                android:text="Action" />
 
             <RadioButton
                 android:id="@+id/category_thought"
                 style="@style/categoryRBStyle"
-                android:text="Thought"/>
+                android:text="Thought" />
 
             <RadioButton
                 android:id="@+id/category_fludire"
                 style="@style/categoryRBStyle"
-                android:text="Fluctuation/Direction"/>
+                android:text="Fluctuation/Direction" />
 
             <RadioButton
                 android:id="@+id/category_ts"
                 style="@style/categoryRBStyle"
-                android:text="Time/Space"/>
+                android:text="Time/Space" />
 
             <RadioButton
                 android:id="@+id/category_conenv"
                 style="@style/categoryRBStyle"
-                android:text="Condition/Environment"/>
+                android:text="Condition/Environment" />
 
             <!--<RadioButton-->
             <!--android:id="@+id/category_new"-->
@@ -74,10 +74,10 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/colorPrimaryDark"/>
+        android:background="@color/colorPrimaryDark" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/grid_base"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 </LinearLayout>

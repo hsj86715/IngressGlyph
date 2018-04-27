@@ -1,14 +1,18 @@
 package com.hsj86715.ingress.glyphres.data;
 
-import android.util.Log;
+import android.support.annotation.NonNull;
 
 import com.hsj86715.ingress.glyphres.BuildConfig;
+
+import java.util.Arrays;
+
+import cn.com.farmcode.utility.tools.Logger;
 
 /**
  * Created by hushujun on 2018/2/13.
  */
 
-public class HackList extends LearnAndPractise{
+public class HackList extends LearnAndPractise implements Comparable<HackList> {
     private GlyphInfo head;
     private int length;
     private GlyphInfo[] sequences;
@@ -32,7 +36,7 @@ public class HackList extends LearnAndPractise{
             if (BuildConfig.DEBUG) {
                 throw new RuntimeException(msg);
             } else {
-                Log.e(getClass().getSimpleName(), msg);
+                Logger.e(msg);
             }
         }
         this.length = length;
@@ -49,9 +53,23 @@ public class HackList extends LearnAndPractise{
             if (BuildConfig.DEBUG) {
                 throw new RuntimeException(msg);
             } else {
-                Log.e(getClass().getSimpleName(), msg);
+                Logger.e(msg);
             }
         }
         this.sequences = sequences;
+    }
+
+    @Override
+    public String toString() {
+        return "HackList{" +
+                "head=" + head.getName() +
+                ", length=" + length +
+                ", sequences=" + Arrays.toString(sequences) +
+                '}';
+    }
+
+    @Override
+    public int compareTo(@NonNull HackList o) {
+        return head.getName().compareTo(o.getHead().getName());
     }
 }

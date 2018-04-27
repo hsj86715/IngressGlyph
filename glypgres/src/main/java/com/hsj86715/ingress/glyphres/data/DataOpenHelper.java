@@ -16,80 +16,16 @@ import cn.com.farmcode.utility.tools.Logger;
  */
 
 class DataOpenHelper extends SQLiteOpenHelper {
-    private static final String TAG = "DataOpenHelper";
-    private static final int DB_VERSION = 1;
-    private static final String DB_NAME = "glyph_sequence.db";
-
     protected static final String TABLE_NAMES = "glyph_name";
     protected static final String TABLE_BASE = "glyph_base";
     protected static final String TABLE_CATEGORY = "glyph_category";
     protected static final String TABLE_PATH = "glyph_path";
     protected static final String TABLE_PAIRS = "glyph_pairs";
     protected static final String TABLE_LIST = "hack_list";
-
     protected static final String TABLE_GLYPH_INFO = "glyph_view";
-
-    protected class PractiseColumn implements BaseColumns {
-        protected static final String LEARN_COUNT = "learn_count";
-        protected static final String PRACTISE_COUNT = "practise_count";
-        protected static final String PRACTISE_CORRECT = "practise_correct";
-    }
-
-    protected class NameColumn implements BaseColumns {
-        protected static final String NAME = "name";
-        protected static final String ALIAS = "alias";
-        protected static final String ALIAS1 = "alias1";
-        protected static final String ALIAS2 = "alias2";
-        protected static final String ALIAS3 = "alias3";
-    }
-
-    protected class PathColumn implements BaseColumns {
-        protected static final String PATH = "path";
-        protected static final String PATH1 = "path1";
-        protected static final String PATH2 = "path2";
-        protected static final String PATH3 = "path3";
-        protected static final String PATH4 = "path4";
-    }
-
-    protected class CategoryColumn implements BaseColumns {
-        protected static final String CATEGORY = "category";
-    }
-
-    protected class GlyphBaseColumn extends PractiseColumn {
-        protected static final String NAME_ID = "name_id";
-        protected static final String CATEGORY_ID = "category_id";
-        protected static final String PATH_ID = "path_id";
-    }
-
-    protected class PairsColumn extends PractiseColumn {
-        protected static final String WITH = "pair_with";
-        protected static final String WITH1 = "pair_with1";
-        protected static final String WITH2 = "pair_with2";
-        protected static final String WITH3 = "pair_with3";
-        protected static final String LENGTH = "pair_length";
-    }
-
-    protected class HackListColumn extends PractiseColumn {
-        protected static final String HEAD = "head";
-        protected static final String LENGTH = "length";
-        protected static final String FIRST = "first";
-        protected static final String SECOND = "second";
-        protected static final String THIRD = "third";
-        protected static final String FOURTH = "fourth";
-        protected static final String FIFTH = "fifth";
-    }
-
-    protected class GlyphInfoColumn {
-        protected static final String ID = GlyphBaseColumn._ID;
-        protected static final String NAME = NameColumn.NAME;
-        protected static final String NAME_ID = "name_id";
-        protected static final String CATEGORY = CategoryColumn.CATEGORY;
-        protected static final String PATH = PathColumn.PATH;
-        protected static final String PATH_ID = "path_id";
-        protected static final String LEARN_COUNT = GlyphBaseColumn.LEARN_COUNT;
-        protected static final String PRACTISE_COUNT = GlyphBaseColumn.PRACTISE_COUNT;
-        protected static final String PRACTISE_CORRECT = GlyphBaseColumn.PRACTISE_CORRECT;
-    }
+    private static final String TAG = "DataOpenHelper";
+    private static final int DB_VERSION = 1;
+    private static final String DB_NAME = "glyph_sequence.db";
 
     public DataOpenHelper(Context context) {
         this(context, null);
@@ -116,7 +52,6 @@ class DataOpenHelper extends SQLiteOpenHelper {
         createGlyphView(db);
     }
 
-
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
@@ -137,7 +72,6 @@ class DataOpenHelper extends SQLiteOpenHelper {
                 NameColumn.ALIAS2 + " TEXT, " +
                 NameColumn.ALIAS3 + " TEXT)");
     }
-
 
     private void createCategoryTable(SQLiteDatabase db) {
         Logger.i(TAG, "createCategoryTable");
@@ -218,5 +152,67 @@ class DataOpenHelper extends SQLiteOpenHelper {
                 TABLE_BASE + "." + GlyphBaseColumn.NAME_ID + "=" + TABLE_NAMES + "." + NameColumn._ID + " AND " +
                 TABLE_BASE + "." + GlyphBaseColumn.CATEGORY_ID + "=" + TABLE_CATEGORY + "." + CategoryColumn._ID + " AND " +
                 TABLE_BASE + "." + GlyphBaseColumn.PATH_ID + "=" + TABLE_PATH + "." + PathColumn._ID);
+    }
+
+    protected class PractiseColumn implements BaseColumns {
+        protected static final String LEARN_COUNT = "learn_count";
+        protected static final String PRACTISE_COUNT = "practise_count";
+        protected static final String PRACTISE_CORRECT = "practise_correct";
+    }
+
+    protected class NameColumn implements BaseColumns {
+        protected static final String NAME = "name";
+        protected static final String ALIAS = "alias";
+        protected static final String ALIAS1 = "alias1";
+        protected static final String ALIAS2 = "alias2";
+        protected static final String ALIAS3 = "alias3";
+    }
+
+    protected class PathColumn implements BaseColumns {
+        protected static final String PATH = "path";
+        protected static final String PATH1 = "path1";
+        protected static final String PATH2 = "path2";
+        protected static final String PATH3 = "path3";
+        protected static final String PATH4 = "path4";
+    }
+
+    protected class CategoryColumn implements BaseColumns {
+        protected static final String CATEGORY = "category";
+    }
+
+    protected class GlyphBaseColumn extends PractiseColumn {
+        protected static final String NAME_ID = "name_id";
+        protected static final String CATEGORY_ID = "category_id";
+        protected static final String PATH_ID = "path_id";
+    }
+
+    protected class PairsColumn extends PractiseColumn {
+        protected static final String WITH = "pair_with";
+        protected static final String WITH1 = "pair_with1";
+        protected static final String WITH2 = "pair_with2";
+        protected static final String WITH3 = "pair_with3";
+        protected static final String LENGTH = "pair_length";
+    }
+
+    protected class HackListColumn extends PractiseColumn {
+        protected static final String HEAD = "head";
+        protected static final String LENGTH = "length";
+        protected static final String FIRST = "first";
+        protected static final String SECOND = "second";
+        protected static final String THIRD = "third";
+        protected static final String FOURTH = "fourth";
+        protected static final String FIFTH = "fifth";
+    }
+
+    protected class GlyphInfoColumn {
+        protected static final String ID = GlyphBaseColumn._ID;
+        protected static final String NAME = NameColumn.NAME;
+        protected static final String NAME_ID = "name_id";
+        protected static final String CATEGORY = CategoryColumn.CATEGORY;
+        protected static final String PATH = PathColumn.PATH;
+        protected static final String PATH_ID = "path_id";
+        protected static final String LEARN_COUNT = GlyphBaseColumn.LEARN_COUNT;
+        protected static final String PRACTISE_COUNT = GlyphBaseColumn.PRACTISE_COUNT;
+        protected static final String PRACTISE_CORRECT = GlyphBaseColumn.PRACTISE_CORRECT;
     }
 }

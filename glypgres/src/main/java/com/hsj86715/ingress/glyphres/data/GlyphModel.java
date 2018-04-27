@@ -5,18 +5,18 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
-import android.util.SparseArray;
 
-import com.hsj86715.ingress.glyphres.tools.Utils;
-import com.hsj86715.ingress.glyphres.data.DataOpenHelper.PathColumn;
-import com.hsj86715.ingress.glyphres.data.DataOpenHelper.NameColumn;
-import com.hsj86715.ingress.glyphres.data.DataOpenHelper.GlyphBaseColumn;
 import com.hsj86715.ingress.glyphres.data.DataOpenHelper.CategoryColumn;
-import com.hsj86715.ingress.glyphres.data.DataOpenHelper.PairsColumn;
-import com.hsj86715.ingress.glyphres.data.DataOpenHelper.HackListColumn;
+import com.hsj86715.ingress.glyphres.data.DataOpenHelper.GlyphBaseColumn;
 import com.hsj86715.ingress.glyphres.data.DataOpenHelper.GlyphInfoColumn;
+import com.hsj86715.ingress.glyphres.data.DataOpenHelper.HackListColumn;
+import com.hsj86715.ingress.glyphres.data.DataOpenHelper.NameColumn;
+import com.hsj86715.ingress.glyphres.data.DataOpenHelper.PairsColumn;
+import com.hsj86715.ingress.glyphres.data.DataOpenHelper.PathColumn;
+import com.hsj86715.ingress.glyphres.tools.Utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -55,11 +55,12 @@ public class GlyphModel {
             }
         }
         Logger.w("initBaseData START");
-        BaseGlyphData glyphData = BaseGlyphData.getInstance();
+        BaseGlyphData glyphData = new BaseGlyphData();
 
         //insert category/name/glyph base
         Logger.i("initBaseData insert category/name/glyph base");
-        String[] categories = {"human", "action", "thought", "fluctuation/direction", "time/space", "condition/environment"};
+        String[] categories = {Constants.C_ACTION, Constants.C_COND_ENV, Constants.C_FLU_DIRE, Constants.C_HUMAN,
+                Constants.C_THOUGHT, Constants.C_TIME_SPACE};
         for (String cat : categories) {
             ContentValues values = new ContentValues();
             values.put(CategoryColumn.CATEGORY, cat);
@@ -201,19 +202,22 @@ public class GlyphModel {
         return -1;
     }
 
-    private Cursor query(SQLiteDatabase database, String table, String[] columns, String selection,
-                         String[] selectionArgs) {
+    private Cursor query(SQLiteDatabase database, String table, String selection, String[] selectionArgs) {
+        return query(database, table, null, selection, selectionArgs);
+    }
+
+    private Cursor query(SQLiteDatabase database, String table, String[] columns, String selection, String[] selectionArgs) {
         return database.query(table, columns, selection, selectionArgs, null, null, null);
     }
 
-    public List<GlyphInfo> getGlyphInfoByCategory(@BaseGlyphData.Category String category) {
+    public List<GlyphInfo> getGlyphInfoByCategory(@Constants.Category String category) {
         SQLiteDatabase database = mHelper.getReadableDatabase();
         List<GlyphInfo> categoryGlyphs = null;
         Cursor cursor = null;
-        if (TextUtils.equals(BaseGlyphData.C_ALL, category)) {
-            cursor = query(database, DataOpenHelper.TABLE_GLYPH_INFO, null, null, null);
+        if (TextUtils.equals(Constants.C_ALL, category)) {
+            cursor = query(database, DataOpenHelper.TABLE_GLYPH_INFO, null, null);
         } else {
-            cursor = query(database, DataOpenHelper.TABLE_GLYPH_INFO, null, GlyphInfoColumn.CATEGORY + "=?",
+            cursor = query(database, DataOpenHelper.TABLE_GLYPH_INFO, GlyphInfoColumn.CATEGORY + "=?",
                     new String[]{category});
         }
         if (cursor != null) {
@@ -232,7 +236,7 @@ public class GlyphModel {
         info.setCategory(cursor.getString(cursor.getColumnIndex(GlyphInfoColumn.CATEGORY)));
         info.setName(cursor.getString(cursor.getColumnIndex(GlyphInfoColumn.NAME)));
         info.setNameId(cursor.getInt(cursor.getColumnIndex(GlyphInfoColumn.NAME_ID)));
-        info.setPath(cursor.getString(cursor.getColumnIndex(GlyphInfoColumn.PATH)));
+        info.setPath(Utils.stringToArray(cursor.getString(cursor.getColumnIndex(GlyphInfoColumn.PATH))));
         info.setPathId(cursor.getInt(cursor.getColumnIndex(GlyphInfoColumn.PATH_ID)));
         info.setLearnCount(cursor.getInt(cursor.getColumnIndex(GlyphInfoColumn.LEARN_COUNT)));
         info.setPractiseCount(cursor.getInt(cursor.getColumnIndex(GlyphInfoColumn.PRACTISE_COUNT)));
@@ -242,7 +246,7 @@ public class GlyphModel {
 
     private Map<Integer, GlyphInfo> getGlyphMap(SQLiteDatabase database) {
         Map<Integer, GlyphInfo> glyphInfoMap = null;
-        Cursor cursor = query(database, DataOpenHelper.TABLE_GLYPH_INFO, null, null, null);
+        Cursor cursor = query(database, DataOpenHelper.TABLE_GLYPH_INFO, null, null);
         if (cursor != null) {
             glyphInfoMap = new HashMap<>();
             while (cursor.moveToNext()) {
@@ -258,13 +262,100 @@ public class GlyphModel {
         SQLiteDatabase database = mHelper.getReadableDatabase();
         Map<Integer, GlyphInfo> glyphInfoMap = getGlyphMap(database);
         List<GlyphInfo[]> pairGlyphs = null;
-        Cursor cursor = query(database, DataOpenHelper.TABLE_PAIRS, null, null, null);
+        Cursor cursor = query(database, DataOpenHelper.TABLE_PAIRS, null, null);
         if (cursor != null) {
             pairGlyphs = new ArrayList<>();
             while (cursor.moveToNext()) {
-
+                int length = cursor.getInt(cursor.getColumnIndex(PairsColumn.LENGTH));
+                int[] pairArray = new int[length];
+                pairArray[0] = cursor.getInt(cursor.getColumnIndex(PairsColumn.WITH));
+                pairArray[1] = cursor.getInt(cursor.getColumnIndex(PairsColumn.WITH1));
+                if (length > 2) {
+                    int pair3 = cursor.getInt(cursor.getColumnIndex(PairsColumn.WITH2));
+                    pairArray = Arrays.copyOf(pairArray, 3);
+                    pairArray[2] = pair3;
+                }
+                if (length > 3) {
+                    int pair4 = cursor.getInt(cursor.getColumnIndex(PairsColumn.WITH3));
+                    pairArray = Arrays.copyOf(pairArray, 4);
+                    pairArray[3] = pair4;
+                }
+                GlyphInfo[] infos = new GlyphInfo[pairArray.length];
+                for (int i = 0; i < pairArray.length; i++) {
+                    infos[i] = glyphInfoMap.get(pairArray[i]);
+                }
+                pairGlyphs.add(infos);
             }
+            cursor.close();
         }
         return pairGlyphs;
+    }
+
+    public List<HackList> getHackList(int length) {
+        SQLiteDatabase database = mHelper.getReadableDatabase();
+        Map<Integer, GlyphInfo> glyphInfoMap = getGlyphMap(database);
+        List<HackList> hackLists = null;
+        Cursor cursor = query(database, DataOpenHelper.TABLE_LIST, HackListColumn.LENGTH + "=?",
+                new String[]{String.valueOf(length)});
+        if (cursor != null) {
+            hackLists = new ArrayList<>();
+            String[] columns = {HackListColumn.FIRST, HackListColumn.SECOND, HackListColumn.THIRD,
+                    HackListColumn.FOURTH, HackListColumn.FIFTH};
+            while (cursor.moveToNext()) {
+                HackList hackList = new HackList();
+                hackList.setLength(length);
+                int headId = cursor.getInt(cursor.getColumnIndex(HackListColumn.HEAD));
+                hackList.setHead(glyphInfoMap.get(headId));
+                GlyphInfo[] infos = new GlyphInfo[length];
+                int sequenceId;
+                for (int i = 0; i < length; i++) {
+                    sequenceId = cursor.getInt(cursor.getColumnIndex(columns[i]));
+                    infos[i] = glyphInfoMap.get(sequenceId);
+                }
+                hackList.setSequences(infos);
+                hackLists.add(hackList);
+            }
+            cursor.close();
+        }
+        return hackLists;
+    }
+
+    public Path getGlyphPaths(int pathId) {
+        SQLiteDatabase database = mHelper.getReadableDatabase();
+        Cursor cursor = query(database, DataOpenHelper.TABLE_PATH, PathColumn._ID + "=?",
+                new String[]{String.valueOf(pathId)});
+        Path path = null;
+        if (cursor != null) {
+            path = new Path();
+            if (cursor.moveToFirst()) {
+                path.setId(cursor.getInt(cursor.getColumnIndex(PathColumn._ID)));
+                path.setPath(Utils.stringToArray(cursor.getString(cursor.getColumnIndex(PathColumn.PATH))));
+                path.setPath1(Utils.stringToArray(cursor.getString(cursor.getColumnIndex(PathColumn.PATH1))));
+                path.setPath2(Utils.stringToArray(cursor.getString(cursor.getColumnIndex(PathColumn.PATH2))));
+                path.setPath3(Utils.stringToArray(cursor.getString(cursor.getColumnIndex(PathColumn.PATH3))));
+                path.setPath4(Utils.stringToArray(cursor.getString(cursor.getColumnIndex(PathColumn.PATH4))));
+            }
+            cursor.close();
+        }
+        return path;
+    }
+
+    public Name getGlyphNames(int nameId) {
+        SQLiteDatabase database = mHelper.getReadableDatabase();
+        Cursor cursor = query(database, DataOpenHelper.TABLE_NAMES, NameColumn._ID + "=?",
+                new String[]{String.valueOf(nameId)});
+        Name name = null;
+        if (cursor != null) {
+            name = new Name();
+            if (cursor.moveToFirst()) {
+                name.setId(cursor.getInt(cursor.getColumnIndex(NameColumn._ID)));
+                name.setAlias(cursor.getString(cursor.getColumnIndex(NameColumn.ALIAS)));
+                name.setAlias1(cursor.getString(cursor.getColumnIndex(NameColumn.ALIAS1)));
+                name.setAlias2(cursor.getString(cursor.getColumnIndex(NameColumn.ALIAS2)));
+                name.setAlias3(cursor.getString(cursor.getColumnIndex(NameColumn.ALIAS3)));
+            }
+            cursor.close();
+        }
+        return name;
     }
 }

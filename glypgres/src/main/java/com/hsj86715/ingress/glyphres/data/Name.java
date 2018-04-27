@@ -12,12 +12,7 @@ public class Name {
     private String alias2;
     private String alias3;
 
-    public Name(){
-    }
-
-    public Name(int id, String name) {
-        this.id = id;
-        this.name = name;
+    public Name() {
     }
 
     public int getId() {
@@ -70,16 +65,16 @@ public class Name {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o){
+        if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()){
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
 
         Name name1 = (Name) o;
 
-        if (id != name1.id){
+        if (id != name1.id) {
             return false;
         }
         return name.equals(name1.name);

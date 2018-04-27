@@ -11,6 +11,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.hsj86715.ingress.glyphres.data.GlyphInfo;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +26,7 @@ public class IngressGlyphView extends FrameLayout {
     private boolean isDrawing = false;
 
     private List<Point> mGlyphPoints = new ArrayList<>();
-    private int[][] mHackSequences;
+    private GlyphInfo[] mHackSequences;
     private int mSequencesIdx = 0;
     private GlyphPathView mPathView = null;
 
@@ -57,7 +59,7 @@ public class IngressGlyphView extends FrameLayout {
      *
      * @param pointsPositions
      */
-    public void drawPath(int[]... pointsPositions) {
+    public void drawPath(GlyphInfo... pointsPositions) {
         if (pointsPositions == null) {
             return;
         }
@@ -174,14 +176,14 @@ public class IngressGlyphView extends FrameLayout {
         }
 
         private void drawFullPath(Canvas canvas) {
-            drawLines(canvas, mHackSequences[mSequencesIdx].length);
+            drawLines(canvas, mHackSequences[mSequencesIdx].getPath().length);
         }
 
         private void drawByStep(Canvas canvas) {
             if (mSequencesIdx >= mHackSequences.length) {
                 return;
             }
-            int[] path = mHackSequences[mSequencesIdx];
+            int[] path = mHackSequences[mSequencesIdx].getPath();
             if (path == null || path.length == 0) {
                 return;
             }
@@ -204,11 +206,11 @@ public class IngressGlyphView extends FrameLayout {
         }
 
         private void drawLines(Canvas canvas, int lineCount) {
-            int position = mHackSequences[mSequencesIdx][0] - 1;
+            int position = mHackSequences[mSequencesIdx].getPath()[0] - 1;
             float startX = mGlyphPoints.get(position).x;
             float startY = mGlyphPoints.get(position).y;
             for (int i = 1; i < lineCount; i++) {
-                position = mHackSequences[mSequencesIdx][i] - 1;
+                position = mHackSequences[mSequencesIdx].getPath()[i] - 1;
                 Point point = mGlyphPoints.get(position);
                 canvas.drawLine(startX, startY, point.x, point.y, paint);
                 startX = point.x;

@@ -12,11 +12,11 @@ import android.support.annotation.Nullable;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 import com.hsj86715.ingress.glyphres.R;
+import com.hsj86715.ingress.glyphres.data.GlyphInfo;
 
 /**
  * Created by hushujun on 2017/5/17.
@@ -32,7 +32,7 @@ public class MultiGlyphView extends IconView {
     private float mTextGlyphDivider;
 
     private SequenceClickListener mHackListener;
-    private String[] mSequenceNames;
+    private GlyphInfo[] mSequences;
     private RectF[] mSequenceBounds;
 
     public MultiGlyphView(Context context) {
@@ -68,16 +68,10 @@ public class MultiGlyphView extends IconView {
         this.mHackListener = listener;
     }
 
-    public void setSequences(String names) {
-        if (!TextUtils.isEmpty(names)) {
-            setSequences(new String[]{names});
-        }
-    }
-
-    public void setSequences(String[] names) {
-        this.mSequenceNames = names;
-        if (mSequenceNames != null && mSequenceNames.length > 0) {
-            mSequenceBounds = new RectF[mSequenceNames.length];
+    public void setSequences(GlyphInfo... glyphInfos) {
+        this.mSequences = glyphInfos;
+        if (mSequences != null && mSequences.length > 0) {
+            mSequenceBounds = new RectF[mSequences.length];
             invalidate();
         }
     }
@@ -90,10 +84,10 @@ public class MultiGlyphView extends IconView {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        if (mSequenceNames == null || mSequenceNames.length < 1) {
+        if (mSequences == null || mSequences.length < 1) {
             return;
         }
-        int count = mSequenceNames.length;
+        int count = mSequences.length;
         final float height = getMeasuredHeight() - getPaddingBottom() - getPaddingTop() - mTextGlyphDivider - mTextSize * 2;
         final float width = (getMeasuredWidth() - mSequencesDivider * (count - 1)) / count;
         float diameter = Math.min(height, width);
@@ -105,7 +99,7 @@ public class MultiGlyphView extends IconView {
             cx = getPaddingLeft() + mSequencesDivider * i + width * i + width / 2;
             cy = getPaddingTop() + height / 2;
             canvas.save();
-            drawSequence(canvas, cx - pointRadius, cy - pointRadius, mSequenceNames[i], paint, glyphRadius, pointRadius);
+            drawSequence(canvas, cx - pointRadius, cy - pointRadius, mSequences[i], paint, glyphRadius, pointRadius);
             canvas.restore();
             if (mHackListener != null) {
                 mSequenceBounds[i] = new RectF(cx - glyphRadius, cy - glyphRadius, cx + glyphRadius,
@@ -115,14 +109,14 @@ public class MultiGlyphView extends IconView {
     }
 
     @Override
-    protected void drawSequence(Canvas canvas, float cx, float cy, String name, Paint paint,
+    protected void drawSequence(Canvas canvas, float cx, float cy, GlyphInfo glyphInfo, Paint paint,
                                 float glyRadius, float pointRadius) {
-        super.drawSequence(canvas, cx, cy, name, paint, glyRadius, pointRadius);
+        super.drawSequence(canvas, cx, cy, glyphInfo, paint, glyRadius, pointRadius);
 
         paint.setTextAlign(Paint.Align.CENTER);
         paint.setTextSize(mTextSize);
         paint.setColor(mTextColor);
-        StaticLayout layout = new StaticLayout(name, new TextPaint(paint), (int) (glyRadius / 0.45f),
+        StaticLayout layout = new StaticLayout(glyphInfo.getName(), new TextPaint(paint), (int) (glyRadius / 0.45f),
                 Layout.Alignment.ALIGN_NORMAL, 1.0f, 0f, true);
         canvas.translate(cx, cy + glyRadius + mTextGlyphDivider);
         layout.draw(canvas);
@@ -139,7 +133,7 @@ public class MultiGlyphView extends IconView {
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 for (int i = 0; i < mSequenceBounds.length; i++) {
                     if (mSequenceBounds[i].contains(event.getX(), event.getY())) {
-                        mHackListener.onSequenceClicked(mSequenceNames[i]);
+                        mHackListener.onSequenceClicked(mSequences[i]);
                         handler = true;
                         break;
                     }
