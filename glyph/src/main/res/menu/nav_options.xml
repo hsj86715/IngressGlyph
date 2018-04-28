@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:id="@+id/option_learn_group">
+        <item
+            android:id="@+id/learn_base"
+            android:title="@string/option_menu_base"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/learn_pairs"
+            android:title="@string/option_menu_pairs"
+            app:showAsAction="never" />
+    </group>
+    <group android:id="@+id/option_remember_group">
+        <item
+            android:id="@+id/remember_hack2"
+            android:title="@string/option_menu_hack2"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/remember_hack3"
+            android:title="@string/option_menu_hack3"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/remember_hack4"
+            android:title="@string/option_menu_hack4"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/remember_hack5"
+            android:title="@string/option_menu_hack5"
+            app:showAsAction="never" />
+    </group>
+</menu>

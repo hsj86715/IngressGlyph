@@ -26,6 +26,7 @@ dependencies {
     api "com.android.support:support-v4:$supportLibsVersion"
     api "com.android.support:appcompat-v7:$supportLibsVersion"
     api "com.android.support:recyclerview-v7:$supportLibsVersion"
+    api "com.android.support:gridlayout-v7:$supportLibsVersion"
     api "com.android.support:design:$supportLibsVersion"
     api 'cn.com.farmcode:developUtility.tools:1.0.2'
     api 'com.google.firebase:firebase-core:15.0.0'

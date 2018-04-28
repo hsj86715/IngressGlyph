@@ -1,4 +1,26 @@
 <resources>
     <string name="app_name">Ingress Sequence</string>
-    <string name="toast_last_is_drawing">The last sequences has not draw completely</string>
+    <string name="toast_last_is_drawing">The last sequences has not draw completely.</string>
+    <string name="start_loading">Loading...</string>
+    <string name="loading_first">The loading may need a few seconds, waiting...</string>
+    <string name="version_info">Developed by: Resistance ID: hsj86715</string>
+    <string name="nav_drawer_open">Open navigation drawer</string>
+    <string name="nav_drawer_close">Close navigation drawer</string>
+    <string name="nav_menu_learn">Learn</string>
+    <string name="nav_menu_remember">Remember</string>
+    <string name="nav_menu_about">About</string>
+    <string name="nav_menu_communicate">Communicate</string>
+    <string name="nav_menu_share">Share</string>
+    <string name="nav_menu_feedback">Feedback</string>
+    <string name="option_menu_base">Base Glyphs</string>
+    <string name="option_menu_pairs">Pairs Glyphs</string>
+    <string name="option_menu_hack2">2 Glyph Hack Sequences</string>
+    <string name="option_menu_hack3">3 Glyph Hack Sequences</string>
+    <string name="option_menu_hack4">4 Glyph Hack Sequences</string>
+    <string name="option_menu_hack5">5 Glyph Hack Sequences</string>
+    <string name="learn_glyph_name">Name: </string>
+    <string name="learn_glyph_alisa">Alisa: </string>
+    <string name="learn_glyph_cat">Category: </string>
+    <string name="learn_glyph_paths">More path: </string>
+    <string name="learn_glyph_alisa_empty">(None)</string>
 </resources>

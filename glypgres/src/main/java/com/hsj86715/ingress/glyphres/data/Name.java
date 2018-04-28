@@ -1,5 +1,7 @@
 package com.hsj86715.ingress.glyphres.data;
 
+import android.text.TextUtils;
+
 /**
  * Created by hushujun on 2018/2/13.
  */
@@ -61,6 +63,36 @@ public class Name {
 
     protected void setAlias3(String alias3) {
         this.alias3 = alias3;
+    }
+
+    public String getAlisaString() {
+        StringBuilder sb = new StringBuilder();
+        if (!TextUtils.isEmpty(alias)) {
+            sb.append(alias);
+        }
+        if (!TextUtils.isEmpty(alias1)) {
+            if (sb.length() > 0) {
+                sb.append("/");
+            }
+            sb.append(alias1);
+        }
+        if (!TextUtils.isEmpty(alias2)) {
+            if (sb.length() > 0) {
+                sb.append("/");
+            }
+            sb.append(alias2);
+        }
+        if (!TextUtils.isEmpty(alias3)) {
+            if (sb.length() > 0) {
+                sb.append("/");
+            }
+            sb.append(alias3);
+        }
+        if (sb.length() <= 0) {
+            return null;
+        } else {
+            return sb.toString();
+        }
     }
 
     @Override

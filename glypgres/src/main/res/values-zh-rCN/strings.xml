@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ingress 序列</string>
+    <string name="toast_last_is_drawing">上一个序列还没有演示完成。</string>
+    <string name="start_loading">数据加载中。。。</string>
+    <string name="loading_first">加载可能需要几秒钟，请稍后。。。</string>
+    <string name="develop_by">开发：蓝军  ID: hsj86715</string>
+    <string name="nav_drawer_open">打开导航抽屉</string>
+    <string name="nav_drawer_close">关闭导航抽屉</string>
+    <string name="nav_menu_learn">学习</string>
+    <string name="nav_menu_remember">记忆</string>
+    <string name="nav_menu_about">关于</string>
+    <string name="nav_menu_communicate">交流</string>
+    <string name="nav_menu_share">分享</string>
+    <string name="nav_menu_feedback">反馈</string>
+    <string name="option_menu_base">基本符号</string>
+    <string name="option_menu_pairs">相似符号</string>
+    <string name="option_menu_hack2">2符号入侵序列</string>
+    <string name="option_menu_hack3">3符号入侵序列</string>
+    <string name="option_menu_hack4">4符号入侵序列</string>
+    <string name="option_menu_hack5">5符号入侵序列</string>
+    <string name="learn_glyph_name">名称: </string>
+    <string name="learn_glyph_alisa">别名: </string>
+    <string name="learn_glyph_cat">类别: </string>
+    <string name="learn_glyph_paths">更多绘制顺序: </string>
+    <string name="learn_glyph_alisa_empty">（无）</string>
+</resources>

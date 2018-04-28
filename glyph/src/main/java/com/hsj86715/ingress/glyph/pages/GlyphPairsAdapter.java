@@ -2,7 +2,6 @@ package com.hsj86715.ingress.glyph.pages;
 
 import com.hsj86715.ingress.glyph.view.BaseRecyclerAdapter;
 import com.hsj86715.ingress.glyphres.data.GlyphInfo;
-import com.hsj86715.ingress.glyphres.tools.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +25,6 @@ public class GlyphPairsAdapter extends BaseRecyclerAdapter {
     public void onBindViewHolder(ViewHolder holder, int position) {
         GlyphInfo[] infos = mGlyphPairs.get(position);
         holder.glyphPreView.setSequences(infos);
-        holder.itemView.setBackgroundColor(Utils.stringToColor(infos[0].getName()));
         holder.glyphPreView.setHackSequenceListener(mClickListener);
     }
 

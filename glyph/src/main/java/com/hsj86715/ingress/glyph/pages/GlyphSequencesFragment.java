@@ -1,12 +1,12 @@
 package com.hsj86715.ingress.glyph.pages;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringDef;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -161,9 +161,6 @@ public class GlyphSequencesFragment extends Fragment implements RadioGroup.OnChe
             return;
         } else {
             updateToolBarSubTitle("Base Glyphs");
-            if (mSequenceListener != null) {
-                mSequenceListener.clearSequence();
-            }
             mCategoryContainer.setVisibility(View.VISIBLE);
             if (mLayoutManager != null && mLayoutManager instanceof GridLayoutManager) {
                 ((GridLayoutManager) mLayoutManager).setSpanCount(3);
@@ -184,9 +181,6 @@ public class GlyphSequencesFragment extends Fragment implements RadioGroup.OnChe
             return;
         } else {
             updateToolBarSubTitle("Glyph Pairs");
-            if (mSequenceListener != null) {
-                mSequenceListener.clearSequence();
-            }
             if (mGlyphAdapter != null && mGlyphAdapter instanceof GlyphBaseAdapter) {
                 mCategoryContainer.setVisibility(View.GONE);
             }
@@ -207,16 +201,10 @@ public class GlyphSequencesFragment extends Fragment implements RadioGroup.OnChe
             mRecyclerView.setLayoutManager(mLayoutManager);
         }
         if (mGlyphAdapter != null && mGlyphAdapter instanceof HackSequencesAdapter) {
-            if (mSequenceListener != null) {
-                mSequenceListener.clearSequence();
-            }
             updateToolBarSubTitle(sequenceLength + " Glyph Hack Sequences");
         } else {
             if (mGlyphAdapter != null && mGlyphAdapter instanceof GlyphBaseAdapter) {
                 mCategoryContainer.setVisibility(View.GONE);
-            }
-            if (mSequenceListener != null) {
-                mSequenceListener.clearSequence();
             }
             updateToolBarSubTitle(sequenceLength + " Glyph Hack Sequences");
         }
