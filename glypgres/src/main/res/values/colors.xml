@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#00BFFF</color>
     <color name="colorPrimaryDark">#4682B4</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#0CF2F2</color>
     <color name="colorCategoryBg">#8080FFFF</color>
 
     <color name="glyph_list_bg">#F5F5F5F5</color>

@@ -4,24 +4,23 @@ import android.text.TextUtils;
 
 /**
  * Created by hushujun on 2018/2/13.
+ *
+ * @author hushujun
  */
 
 public class Name {
-    private int id;
+    private long id;
     private String name;
     private String alias;
     private String alias1;
     private String alias2;
     private String alias3;
 
-    public Name() {
-    }
-
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    protected void setId(int id) {
+    protected void setId(long id) {
         this.id = id;
     }
 
@@ -37,7 +36,7 @@ public class Name {
         return alias;
     }
 
-    protected void setAlias(String alias) {
+    public void setAlias(String alias) {
         this.alias = alias;
     }
 
@@ -45,7 +44,7 @@ public class Name {
         return alias1;
     }
 
-    protected void setAlias1(String alias1) {
+    public void setAlias1(String alias1) {
         this.alias1 = alias1;
     }
 
@@ -53,7 +52,7 @@ public class Name {
         return alias2;
     }
 
-    protected void setAlias2(String alias2) {
+    public void setAlias2(String alias2) {
         this.alias2 = alias2;
     }
 
@@ -61,7 +60,7 @@ public class Name {
         return alias3;
     }
 
-    protected void setAlias3(String alias3) {
+    public void setAlias3(String alias3) {
         this.alias3 = alias3;
     }
 
@@ -114,7 +113,7 @@ public class Name {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = (int) id;
         result = 31 * result + name.hashCode();
         return result;
     }

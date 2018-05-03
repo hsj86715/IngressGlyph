@@ -1,5 +1,7 @@
 package com.hsj86715.ingress.glyph;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
 import android.support.design.widget.NavigationView;
@@ -13,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.hsj86715.ingress.glyph.pages.LearnFragment;
+import com.hsj86715.ingress.glyph.pages.RememberFragment;
 
 import static com.hsj86715.ingress.glyph.GlyphNavActivity.Function.LEARN;
 import static com.hsj86715.ingress.glyph.GlyphNavActivity.Function.REMEMBER;
@@ -91,18 +94,26 @@ public class GlyphNavActivity extends AppCompatActivity implements
         switch (item.getItemId()) {
             case R.id.nav_learn:
                 mFunction = LEARN;
+                if (mCurrentFrag instanceof RememberFragment) {
+                    mCurrentFrag = new LearnFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.content_container, mCurrentFrag).commit();
+                }
                 break;
             case R.id.nav_remember:
                 mFunction = REMEMBER;
+                if (mCurrentFrag instanceof LearnFragment) {
+                    mCurrentFrag = new RememberFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.content_container, mCurrentFrag).commit();
+                }
                 break;
             case R.id.nav_share:
-
+                shareTheApp();
                 break;
             case R.id.nav_feedback:
-
+                jumpToPlayPage();
                 break;
             case R.id.nav_about:
-
+                startActivity(new Intent(this, AboutActivity.class));
                 break;
             default:
                 break;
@@ -111,5 +122,20 @@ public class GlyphNavActivity extends AppCompatActivity implements
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void shareTheApp() {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.nav_menu_share));
+        intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.nav_share_text));
+        startActivity(Intent.createChooser(intent, getTitle()));
+    }
+
+    private void jumpToPlayPage() {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=cn.com.farmcode.ingress.sequence");
+        intent.setData(uri);
+        startActivity(intent);
     }
 }

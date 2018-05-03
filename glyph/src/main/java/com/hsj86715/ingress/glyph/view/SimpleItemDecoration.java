@@ -7,10 +7,9 @@ import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.hsj86715.ingress.glyph.BaseDecoration;
-
 /**
  * Created by hushujun on 2017/5/16.
+ * @author hushujun
  */
 
 public class SimpleItemDecoration extends BaseDecoration {

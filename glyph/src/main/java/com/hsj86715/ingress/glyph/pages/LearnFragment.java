@@ -1,6 +1,7 @@
 package com.hsj86715.ingress.glyph.pages;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.hsj86715.ingress.glyph.EditGlyphActivity;
 import com.hsj86715.ingress.glyph.R;
 import com.hsj86715.ingress.glyph.view.BaseRecyclerAdapter;
 import com.hsj86715.ingress.glyph.view.SimpleItemDecoration;
@@ -61,6 +63,15 @@ public class LearnFragment extends Fragment implements SequenceClickListener {
         mGlyphAlisaTx = view.findViewById(R.id.learn_glyph_alisa_text);
         mGlyphCatTx = view.findViewById(R.id.learn_glyph_cat_text);
         mGlyphsRv = view.findViewById(R.id.learn_glyphs_rv);
+        TextView editTx = view.findViewById(R.id.learn_glyph_edit_text);
+        editTx.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), EditGlyphActivity.class);
+                intent.putExtra("glyph", mCurrentGlyph);
+                startActivityForResult(intent, 0);
+            }
+        });
 
         mGlyphsRv.addItemDecoration(new SimpleItemDecoration());
 
@@ -74,8 +85,20 @@ public class LearnFragment extends Fragment implements SequenceClickListener {
     }
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(id));
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, item.getTitle().toString());
+        bundle.putString(FirebaseAnalytics.Param.GROUP_ID, "OptionLearn");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
         if (id == R.id.learn_base) {
             showBaseSequences();
         } else if (id == R.id.learn_pairs) {
@@ -179,11 +202,11 @@ public class LearnFragment extends Fragment implements SequenceClickListener {
         }
     }
 
-    private class NameTask extends AsyncTask<Integer, Void, Name> {
+    private class NameTask extends AsyncTask<Long, Void, Name> {
 
         @Override
-        protected Name doInBackground(Integer... integers) {
-            return GlyphModel.getInstance(getActivity()).getGlyphNames(integers[0]);
+        protected Name doInBackground(Long... longs) {
+            return GlyphModel.getInstance(getActivity()).getGlyphNames(longs[0]);
         }
 
         @Override

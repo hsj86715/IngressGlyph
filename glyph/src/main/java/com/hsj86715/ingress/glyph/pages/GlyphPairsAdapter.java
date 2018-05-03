@@ -8,6 +8,7 @@ import java.util.List;
 
 /**
  * Created by hushujun on 2017/5/16.
+ * @author hushujun
  */
 
 public class GlyphPairsAdapter extends BaseRecyclerAdapter {

@@ -10,6 +10,7 @@ import cn.com.farmcode.utility.tools.Logger;
 
 /**
  * Created by hushujun on 2018/2/13.
+ * @author hushujun
  */
 
 public class HackList extends LearnAndPractise implements Comparable<HackList> {

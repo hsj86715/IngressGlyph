@@ -1,14 +1,17 @@
 package com.hsj86715.ingress.glyphres.data;
 
+/**
+ * @author hushujun
+ */
 public class Category {
-    private int id;
+    private long id;
     private String name;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    protected void setId(int id) {
+    protected void setId(long id) {
         this.id = id;
     }
 
@@ -20,11 +23,15 @@ public class Category {
         this.name = name;
     }
 
-    @Override
-    public String toString() {
+    public String toFullString() {
         return "Category{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

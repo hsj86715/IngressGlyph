@@ -35,5 +35,6 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':glypgres')
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
 }
 apply plugin: 'com.google.gms.google-services'

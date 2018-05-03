@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Ingress序列</string>
-    <string name="start_loading">數據加载中。。。</string>
+    <string name="start_loading">資料加载中。。。</string>
     <string name="loading_first">載入可能需要幾秒鐘，請稍後。。。</string>
     <string name="develop_by">開發：藍軍， ID: hsj86715</string>
     <string name="nav_drawer_open">打開導航抽屜</string>
@@ -34,5 +34,5 @@
     <string name="toast_edit_save_success">保存成功</string>
     <string name="toast_edit_save_fail">保存失敗，請稍後重試。</string>
     <string name="nav_share_text">一旦你使用這個應用程式，你的Ingress技能將得到迅速改善。 在室內學習符號並記住所有的駭客序列，從而並提升您在戶外的遊戲表現。這裡是連結 HTTPs://play.google.com/store/apps/details?id=cn.com.farmcode.ingress.sequence</string>
-    <string name="about_app_text">&#160;&#160;&#160;&#160;Ingress Sequence應用程式是Ingress的助手。 \n&#160;&#160;&#160;&#160;此應用程式中使用的資料是從Ingress網站和其他協力廠商組織或玩家收集的。它説明玩家在室內儘快記住符號和駭客序列，一旦你提高了你繪製標誌符號或駭客序列的速度和準確性，你將獲得更豐厚的遊戲獎勵。\n&#160;&#160;&#160;&#160;感謝 HTTP://www.iconfont.cn 開源了應用程式圖示，這個應用程式的原始程式碼也開源在 HTTPs://github.com/hsj86715/IngressGlyph</string>
+    <string name="about_app_text">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Ingress Sequence應用程式是Ingress的助手。 \n&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;此應用程式中使用的資料是從Ingress網站和其他協力廠商組織或玩家收集的。它説明玩家在室內儘快記住符號和駭客序列，一旦你提高了你繪製標誌符號或駭客序列的速度和準確性，你將獲得更豐厚的遊戲獎勵。\n&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;感謝 HTTP://www.iconfont.cn 開源了應用程式圖示，這個應用程式的原始程式碼也開源在 HTTPs://github.com/hsj86715/IngressGlyph</string>
 </resources>

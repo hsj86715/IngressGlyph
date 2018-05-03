@@ -2,19 +2,22 @@ package com.hsj86715.ingress.glyphres.data;
 
 import java.util.Arrays;
 
+/**
+ * @author hushujun
+ */
 public class Path {
-    private int id;
+    private long id;
     private int[] path;
     private int[] path1;
     private int[] path2;
     private int[] path3;
     private int[] path4;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    protected void setId(int id) {
+    protected void setId(long id) {
         this.id = id;
     }
 

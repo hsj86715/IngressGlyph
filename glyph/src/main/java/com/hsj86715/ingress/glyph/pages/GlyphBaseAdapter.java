@@ -24,15 +24,6 @@ public class GlyphBaseAdapter extends BaseRecyclerAdapter {
         }
     }
 
-    public GlyphBaseAdapter() {
-
-    }
-
-    public void setGlyphCategory(List<GlyphInfo> glyphInfos) {
-        mGlyphInfos = glyphInfos;
-        notifyDataSetChanged();
-    }
-
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         final GlyphInfo info = mGlyphInfos.get(position);

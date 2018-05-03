@@ -11,6 +11,7 @@ import com.hsj86715.ingress.glyphres.view.SequenceClickListener;
 
 /**
  * Created by hushujun on 2017/5/16.
+ * @author hushujun
  */
 
 public abstract class BaseRecyclerAdapter extends RecyclerView.Adapter<BaseRecyclerAdapter.ViewHolder> {

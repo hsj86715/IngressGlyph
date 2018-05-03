@@ -7,6 +7,7 @@ import java.util.Arrays;
 
 /**
  * Created by hushujun on 2017/11/21.
+ * @author hushujun
  */
 
 public class GlyphInfo extends LearnAndPractise implements Parcelable {
@@ -21,20 +22,20 @@ public class GlyphInfo extends LearnAndPractise implements Parcelable {
             return new GlyphInfo[size];
         }
     };
-    private int id;
+    private long id;
     private String name;
-    private int nameId;
+    private long nameId;
     private String category;
     private int[] path;
-    private int pathId;
+    private long pathId;
 
     protected GlyphInfo(Parcel in) {
-        id = in.readInt();
+        id = in.readLong();
         name = in.readString();
-        nameId = in.readInt();
+        nameId = in.readLong();
         category = in.readString();
         path = in.createIntArray();
-        pathId = in.readInt();
+        pathId = in.readLong();
         learnCount = in.readInt();
         practiseCount = in.readInt();
         practiseCorrect = in.readInt();
@@ -46,12 +47,12 @@ public class GlyphInfo extends LearnAndPractise implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
         dest.writeString(name);
-        dest.writeInt(nameId);
+        dest.writeLong(nameId);
         dest.writeString(category);
         dest.writeIntArray(path);
-        dest.writeInt(pathId);
+        dest.writeLong(pathId);
         dest.writeInt(learnCount);
         dest.writeInt(practiseCount);
         dest.writeInt(practiseCorrect);
@@ -62,11 +63,11 @@ public class GlyphInfo extends LearnAndPractise implements Parcelable {
         return 0;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    protected void setId(int id) {
+    protected void setId(long id) {
         this.id = id;
     }
 
@@ -78,11 +79,11 @@ public class GlyphInfo extends LearnAndPractise implements Parcelable {
         this.name = name;
     }
 
-    public int getNameId() {
+    public long getNameId() {
         return nameId;
     }
 
-    protected void setNameId(int nameId) {
+    protected void setNameId(long nameId) {
         this.nameId = nameId;
     }
 
@@ -90,7 +91,7 @@ public class GlyphInfo extends LearnAndPractise implements Parcelable {
         return category;
     }
 
-    protected void setCategory(String category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 
@@ -102,11 +103,11 @@ public class GlyphInfo extends LearnAndPractise implements Parcelable {
         this.path = path;
     }
 
-    public int getPathId() {
+    public long getPathId() {
         return pathId;
     }
 
-    protected void setPathId(int pathId) {
+    protected void setPathId(long pathId) {
         this.pathId = pathId;
     }
 
@@ -132,7 +133,7 @@ public class GlyphInfo extends LearnAndPractise implements Parcelable {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = (int) id;
         result = 31 * result + name.hashCode();
         result = 31 * result + Arrays.hashCode(path);
         return result;

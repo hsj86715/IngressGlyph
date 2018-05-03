@@ -22,7 +22,8 @@ class DataOpenHelper extends SQLiteOpenHelper {
     protected static final String TABLE_PATH = "glyph_path";
     protected static final String TABLE_PAIRS = "glyph_pairs";
     protected static final String TABLE_LIST = "hack_list";
-    protected static final String TABLE_GLYPH_INFO = "glyph_view";
+    protected static final String TABLE_GLYPH = "glyph_view";
+    protected static final String TABLE_EDIT_TEMP = "edit_temp";
     private static final String TAG = "DataOpenHelper";
     private static final int DB_VERSION = 1;
     private static final String DB_NAME = "glyph_sequence.db";
@@ -49,6 +50,7 @@ class DataOpenHelper extends SQLiteOpenHelper {
         createGlyphBaseTable(db);
         createHackListTable(db);
 
+        createEditTempTable(db);
         createGlyphView(db);
     }
 
@@ -133,9 +135,25 @@ class DataOpenHelper extends SQLiteOpenHelper {
                 HackListColumn.PRACTISE_CORRECT + " INTEGER DEFAULT 0)");
     }
 
+    private void createEditTempTable(SQLiteDatabase db) {
+        Logger.i(TAG, "createEditTempTable");
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_EDIT_TEMP + " (" +
+                EditTempColumn._ID + " INTEGER PRIMARY KEY, " +
+                EditTempColumn.GLYPH_ID + " INTEGER NOT NULL, " +
+                EditTempColumn.ALIAS + " TEXT, " +
+                EditTempColumn.ALIAS1 + " TEXT, " +
+                EditTempColumn.ALIAS2 + " TEXT, " +
+                EditTempColumn.ALIAS3 + " TEXT, " +
+                EditTempColumn.CAT_NAME + " TEXT NOT NULL, " +
+                EditTempColumn.PATH1 + " TEXT, " +
+                EditTempColumn.PATH2 + " TEXT, " +
+                EditTempColumn.PATH3 + " TEXT, " +
+                EditTempColumn.PATH4 + " TEXT )");
+    }
+
     private void createGlyphView(SQLiteDatabase db) {
         Logger.i(TAG, "createGlyphView");
-        db.execSQL("CREATE VIEW " + TABLE_GLYPH_INFO +
+        db.execSQL("CREATE VIEW " + TABLE_GLYPH +
                 " AS SELECT " +
                 TABLE_BASE + "." + GlyphBaseColumn._ID + ", " +
                 TABLE_NAMES + "." + NameColumn.NAME + ", " +
@@ -202,6 +220,19 @@ class DataOpenHelper extends SQLiteOpenHelper {
         protected static final String THIRD = "third";
         protected static final String FOURTH = "fourth";
         protected static final String FIFTH = "fifth";
+    }
+
+    protected class EditTempColumn implements BaseColumns {
+        protected static final String GLYPH_ID = "glyph_id";
+        protected static final String ALIAS = NameColumn.ALIAS;
+        protected static final String ALIAS1 = NameColumn.ALIAS1;
+        protected static final String ALIAS2 = NameColumn.ALIAS2;
+        protected static final String ALIAS3 = NameColumn.ALIAS3;
+        protected static final String CAT_NAME = GlyphInfoColumn.CATEGORY;
+        protected static final String PATH1 = PathColumn.PATH1;
+        protected static final String PATH2 = PathColumn.PATH2;
+        protected static final String PATH3 = PathColumn.PATH3;
+        protected static final String PATH4 = PathColumn.PATH4;
     }
 
     protected class GlyphInfoColumn {

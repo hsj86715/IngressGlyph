@@ -1,4 +1,4 @@
-package com.hsj86715.ingress.glyph;
+package com.hsj86715.ingress.glyph.view;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
@@ -8,6 +8,7 @@ import android.util.Log;
 
 /**
  * Created by hushujun on 2017/5/16.
+ * @author hushujun
  */
 
 public class BaseDecoration extends RecyclerView.ItemDecoration {
