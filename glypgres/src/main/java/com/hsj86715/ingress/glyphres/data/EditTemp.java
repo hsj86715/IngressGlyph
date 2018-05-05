@@ -104,6 +104,16 @@ public class EditTemp {
         this.path4 = path4;
     }
 
+    public void copyFromName(Name name) {
+        if (name == null) {
+            return;
+        }
+        alias = name.getAlias();
+        alias1 = name.getAlias1();
+        alias2 = name.getAlias2();
+        alias3 = name.getAlias3();
+    }
+
     @Override
     public String toString() {
         return "EditTemp{" +

@@ -31,8 +31,11 @@
     <string name="toast_edit_error_on_null">There is something wrong with the action, try later.</string>
     <string name="toast_edit_save_hint">The modify has not be saved, exit without save?</string>
     <string name="toast_action_exit_yes">Exit</string>
+    <string name="toast_edit_save_no_change">No content changed</string>
     <string name="toast_edit_save_success">Save success</string>
     <string name="toast_edit_save_fail">Save failed, try later.</string>
+    <string name="toast_share_no_app">Sorry, no apps can complete the share action.</string>
+    <string name="toast_feedback_no_app">Sorry, no apps can complete the feedback action.</string>
     <string name="nav_share_text">Once you use this app, your skills for Ingress will be improved quickly. Learn glyphs and remember all the hack sequences indoor, and improve your performance outdoors. Here is the link https://play.google.com/store/apps/details?id=cn.com.farmcode.ingress.sequence</string>
     <string name="about_app_text">&#160;&#160;&#160;&#160;The Ingress Sequence app is an assistant for Ingress.\n&#160;&#160;&#160;&#160;The data used in this app is collected from the Ingress website and other third organizations, or players. It help players to remember the glyphs and hack sequences as soon as possible indoors, once you improved your speed and accuracy on draw the glyphs or hack sequences, you will gain more generous game rewards.\n&#160;&#160;&#160;&#160;Thanks for http://www.iconfont.cn open source the app icons, and this app\'s source code is opened on https://github.com/hsj86715/IngressGlyph</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.hsj86715.ingress.glyph;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.hsj86715.ingress.glyph.pages.EditFragment;
 import com.hsj86715.ingress.glyphres.data.GlyphInfo;
@@ -28,7 +30,7 @@ public class EditGlyphActivity extends AppCompatActivity {
         mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                handleExit();
+                onBackPressed();
             }
         });
 
@@ -64,7 +66,13 @@ public class EditGlyphActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        handleExit();
+        try {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(mToolBar.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            handleExit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

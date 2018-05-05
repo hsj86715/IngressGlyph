@@ -18,6 +18,7 @@ import com.hsj86715.ingress.glyphres.tools.Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -229,6 +230,7 @@ public class GlyphModel {
             }
             cursor.close();
         }
+        Collections.sort(categoryGlyphs);
         return categoryGlyphs;
     }
 
@@ -447,9 +449,12 @@ public class GlyphModel {
         }
     }
 
-    public int updateGlyphLearCount(long glyphId) {
-
-        return 0;
+    public int updateGlyphLearCount(GlyphInfo glyphInfo) {
+        SQLiteDatabase database = mHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(GlyphBaseColumn.LEARN_COUNT, glyphInfo.getLearnCount() + 1);
+        return database.update(DataOpenHelper.TABLE_BASE, values, GlyphBaseColumn._ID + "=?",
+                new String[]{String.valueOf(glyphInfo.getId())});
     }
 
     public int updateGlyphCategory(long glyphId, long newCatId) {

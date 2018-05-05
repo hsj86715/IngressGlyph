@@ -139,19 +139,19 @@
 
         <!--</HorizontalScrollView>-->
 
-        <TextView
-            android:id="@+id/learn_glyph_edit_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:drawableLeft="@drawable/ic_edit"
-            android:drawablePadding="2dp"
-            android:gravity="center_vertical"
-            android:padding="4dp"
-            android:text="@string/learn_glyph_edit"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="14sp" />
+        <!--<TextView-->
+            <!--android:id="@+id/learn_glyph_edit_text"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:drawableLeft="@drawable/ic_edit"-->
+            <!--android:drawablePadding="2dp"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:padding="4dp"-->
+            <!--android:text="@string/learn_glyph_edit"-->
+            <!--android:textColor="@color/colorPrimaryDark"-->
+            <!--android:textSize="14sp" />-->
     </RelativeLayout>
 
     <View

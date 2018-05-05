@@ -2,15 +2,17 @@ package com.hsj86715.ingress.glyphres.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import java.util.Arrays;
 
 /**
  * Created by hushujun on 2017/11/21.
+ *
  * @author hushujun
  */
 
-public class GlyphInfo extends LearnAndPractise implements Parcelable {
+public class GlyphInfo extends LearnAndPractise implements Parcelable, Comparable<GlyphInfo> {
     public static final Creator<GlyphInfo> CREATOR = new Creator<GlyphInfo>() {
         @Override
         public GlyphInfo createFromParcel(Parcel in) {
@@ -147,5 +149,10 @@ public class GlyphInfo extends LearnAndPractise implements Parcelable {
                 ", category='" + category + '\'' +
                 ", path='" + Arrays.toString(path) + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(@NonNull GlyphInfo o) {
+        return name.compareTo(o.name);
     }
 }

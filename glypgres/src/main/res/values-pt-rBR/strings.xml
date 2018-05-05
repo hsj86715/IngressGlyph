@@ -32,8 +32,11 @@
     <string name="toast_edit_error_on_null">Há algo de errado com a ação, tente mais tarde.</string>
     <string name="toast_edit_save_hint">A modificação não foi salva, Exit sem salvar?</string>
     <string name="toast_action_exit_yes">Saída</string>
+    <string name="toast_edit_save_no_change">Nenhum conteúdo alterado</string>
     <string name="toast_edit_save_success">Salvar o sucesso</string>
     <string name="toast_edit_save_fail">Salvar falhou, tente mais tarde.</string>
+    <string name="toast_share_no_app">Pesaroso, nenhum apps pode terminar a ação da parte.</string>
+    <string name="toast_feedback_no_app">Pesaroso, nenhum apps pode terminar a ação do gabarito.</string>
     <string name="nav_share_text">Uma vez que você usa este app, suas habilidades para o ingresso serão melhoradas rapidamente. Aprenda glifos e lembre-se de todas as seqüências hack indoor, e melhorar o seu desempenho ao ar livre. Aqui está o link https://Play.google.com/Store/apps/Details?ID=CN.com.farmcode.ingress.Sequence</string>
     <string name="about_app_text">&#160;&#160;&#160;&#160;O aplicativo de seqüência de ingresso é um assistente para ingresso.\n&#160;&#160;&#160;&#160;Os dados utilizados neste aplicativo são coletados no site de ingresso e em outras organizações, ou jogadores. Ele ajuda os jogadores a lembrar os glifos e seqüências hack o mais rapidamente possível dentro de casa, uma vez que você melhorou a sua velocidade e precisão em desenhar os glifos ou seqüências hack, você vai ganhar mais recompensas jogo generoso.\n&#160;&#160;&#160;&#160;Agradecimentos para http://www.iconfont.cn a fonte aberta os ícones do App, e este código de fonte do App  é aberto em https://github.com/hsj86715/IngressGlyph</string>
 </resources>

@@ -46,6 +46,7 @@ public class LearnFragment extends Fragment implements SequenceClickListener {
     private BaseRecyclerAdapter mGlyphAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private GlyphInfo mCurrentGlyph;
+
     private FirebaseAnalytics mFirebaseAnalytics;
 
     @Nullable
@@ -63,15 +64,20 @@ public class LearnFragment extends Fragment implements SequenceClickListener {
         mGlyphAlisaTx = view.findViewById(R.id.learn_glyph_alisa_text);
         mGlyphCatTx = view.findViewById(R.id.learn_glyph_cat_text);
         mGlyphsRv = view.findViewById(R.id.learn_glyphs_rv);
-        TextView editTx = view.findViewById(R.id.learn_glyph_edit_text);
-        editTx.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), EditGlyphActivity.class);
-                intent.putExtra("glyph", mCurrentGlyph);
-                startActivityForResult(intent, 0);
-            }
-        });
+//        TextView editTx = view.findViewById(R.id.learn_glyph_edit_text);
+//        editTx.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getActivity(), EditGlyphActivity.class);
+//                intent.putExtra("glyph", mCurrentGlyph);
+//                startActivityForResult(intent, 0);
+//
+//                Bundle bundle = new Bundle();
+//                bundle.putString(FirebaseAnalytics.Param.CONTENT, mCurrentGlyph.getName());
+//                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Glyph");
+//                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
+//            }
+//        });
 
         mGlyphsRv.addItemDecoration(new SimpleItemDecoration());
 
@@ -156,7 +162,7 @@ public class LearnFragment extends Fragment implements SequenceClickListener {
 
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.CONTENT, glyphInfo.getName());
-        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Sequence");
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Glyph");
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
     }
 
@@ -166,6 +172,7 @@ public class LearnFragment extends Fragment implements SequenceClickListener {
             Snackbar.make(mGlyphView, R.string.toast_last_is_drawing, Snackbar.LENGTH_SHORT).show();
         } else {
             updatePreview(glyphInfo);
+            new UpdateLearnCountTask().execute(glyphInfo);
         }
     }
 
@@ -219,6 +226,13 @@ public class LearnFragment extends Fragment implements SequenceClickListener {
                     mGlyphAlisaTx.setText(alisa);
                 }
             }
+        }
+    }
+
+    private class UpdateLearnCountTask extends AsyncTask<GlyphInfo, Void, Integer> {
+        @Override
+        protected Integer doInBackground(GlyphInfo... longs) {
+            return GlyphModel.getInstance(getActivity()).updateGlyphLearCount(longs[0]);
         }
     }
 

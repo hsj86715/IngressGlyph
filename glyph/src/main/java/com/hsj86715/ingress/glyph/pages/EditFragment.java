@@ -1,5 +1,6 @@
 package com.hsj86715.ingress.glyph.pages;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -44,6 +46,8 @@ public class EditFragment extends Fragment {
     private long mSelectCatId;
     private boolean mCatChanged = false;
     private boolean mNameChanged = false;
+
+    private UpdateNameTask mUpdateNameTask;
 
 
     public static EditFragment getInstance(GlyphInfo glyphInfo) {
@@ -88,6 +92,10 @@ public class EditFragment extends Fragment {
         if (name == null) {
             return;
         }
+        if (mEditTemp == null) {
+            mEditTemp = new EditTemp();
+        }
+        mEditTemp.copyFromName(name);
         mAlisaEt.setText(name.getAlias());
         mAlisa1Et.setText(name.getAlias1());
         mAlisa2Et.setText(name.getAlias2());
@@ -152,12 +160,33 @@ public class EditFragment extends Fragment {
     }
 
     public void save() {
+        hideIMME();
+        if (!mCatChanged && !mNameChanged) {
+            Snackbar.make(getView(), R.string.toast_edit_save_no_change, Snackbar.LENGTH_SHORT).show();
+            return;
+        }
         if (mCatChanged) {
             new UpdateCatTask().execute(mCurrentGlyph.getId(), mSelectCatId);
         }
         if (mNameChanged) {
-            new UpdateNameTask().execute(String.valueOf(mCurrentGlyph.getNameId()), mAlisaEt.getText().toString(),
-                    mAlisa1Et.getText().toString(), mAlisa2Et.getText().toString(), mAlisa3Et.getText().toString());
+            if (mUpdateNameTask != null) {
+                return;
+            } else {
+                mUpdateNameTask = new UpdateNameTask();
+                mUpdateNameTask.execute(String.valueOf(mCurrentGlyph.getNameId()), mAlisaEt.getText().toString(),
+                        mAlisa1Et.getText().toString(), mAlisa2Et.getText().toString(), mAlisa3Et.getText().toString());
+            }
+        }
+    }
+
+    private void hideIMME() {
+        try {
+            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (imm.isActive()) {
+                imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -172,13 +201,14 @@ public class EditFragment extends Fragment {
     }
 
     private void handleSaveResult(int result) {
-        mNameChanged = result > 0;
         if (result > 0) {
-            new DeleteEditTempTask().execute(mCurrentGlyph.getId());
+            if (mUpdateNameTask == null || mUpdateNameTask.getStatus() == AsyncTask.Status.FINISHED) {
+                new DeleteEditTempTask().execute(mCurrentGlyph.getId());
 
-            if (getActivity() != null && !getActivity().isFinishing()) {
-                if (getView() != null) {
-                    Snackbar.make(getView(), R.string.toast_edit_save_success, Snackbar.LENGTH_SHORT).show();
+                if (getActivity() != null && !getActivity().isFinishing()) {
+                    if (getView() != null) {
+                        Snackbar.make(getView(), R.string.toast_edit_save_success, Snackbar.LENGTH_SHORT).show();
+                    }
                 }
             }
         } else {
@@ -342,7 +372,7 @@ public class EditFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Integer integer) {
-            mCatChanged = integer > 0;
+            handleSaveResult(integer);
             Logger.e("Update category " + integer);
         }
     }

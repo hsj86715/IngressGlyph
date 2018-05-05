@@ -13,14 +13,14 @@
     <string name="nav_menu_statistical">統計</string>
     <string name="nav_menu_about">關於</string>
     <string name="nav_menu_communicate">交流</string>
-    <string name="nav_menu_share">分享</string>
+    <string name="nav_menu_share">共用</string>
     <string name="nav_menu_feedback">回饋</string>
-    <string name="option_menu_base">基本符號</string>
-    <string name="option_menu_pairs">相似符號</string>
-    <string name="option_menu_hack2">2符號入侵序列</string>
-    <string name="option_menu_hack3">3符號入侵序列</string>
-    <string name="option_menu_hack4">4符號入侵序列</string>
-    <string name="option_menu_hack5">5符號入侵序列</string>
+    <string name="option_menu_base">基本銘文</string>
+    <string name="option_menu_pairs">相似銘文</string>
+    <string name="option_menu_hack2">2銘文入侵序列</string>
+    <string name="option_menu_hack3">3銘文入侵序列</string>
+    <string name="option_menu_hack4">4銘文入侵序列</string>
+    <string name="option_menu_hack5">5銘文入侵序列</string>
     <string name="learn_glyph_name">名稱: </string>
     <string name="learn_glyph_alisa">別名: </string>
     <string name="learn_glyph_cat">類別: </string>
@@ -32,8 +32,11 @@
     <string name="toast_edit_error_on_null">當前操作行為出現異常，請稍後重試。</string>
     <string name="toast_edit_save_hint">修改的內容尚未保存，不保存退出？</string>
     <string name="toast_action_exit_yes">退出</string>
+    <string name="toast_edit_save_no_change">沒有內容被改變</string>
     <string name="toast_edit_save_success">保存成功</string>
     <string name="toast_edit_save_fail">保存失敗，請稍後重試。</string>
-    <string name="nav_share_text">一旦你使用這個應用程式，你的Ingress技能將得到迅速改善。 在室內學習符號並記住所有的駭客序列，從而並提升您在戶外的遊戲表現。這裡是連結 HTTPs://play.google.com/store/apps/details?id=cn.com.farmcode.ingress.sequence</string>
-    <string name="about_app_text">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Ingress Sequence應用程式是Ingress的助手。 \n&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;此應用程式中使用的資料是從Ingress網站和其他協力廠商組織或玩家收集的。它説明玩家在室內儘快記住符號和駭客序列，一旦你提高了你繪製標誌符號或駭客序列的速度和準確性，你將獲得更豐厚的遊戲獎勵。\n&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;感謝 HTTP://www.iconfont.cn 開源了應用程式圖示，這個應用程式的原始程式碼也開源在 HTTPs://github.com/hsj86715/IngressGlyph</string>
+    <string name="toast_share_no_app">對不起, 沒有應用程式可以完成共用操作。</string>
+    <string name="toast_feedback_no_app">對不起, 沒有應用程式可以完成回饋操作。</string>
+    <string name="nav_share_text">一旦你使用這個應用程式，你的Ingress技能將得到迅速改善。 在室內學習銘文並記住所有的駭客序列，從而並提升您在戶外的遊戲表現。這裡是連結 HTTPs://play.google.com/store/apps/details?id=cn.com.farmcode.ingress.sequence</string>
+    <string name="about_app_text">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Ingress Sequence應用程式是Ingress的助手。 \n&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;此應用程式中使用的資料是從Ingress網站和其他協力廠商組織或玩家收集的。它説明玩家在室內儘快記住銘文和駭客序列，一旦你提高了你繪製標誌銘文或駭客序列的速度和準確性，你將獲得更豐厚的遊戲獎勵。\n&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;感謝 HTTP://www.iconfont.cn 開源了應用程式圖示，這個應用程式的原始程式碼也開源在 HTTPs://github.com/hsj86715/IngressGlyph</string>
 </resources>

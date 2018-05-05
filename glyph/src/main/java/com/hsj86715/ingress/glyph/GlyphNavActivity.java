@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -14,8 +15,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.hsj86715.ingress.glyph.pages.LearnFragment;
 import com.hsj86715.ingress.glyph.pages.RememberFragment;
+
+import java.util.Date;
 
 import static com.hsj86715.ingress.glyph.GlyphNavActivity.Function.LEARN;
 import static com.hsj86715.ingress.glyph.GlyphNavActivity.Function.REMEMBER;
@@ -32,18 +36,20 @@ public class GlyphNavActivity extends AppCompatActivity implements
         int LEARN = 0, REMEMBER = 1;
     }
 
+    private Toolbar mToolbar;
     private Fragment mCurrentFrag;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nav);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        mToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.nav_drawer_open, R.string.nav_drawer_close);
+                this, drawer, mToolbar, R.string.nav_drawer_open, R.string.nav_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -52,6 +58,8 @@ public class GlyphNavActivity extends AppCompatActivity implements
 
         mCurrentFrag = new LearnFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.content_container, mCurrentFrag).commit();
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
     }
 
     @Override
@@ -62,6 +70,14 @@ public class GlyphNavActivity extends AppCompatActivity implements
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.START_DATE, new Date().toString());
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.BEGIN_CHECKOUT, bundle);
+        super.onDestroy();
     }
 
     @Override
@@ -108,6 +124,12 @@ public class GlyphNavActivity extends AppCompatActivity implements
                 break;
             case R.id.nav_share:
                 shareTheApp();
+
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(item.getItemId()));
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, item.getTitle().toString());
+                bundle.putString(FirebaseAnalytics.Param.GROUP_ID, String.valueOf(item.getGroupId()));
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SHARE, bundle);
                 break;
             case R.id.nav_feedback:
                 jumpToPlayPage();
@@ -125,17 +147,27 @@ public class GlyphNavActivity extends AppCompatActivity implements
     }
 
     private void shareTheApp() {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.nav_menu_share));
-        intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.nav_share_text));
-        startActivity(Intent.createChooser(intent, getTitle()));
+        try {
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.nav_menu_share));
+            intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.nav_share_text));
+            startActivity(Intent.createChooser(intent, getTitle()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            Snackbar.make(mToolbar, R.string.toast_share_no_app, Snackbar.LENGTH_SHORT).show();
+        }
     }
 
     private void jumpToPlayPage() {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=cn.com.farmcode.ingress.sequence");
-        intent.setData(uri);
-        startActivity(intent);
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=cn.com.farmcode.ingress.sequence");
+            intent.setData(uri);
+            startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Snackbar.make(mToolbar, R.string.toast_feedback_no_app, Snackbar.LENGTH_SHORT).show();
+        }
     }
 }
