@@ -6,6 +6,7 @@
     <string name="develop_by">开发：蓝军， ID: hsj86715</string>
     <string name="nav_drawer_open">打开导航抽屉</string>
     <string name="nav_drawer_close">关闭导航抽屉</string>
+    <string name="nav_header_subtitle">Ingress的游戏助手</string>
     <string name="nav_menu_learn">学习</string>
     <string name="nav_menu_remember">记忆</string>
     <string name="nav_menu_practise">练习</string>

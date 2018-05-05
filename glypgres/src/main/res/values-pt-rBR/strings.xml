@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Seqüência de ingresso</string>
+    <string name="start_loading">Carregar...</string>
+    <string name="loading_first">O carregamento pode precisar de alguns segundos, esperando...</string>
+    <string name="develop_by">Desenvolvido por: resistência, ID: hsj86715</string>
+    <string name="nav_drawer_open">Abra a gaveta da navegação</string>
+    <string name="nav_drawer_close">Fechar gaveta de navegação</string>
+    <string name="nav_header_subtitle">Um assistente para o jogo de ingresso.</string>
+    <string name="nav_menu_learn">Aprender</string>
+    <string name="nav_menu_remember">Lembrar</string>
+    <string name="nav_menu_practise">Praticar</string>
+    <string name="nav_menu_statistical">Estatística</string>
+    <string name="nav_menu_about">Sobre</string>
+    <string name="nav_menu_communicate">Comunicar</string>
+    <string name="nav_menu_share">Compartilhar</string>
+    <string name="nav_menu_feedback">Feedback</string>
+    <string name="option_menu_base">Glifos base</string>
+    <string name="option_menu_pairs">Glifos de pares</string>
+    <string name="option_menu_hack2">2 seqüências de hack glifo</string>
+    <string name="option_menu_hack3">3 seqüências de hack glifo</string>
+    <string name="option_menu_hack4">4 seqüências de hack glifo</string>
+    <string name="option_menu_hack5">5 seqüências de hack glifo</string>
+    <string name="learn_glyph_name">Nome: </string>
+    <string name="learn_glyph_alisa">Alisa: </string>
+    <string name="learn_glyph_cat">Categoria: </string>
+    <string name="learn_glyph_paths">Mais caminho: </string>
+    <string name="learn_glyph_alisa_empty">(Nenhum)</string>
+    <string name="learn_glyph_edit">Editar</string>
+    <string name="edit_menu_save">Salvar</string>
+    <string name="toast_last_is_drawing">As últimas seqüências não se desenham completamente.</string>
+    <string name="toast_edit_error_on_null">Há algo de errado com a ação, tente mais tarde.</string>
+    <string name="toast_edit_save_hint">A modificação não foi salva, Exit sem salvar?</string>
+    <string name="toast_action_exit_yes">Saída</string>
+    <string name="toast_edit_save_success">Salvar o sucesso</string>
+    <string name="toast_edit_save_fail">Salvar falhou, tente mais tarde.</string>
+    <string name="nav_share_text">Uma vez que você usa este app, suas habilidades para o ingresso serão melhoradas rapidamente. Aprenda glifos e lembre-se de todas as seqüências hack indoor, e melhorar o seu desempenho ao ar livre. Aqui está o link https://Play.google.com/Store/apps/Details?ID=CN.com.farmcode.ingress.Sequence</string>
+    <string name="about_app_text">&#160;&#160;&#160;&#160;O aplicativo de seqüência de ingresso é um assistente para ingresso.\n&#160;&#160;&#160;&#160;Os dados utilizados neste aplicativo são coletados no site de ingresso e em outras organizações, ou jogadores. Ele ajuda os jogadores a lembrar os glifos e seqüências hack o mais rapidamente possível dentro de casa, uma vez que você melhorou a sua velocidade e precisão em desenhar os glifos ou seqüências hack, você vai ganhar mais recompensas jogo generoso.\n&#160;&#160;&#160;&#160;Agradecimentos para http://www.iconfont.cn a fonte aberta os ícones do App, e este código de fonte do App  é aberto em https://github.com/hsj86715/IngressGlyph</string>
+</resources>

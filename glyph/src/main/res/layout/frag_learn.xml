@@ -3,18 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp"
-    android:paddingTop="2dp">
+    android:paddingLeft="@dimen/page_horizontal_padding"
+    android:paddingRight="@dimen/page_horizontal_padding"
+    android:paddingTop="@dimen/page_vertical_padding">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp">
+        android:layout_height="@dimen/learn_glyph_size">
 
         <com.hsj86715.ingress.glyphres.view.IngressGlyphView
             android:id="@+id/learn_glyph_view"
-            android:layout_width="250dp"
-            android:layout_height="250dp" />
+            android:layout_width="@dimen/learn_glyph_size"
+            android:layout_height="@dimen/learn_glyph_size" />
 
         <TextView
             android:id="@+id/learn_glyph_name"
@@ -84,58 +84,58 @@
             android:textSize="14sp" />
 
         <!--<TextView-->
-            <!--android:id="@+id/learn_glyphs"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignLeft="@id/learn_glyph_cat_text"-->
-            <!--android:layout_below="@id/learn_glyph_cat_text"-->
-            <!--android:layout_marginTop="4dp"-->
-            <!--android:text="@string/learn_glyph_paths"-->
-            <!--android:textColor="@android:color/black"-->
-            <!--android:textSize="16sp" />-->
+        <!--android:id="@+id/learn_glyphs"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignLeft="@id/learn_glyph_cat_text"-->
+        <!--android:layout_below="@id/learn_glyph_cat_text"-->
+        <!--android:layout_marginTop="4dp"-->
+        <!--android:text="@string/learn_glyph_paths"-->
+        <!--android:textColor="@android:color/black"-->
+        <!--android:textSize="16sp" />-->
 
         <!--<HorizontalScrollView-->
-            <!--android:layout_below="@id/learn_glyphs"-->
-            <!--android:layout_alignLeft="@id/learn_glyphs"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginTop="2dp"-->
-            <!--android:scrollbars="none">-->
+        <!--android:layout_below="@id/learn_glyphs"-->
+        <!--android:layout_alignLeft="@id/learn_glyphs"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="2dp"-->
+        <!--android:scrollbars="none">-->
 
-            <!--<LinearLayout-->
-                <!--android:id="@+id/learn_glyph_paths"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content">-->
+        <!--<LinearLayout-->
+        <!--android:id="@+id/learn_glyph_paths"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content">-->
 
-                <!--<ImageView-->
-                    <!--android:layout_width="48dp"-->
-                    <!--android:layout_height="48dp"-->
-                    <!--android:src="@color/colorPrimary" />-->
+        <!--<ImageView-->
+        <!--android:layout_width="48dp"-->
+        <!--android:layout_height="48dp"-->
+        <!--android:src="@color/colorPrimary" />-->
 
-                <!--<ImageView-->
-                    <!--android:layout_width="48dp"-->
-                    <!--android:layout_height="48dp"-->
-                    <!--android:layout_marginLeft="2dp"-->
-                    <!--android:layout_marginRight="2dp"-->
-                    <!--android:src="@color/colorPrimary" />-->
+        <!--<ImageView-->
+        <!--android:layout_width="48dp"-->
+        <!--android:layout_height="48dp"-->
+        <!--android:layout_marginLeft="2dp"-->
+        <!--android:layout_marginRight="2dp"-->
+        <!--android:src="@color/colorPrimary" />-->
 
-                <!--<ImageView-->
-                    <!--android:layout_width="48dp"-->
-                    <!--android:layout_height="48dp"-->
-                    <!--android:src="@color/colorPrimary" />-->
+        <!--<ImageView-->
+        <!--android:layout_width="48dp"-->
+        <!--android:layout_height="48dp"-->
+        <!--android:src="@color/colorPrimary" />-->
 
-                <!--<ImageView-->
-                    <!--android:layout_width="48dp"-->
-                    <!--android:layout_height="48dp"-->
-                    <!--android:layout_marginLeft="2dp"-->
-                    <!--android:layout_marginRight="2dp"-->
-                    <!--android:src="@color/colorPrimary" />-->
+        <!--<ImageView-->
+        <!--android:layout_width="48dp"-->
+        <!--android:layout_height="48dp"-->
+        <!--android:layout_marginLeft="2dp"-->
+        <!--android:layout_marginRight="2dp"-->
+        <!--android:src="@color/colorPrimary" />-->
 
-                <!--<ImageView-->
-                    <!--android:layout_width="48dp"-->
-                    <!--android:layout_height="48dp"-->
-                    <!--android:src="@color/colorPrimary" />-->
-            <!--</LinearLayout>-->
+        <!--<ImageView-->
+        <!--android:layout_width="48dp"-->
+        <!--android:layout_height="48dp"-->
+        <!--android:src="@color/colorPrimary" />-->
+        <!--</LinearLayout>-->
 
         <!--</HorizontalScrollView>-->
 

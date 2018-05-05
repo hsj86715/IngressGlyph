@@ -6,6 +6,7 @@
     <string name="develop_by">開發：藍軍， ID: hsj86715</string>
     <string name="nav_drawer_open">打開導航抽屜</string>
     <string name="nav_drawer_close">關閉導航抽屜</string>
+    <string name="nav_header_subtitle">Ingress的遊戲助手</string>
     <string name="nav_menu_learn">學習</string>
     <string name="nav_menu_remember">記憶</string>
     <string name="nav_menu_practise">練習</string>

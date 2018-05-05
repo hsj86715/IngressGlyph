@@ -5,6 +5,7 @@
     <string name="develop_by">Developed by: Resistance, ID: hsj86715</string>
     <string name="nav_drawer_open">Open navigation drawer</string>
     <string name="nav_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_subtitle">An assistant for Ingress game.</string>
     <string name="nav_menu_learn">Learn</string>
     <string name="nav_menu_remember">Remember</string>
     <string name="nav_menu_practise">Practise</string>
