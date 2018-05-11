@@ -17,9 +17,12 @@ import android.view.MotionEvent;
 
 import com.hsj86715.ingress.glyphres.R;
 import com.hsj86715.ingress.glyphres.data.GlyphInfo;
+import com.hsj86715.ingress.glyphres.tools.Utils;
 
 /**
  * Created by hushujun on 2017/5/17.
+ *
+ * @author hushujun
  */
 
 public class MultiGlyphView extends IconView {
@@ -34,6 +37,8 @@ public class MultiGlyphView extends IconView {
     private SequenceClickListener mHackListener;
     private GlyphInfo[] mSequences;
     private RectF[] mSequenceBounds;
+    private boolean[] mResults;
+    private long[] mSequenceCosts;
 
     public MultiGlyphView(Context context) {
         this(context, null);
@@ -76,6 +81,26 @@ public class MultiGlyphView extends IconView {
         }
     }
 
+    public void setSequences(GlyphInfo[] glyphInfos, long[] costs) {
+        this.mSequences = glyphInfos;
+        if (mSequences != null && mSequences.length > 0) {
+            mSequenceBounds = new RectF[mSequences.length];
+            if (costs != null && costs.length == glyphInfos.length) {
+                this.mSequenceCosts = costs;
+            }
+            invalidate();
+        }
+    }
+
+    public void setSequenceResult(boolean[] results) {
+
+    }
+
+    public void clear() {
+        mSequences = null;
+        invalidate();
+    }
+
     @Override
     protected int getSuggestedMinimumHeight() {
         int miniHeight = (int) (getPaddingTop() + getPaddingBottom() + mGlyphRadius * 2 + mTextGlyphDivider + mTextSize * 2);
@@ -101,9 +126,10 @@ public class MultiGlyphView extends IconView {
             canvas.save();
             drawSequence(canvas, cx - pointRadius, cy - pointRadius, mSequences[i], paint, glyphRadius, pointRadius);
             canvas.restore();
-            if (mHackListener != null) {
-                mSequenceBounds[i] = new RectF(cx - glyphRadius, cy - glyphRadius, cx + glyphRadius,
-                        cy + glyphRadius + mTextGlyphDivider + mTextSize * 2);
+            mSequenceBounds[i] = new RectF(cx - glyphRadius, cy - glyphRadius, cx + glyphRadius,
+                    cy + glyphRadius + mTextGlyphDivider + mTextSize * 2);
+            if (mSequenceCosts != null && i < mSequenceCosts.length) {
+                drawTimeCost(canvas, paint, mSequenceBounds[i], mSequenceCosts[i]);
             }
         }
     }
@@ -121,6 +147,18 @@ public class MultiGlyphView extends IconView {
         canvas.translate(cx, cy + glyRadius + mTextGlyphDivider);
         layout.draw(canvas);
         paint.reset();
+    }
+
+    private void drawTimeCost(Canvas canvas, Paint paint, RectF rectF, long timeCost) {
+        paint.setTextAlign(Paint.Align.LEFT);
+        paint.setTextSize(mTextSize / 2);
+        paint.setColor(mTextColor);
+        canvas.drawText(Utils.timeToSeconds(timeCost), rectF.left, rectF.top - mTextSize / 2, paint);
+        paint.reset();
+    }
+
+    private void drawResult(Canvas canvas, Paint paint, RectF rectF, boolean result) {
+//        canvas.
     }
 
 

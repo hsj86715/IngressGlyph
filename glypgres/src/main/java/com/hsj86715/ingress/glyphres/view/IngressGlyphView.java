@@ -18,6 +18,7 @@ import java.util.List;
 
 /**
  * Created by hushujun on 2017/5/17.
+ * @author hushujun
  */
 
 public class IngressGlyphView extends FrameLayout {

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ingress="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.hsj86715.ingress.glyphres.view.practise.PractiseView
+        android:id="@+id/practice_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    
+    <com.hsj86715.ingress.glyphres.view.MultiGlyphView
+        android:id="@+id/practise_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        ingress:glyphRadius="40dp"
+        ingress:sequencesDivider="5dp"
+        ingress:textColor="@android:color/black"
+        ingress:textGlyphDivider="2dp"
+        ingress:textSize="14sp"/>
+
+</LinearLayout>

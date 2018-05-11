@@ -29,4 +29,10 @@
             android:title="@string/option_menu_hack5"
             app:showAsAction="never" />
     </group>
+    <group android:id="@+id/option_practise_group">
+        <item
+            android:id="@+id/practise_random"
+            android:title="@string/option_menu_random"
+            app:showAsAction="never" />
+    </group>
 </menu>

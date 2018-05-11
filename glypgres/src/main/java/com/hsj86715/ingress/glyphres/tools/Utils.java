@@ -4,6 +4,8 @@ import android.text.TextUtils;
 
 /**
  * Created by hushujun on 2017/5/16.
+ *
+ * @author hushujun
  */
 
 public class Utils {
@@ -37,5 +39,26 @@ public class Utils {
             }
         }
         return arrayPath;
+    }
+
+    public static String timeToSeconds(long time) {
+        if (time < 0) {
+            return "";
+        }
+        float sec = time / 1000.0f;
+        return sec + " s";
+    }
+
+    public static String timeToMinSec(long time) {
+        if (time < 0) {
+            return "";
+        }
+        int seconds = (int) (time / 1000);
+        int minutes = 0;
+        if (seconds >= 60) {
+            minutes = seconds / 60;
+            seconds = seconds % 60;
+        }
+        return minutes + ":" + seconds;
     }
 }

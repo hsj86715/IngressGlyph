@@ -13,14 +13,14 @@
             android:id="@+id/nav_remember"
             android:icon="@drawable/ic_menu_remember"
             android:title="@string/nav_menu_remember" />
-        <!--<item-->
-            <!--android:id="@+id/nav_practise"-->
-            <!--android:icon="@drawable/ic_menu_practise"-->
-            <!--android:title="@string/nav_menu_practise" />-->
-        <!--<item-->
-            <!--android:id="@+id/nav_statistical"-->
-            <!--android:icon="@drawable/ic_menu_statistical"-->
-            <!--android:title="@string/nav_menu_statistical" />-->
+        <item
+            android:id="@+id/nav_practise"
+            android:icon="@drawable/ic_menu_practise"
+            android:title="@string/nav_menu_practise" />
+        <item
+            android:id="@+id/nav_statistical"
+            android:icon="@drawable/ic_menu_statistical"
+            android:title="@string/nav_menu_statistical" />
     </group>
 
     <item android:title="@string/nav_menu_communicate">

@@ -295,24 +295,34 @@ public class GlyphModel {
         return pairGlyphs;
     }
 
+    /**
+     * @param length 2-5
+     * @return if the length is invalid,this will return all the sequences
+     */
     public List<HackList> getHackList(int length) {
         SQLiteDatabase database = mHelper.getReadableDatabase();
         Map<Long, GlyphInfo> glyphInfoMap = getGlyphMap(database);
         List<HackList> hackLists = null;
-        Cursor cursor = query(database, DataOpenHelper.TABLE_LIST, HackListColumn.LENGTH + "=?",
-                new String[]{String.valueOf(length)});
+        Cursor cursor;
+        if (length < 2 || length > 5) {
+            cursor = query(database, DataOpenHelper.TABLE_LIST, null, null);
+        } else {
+            cursor = query(database, DataOpenHelper.TABLE_LIST, HackListColumn.LENGTH + "=?",
+                    new String[]{String.valueOf(length)});
+        }
         if (cursor != null) {
             hackLists = new ArrayList<>();
             String[] columns = {HackListColumn.FIRST, HackListColumn.SECOND, HackListColumn.THIRD,
                     HackListColumn.FOURTH, HackListColumn.FIFTH};
             while (cursor.moveToNext()) {
                 HackList hackList = new HackList();
-                hackList.setLength(length);
+                int innerLength = cursor.getInt(cursor.getColumnIndex(HackListColumn.LENGTH));
+                hackList.setLength(innerLength);
                 long headId = cursor.getLong(cursor.getColumnIndex(HackListColumn.HEAD));
                 hackList.setHead(glyphInfoMap.get(headId));
-                GlyphInfo[] infos = new GlyphInfo[length];
+                GlyphInfo[] infos = new GlyphInfo[innerLength];
                 long sequenceId;
-                for (int i = 0; i < length; i++) {
+                for (int i = 0; i < innerLength; i++) {
                     sequenceId = cursor.getLong(cursor.getColumnIndex(columns[i]));
                     infos[i] = glyphInfoMap.get(sequenceId);
                 }

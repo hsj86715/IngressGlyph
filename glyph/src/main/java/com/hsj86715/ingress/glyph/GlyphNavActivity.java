@@ -17,11 +17,13 @@ import android.view.MenuItem;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.hsj86715.ingress.glyph.pages.LearnFragment;
+import com.hsj86715.ingress.glyph.pages.PractiseFragment;
 import com.hsj86715.ingress.glyph.pages.RememberFragment;
 
 import java.util.Date;
 
 import static com.hsj86715.ingress.glyph.GlyphNavActivity.Function.LEARN;
+import static com.hsj86715.ingress.glyph.GlyphNavActivity.Function.PRACTISE;
 import static com.hsj86715.ingress.glyph.GlyphNavActivity.Function.REMEMBER;
 
 /**
@@ -31,9 +33,9 @@ public class GlyphNavActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener {
     private int mFunction = LEARN;
 
-    @IntDef({LEARN, REMEMBER})
+    @IntDef({LEARN, REMEMBER, PRACTISE})
     @interface Function {
-        int LEARN = 0, REMEMBER = 1;
+        int LEARN = 0, REMEMBER = 1, PRACTISE = 2;
     }
 
     private Toolbar mToolbar;
@@ -91,9 +93,15 @@ public class GlyphNavActivity extends AppCompatActivity implements
         if (mFunction == LEARN) {
             menu.setGroupVisible(R.id.option_learn_group, true);
             menu.setGroupVisible(R.id.option_remember_group, false);
+            menu.setGroupVisible(R.id.option_practise_group, false);
         } else if (mFunction == REMEMBER) {
             menu.setGroupVisible(R.id.option_learn_group, false);
             menu.setGroupVisible(R.id.option_remember_group, true);
+            menu.setGroupVisible(R.id.option_practise_group, false);
+        } else if (mFunction == PRACTISE) {
+            menu.setGroupVisible(R.id.option_learn_group, false);
+            menu.setGroupVisible(R.id.option_remember_group, true);
+            menu.setGroupVisible(R.id.option_practise_group, true);
         }
         return super.onPrepareOptionsMenu(menu);
     }
@@ -104,21 +112,27 @@ public class GlyphNavActivity extends AppCompatActivity implements
         return mCurrentFrag.onOptionsItemSelected(item) | super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_learn:
                 mFunction = LEARN;
-                if (mCurrentFrag instanceof RememberFragment) {
+                if (!(mCurrentFrag instanceof LearnFragment)) {
                     mCurrentFrag = new LearnFragment();
                     getSupportFragmentManager().beginTransaction().replace(R.id.content_container, mCurrentFrag).commit();
                 }
                 break;
             case R.id.nav_remember:
                 mFunction = REMEMBER;
-                if (mCurrentFrag instanceof LearnFragment) {
+                if (!(mCurrentFrag instanceof RememberFragment)) {
                     mCurrentFrag = new RememberFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.content_container, mCurrentFrag).commit();
+                }
+                break;
+            case R.id.nav_practise:
+                mFunction = PRACTISE;
+                if (!(mCurrentFrag instanceof PractiseFragment)) {
+                    mCurrentFrag = new PractiseFragment();
                     getSupportFragmentManager().beginTransaction().replace(R.id.content_container, mCurrentFrag).commit();
                 }
                 break;

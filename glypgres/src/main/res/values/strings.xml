@@ -20,6 +20,7 @@
     <string name="option_menu_hack3">3 Glyph Hack Sequences</string>
     <string name="option_menu_hack4">4 Glyph Hack Sequences</string>
     <string name="option_menu_hack5">5 Glyph Hack Sequences</string>
+    <string name="option_menu_random">Random</string>
     <string name="learn_glyph_name">Name: </string>
     <string name="learn_glyph_alisa">Alisa: </string>
     <string name="learn_glyph_cat">Category: </string>
@@ -38,4 +39,6 @@
     <string name="toast_feedback_no_app">Sorry, no apps can complete the feedback action.</string>
     <string name="nav_share_text">Once you use this app, your skills for Ingress will be improved quickly. Learn glyphs and remember all the hack sequences indoor, and improve your performance outdoors. Here is the link https://play.google.com/store/apps/details?id=cn.com.farmcode.ingress.sequence</string>
     <string name="about_app_text">&#160;&#160;&#160;&#160;The Ingress Sequence app is an assistant for Ingress.\n&#160;&#160;&#160;&#160;The data used in this app is collected from the Ingress website and other third organizations, or players. It help players to remember the glyphs and hack sequences as soon as possible indoors, once you improved your speed and accuracy on draw the glyphs or hack sequences, you will gain more generous game rewards.\n&#160;&#160;&#160;&#160;Thanks for http://www.iconfont.cn open source the app icons, and this app\'s source code is opened on https://github.com/hsj86715/IngressGlyph</string>
+    <string name="toast_practise_list_end">Current is the last in this Hack list</string>
+    <string name="toast_practise_list_first">Current is the first int this Hack list</string>
 </resources>
