@@ -2,6 +2,7 @@ package com.hsj86715.ingress.glyphres.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
@@ -89,7 +90,7 @@ public class IconView extends View {
     }
 
     protected void drawSequence(Canvas canvas, float cx, float cy, GlyphInfo glyphInfo, Paint paint,
-                                float glyRadius, float pointRadius) {
+                                float glyRadius, float pointRadius, int index) {
         List<PointF> glyphPoints = new ArrayList<>();
         drawEmptyCircle(cx, cy, paint, canvas, pointRadius, glyphPoints);
         Path path = new Path();
@@ -114,11 +115,15 @@ public class IconView extends View {
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(6);
         paint.setStrokeCap(Paint.Cap.ROUND);
-        paint.setARGB(128, 120, 70, 0);
+        paint.setARGB(128,120,70,0);
         canvas.drawPath(path, paint);
         paint.reset();
 
-        drawPath(canvas, paint, glyphInfo, glyphPoints, glyRadius);
+        drawPath(canvas, paint, glyphInfo, glyphPoints, glyRadius,index);
+    }
+
+    protected int getPathColor(int index){
+        return Color.argb(255,0,0,0);
     }
 
     private void drawEmptyCircle(float cx, float cy, Paint paint, Canvas canvas, float pointRadius,
@@ -132,10 +137,11 @@ public class IconView extends View {
         glyphPoints.add(new PointF(cx, cy));
     }
 
-    private void drawPath(Canvas canvas, Paint paint, GlyphInfo glyphInfo, List<PointF> glyphPoints, float glyRadius) {
+    private void drawPath(Canvas canvas, Paint paint, GlyphInfo glyphInfo, List<PointF> glyphPoints,
+                          float glyRadius,int index) {
         paint.setStrokeWidth(glyRadius / 20 > 15 ? 15 : glyRadius / 20);
         paint.setStrokeCap(Paint.Cap.ROUND);
-        paint.setARGB(255, 0, 0, 0);
+        paint.setColor(getPathColor(index));
         drawLines(canvas, glyphInfo.getPath(), glyphPoints, paint);
     }
 

@@ -25,7 +25,7 @@ class DataOpenHelper extends SQLiteOpenHelper {
     protected static final String TABLE_GLYPH = "glyph_view";
     protected static final String TABLE_EDIT_TEMP = "edit_temp";
     private static final String TAG = "DataOpenHelper";
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 2;
     private static final String DB_NAME = "glyph_sequence.db";
 
     public DataOpenHelper(Context context) {
@@ -56,7 +56,15 @@ class DataOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        switch (oldVersion) {
+            case 1:
+                updateGlyphBaseTable2Version2(db);
+                updateHackListTable2Version2(db);
+                updateGlyphView2Version2(db);
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
@@ -102,7 +110,8 @@ class DataOpenHelper extends SQLiteOpenHelper {
                 GlyphBaseColumn.PATH_ID + " INTEGER NOT NULL, " +
                 GlyphBaseColumn.LEARN_COUNT + " INTEGER DEFAULT 0, " +
                 GlyphBaseColumn.PRACTISE_COUNT + " INTEGER DEFAULT 0," +
-                GlyphBaseColumn.PRACTISE_CORRECT + " INTEGER DEFAULT 0)");
+                GlyphBaseColumn.PRACTISE_CORRECT + " INTEGER DEFAULT 0," +
+                GlyphBaseColumn.PRACTISE_BEST + " INTERGER)");
     }
 
     private void createPairTable(SQLiteDatabase db) {
@@ -113,10 +122,7 @@ class DataOpenHelper extends SQLiteOpenHelper {
                 PairsColumn.WITH1 + " INTEGER NOT NULL, " +
                 PairsColumn.WITH2 + " INTEGER, " +
                 PairsColumn.WITH3 + " INTEGER, " +
-                PairsColumn.LENGTH + " INTEGER, " +
-                PairsColumn.LEARN_COUNT + " INTEGER DEFAULT 0, " +
-                PairsColumn.PRACTISE_COUNT + " INTEGER DEFAULT 0," +
-                PairsColumn.PRACTISE_CORRECT + " INTEGER DEFAULT 0)");
+                PairsColumn.LENGTH + " INTEGER)");
     }
 
     private void createHackListTable(SQLiteDatabase db) {
@@ -132,7 +138,8 @@ class DataOpenHelper extends SQLiteOpenHelper {
                 HackListColumn.FIFTH + " INTEGER, " +
                 HackListColumn.LEARN_COUNT + " INTEGER DEFAULT 0," +
                 HackListColumn.PRACTISE_COUNT + " INTEGER DEFAULT 0, " +
-                HackListColumn.PRACTISE_CORRECT + " INTEGER DEFAULT 0)");
+                HackListColumn.PRACTISE_CORRECT + " INTEGER DEFAULT 0," +
+                HackListColumn.PRACTISE_BEST + " INTEGER)");
     }
 
     private void createEditTempTable(SQLiteDatabase db) {
@@ -163,7 +170,8 @@ class DataOpenHelper extends SQLiteOpenHelper {
                 TABLE_PATH + "." + PathColumn._ID + " AS " + GlyphInfoColumn.PATH_ID + ", " +
                 TABLE_BASE + "." + GlyphBaseColumn.LEARN_COUNT + ", " +
                 TABLE_BASE + "." + GlyphBaseColumn.PRACTISE_COUNT + ", " +
-                TABLE_BASE + "." + GlyphBaseColumn.PRACTISE_CORRECT +
+                TABLE_BASE + "." + GlyphBaseColumn.PRACTISE_CORRECT + ", " +
+                TABLE_BASE + "." + GlyphBaseColumn.PRACTISE_BEST +
                 " FROM " +
                 TABLE_BASE + ", " + TABLE_NAMES + ", " + TABLE_CATEGORY + ", " + TABLE_PATH +
                 " WHERE " +
@@ -172,10 +180,25 @@ class DataOpenHelper extends SQLiteOpenHelper {
                 TABLE_BASE + "." + GlyphBaseColumn.PATH_ID + "=" + TABLE_PATH + "." + PathColumn._ID);
     }
 
+    private void updateGlyphBaseTable2Version2(SQLiteDatabase db) {
+        db.execSQL("ALTER TABLE " + TABLE_BASE + " ADD " + GlyphBaseColumn.PRACTISE_BEST + " INTEGER");
+    }
+
+    private void updateHackListTable2Version2(SQLiteDatabase db) {
+        db.execSQL("ALTER TABLE " + TABLE_LIST + " ADD " + HackListColumn.PRACTISE_BEST + " INTEGER");
+    }
+
+    private void updateGlyphView2Version2(SQLiteDatabase db) {
+        db.execSQL("DROP VIEW " + TABLE_GLYPH);
+        createGlyphView(db);
+    }
+
     protected class PractiseColumn implements BaseColumns {
         protected static final String LEARN_COUNT = "learn_count";
         protected static final String PRACTISE_COUNT = "practise_count";
         protected static final String PRACTISE_CORRECT = "practise_correct";
+        //version 2 added column
+        protected static final String PRACTISE_BEST = "practise_best_time";
     }
 
     protected class NameColumn implements BaseColumns {
@@ -204,7 +227,7 @@ class DataOpenHelper extends SQLiteOpenHelper {
         protected static final String PATH_ID = "path_id";
     }
 
-    protected class PairsColumn extends PractiseColumn {
+    protected class PairsColumn implements BaseColumns {
         protected static final String WITH = "pair_with";
         protected static final String WITH1 = "pair_with1";
         protected static final String WITH2 = "pair_with2";
@@ -245,5 +268,6 @@ class DataOpenHelper extends SQLiteOpenHelper {
         protected static final String LEARN_COUNT = GlyphBaseColumn.LEARN_COUNT;
         protected static final String PRACTISE_COUNT = GlyphBaseColumn.PRACTISE_COUNT;
         protected static final String PRACTISE_CORRECT = GlyphBaseColumn.PRACTISE_CORRECT;
+        protected static final String PRACTISE_BEST = GlyphBaseColumn.PRACTISE_BEST;
     }
 }

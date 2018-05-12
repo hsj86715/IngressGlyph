@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Ingressシーケンス</string>
+    <string name="app_name">Ingress練習</string>
     <string name="start_loading">読み込み。。。</string>
     <string name="loading_first">ローディングは数秒を、待っている必要があるかもしれない。</string>
     <string name="develop_by">開発: 抵抗、ID: hsj86715</string>
@@ -39,4 +39,6 @@
     <string name="toast_feedback_no_app">アプリはフィードバックアクションを完了できません。</string>
     <string name="nav_share_text">一度このアプリを使用すると、Ingressのためのあなたのスキルはすぐに改善されます。グリフを学び、すべてのハックシーケンス屋内を覚えて、屋外でのパフォーマンスを向上させます。ここではリンク https://play.google.com/store/apps/details?id=cn.com.farmcode.ingress.sequence です</string>
     <string name="about_app_text">&#160;&#160;&#160;&#160;Ingressシーケンスアプリは、Ingressのアシスタントです。\n&#160;&#160;&#160;&#160;このアプリで使用されるデータは、Ingress web サイトや他の3番目の組織、またはプレーヤーから収集されます。それは、グリフを覚えて、できるだけ早く屋内でシーケンスをハックするためにプレイヤーを助ける, 一度あなたの速度と精度は、グリフやハックシーケンスを描画する上で改善, あなたはより寛大なゲームの報酬を得る.\n&#160;&#160;&#160;&#160;http://www.iconfont.cn オープンソースのおかげでアプリのアイコンは、このアプリ  のソースコードは、https://github.com/hsj86715/IngressGlyph で開かれている</string>
+    <string name="toast_practise_list_end">現在は、このハックリストの最後です</string>
+    <string name="toast_practise_list_first">現在のこのハックリストの最初の</string>
 </resources>

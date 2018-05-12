@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Ingress Sequence</string>
+    <string name="app_name">Ingress Practise</string>
     <string name="start_loading">Loading...</string>
     <string name="loading_first">The loading may need a few seconds, waiting...</string>
     <string name="develop_by">Developed by: Resistance, ID: hsj86715</string>
@@ -40,5 +40,5 @@
     <string name="nav_share_text">Once you use this app, your skills for Ingress will be improved quickly. Learn glyphs and remember all the hack sequences indoor, and improve your performance outdoors. Here is the link https://play.google.com/store/apps/details?id=cn.com.farmcode.ingress.sequence</string>
     <string name="about_app_text">&#160;&#160;&#160;&#160;The Ingress Sequence app is an assistant for Ingress.\n&#160;&#160;&#160;&#160;The data used in this app is collected from the Ingress website and other third organizations, or players. It help players to remember the glyphs and hack sequences as soon as possible indoors, once you improved your speed and accuracy on draw the glyphs or hack sequences, you will gain more generous game rewards.\n&#160;&#160;&#160;&#160;Thanks for http://www.iconfont.cn open source the app icons, and this app\'s source code is opened on https://github.com/hsj86715/IngressGlyph</string>
     <string name="toast_practise_list_end">Current is the last in this Hack list</string>
-    <string name="toast_practise_list_first">Current is the first int this Hack list</string>
+    <string name="toast_practise_list_first">Current is the first in this Hack list</string>
 </resources>

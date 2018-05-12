@@ -81,19 +81,18 @@ public class MultiGlyphView extends IconView {
         }
     }
 
-    public void setSequences(GlyphInfo[] glyphInfos, long[] costs) {
+    public void setSequenceResult(GlyphInfo[] glyphInfos, long[] costs, boolean[] results) {
         this.mSequences = glyphInfos;
         if (mSequences != null && mSequences.length > 0) {
             mSequenceBounds = new RectF[mSequences.length];
-            if (costs != null && costs.length == glyphInfos.length) {
+            if (costs != null) {
                 this.mSequenceCosts = costs;
+            }
+            if (results != null) {
+                this.mResults = results;
             }
             invalidate();
         }
-    }
-
-    public void setSequenceResult(boolean[] results) {
-
     }
 
     public void clear() {
@@ -124,7 +123,7 @@ public class MultiGlyphView extends IconView {
             cx = getPaddingLeft() + mSequencesDivider * i + width * i + width / 2;
             cy = getPaddingTop() + height / 2;
             canvas.save();
-            drawSequence(canvas, cx - pointRadius, cy - pointRadius, mSequences[i], paint, glyphRadius, pointRadius);
+            drawSequence(canvas, cx - pointRadius, cy - pointRadius, mSequences[i], paint, glyphRadius, pointRadius, i);
             canvas.restore();
             mSequenceBounds[i] = new RectF(cx - glyphRadius, cy - glyphRadius, cx + glyphRadius,
                     cy + glyphRadius + mTextGlyphDivider + mTextSize * 2);
@@ -135,13 +134,40 @@ public class MultiGlyphView extends IconView {
     }
 
     @Override
+    protected int getPathColor(int index) {
+        if (mResults != null && index < mResults.length) {
+            boolean result = mResults[index];
+            if (result) {
+                return Color.GREEN;
+            } else {
+                return Color.RED;
+            }
+        } else {
+            return super.getPathColor(index);
+        }
+    }
+
+    private int getTextColor(int index) {
+        if (mResults != null && index < mResults.length) {
+            boolean result = mResults[index];
+            if (result) {
+                return Color.GREEN;
+            } else {
+                return Color.RED;
+            }
+        } else {
+            return mTextColor;
+        }
+    }
+
+    @Override
     protected void drawSequence(Canvas canvas, float cx, float cy, GlyphInfo glyphInfo, Paint paint,
-                                float glyRadius, float pointRadius) {
-        super.drawSequence(canvas, cx, cy, glyphInfo, paint, glyRadius, pointRadius);
+                                float glyRadius, float pointRadius, int index) {
+        super.drawSequence(canvas, cx, cy, glyphInfo, paint, glyRadius, pointRadius, index);
 
         paint.setTextAlign(Paint.Align.CENTER);
         paint.setTextSize(mTextSize);
-        paint.setColor(mTextColor);
+        paint.setColor(getTextColor(index));
         StaticLayout layout = new StaticLayout(glyphInfo.getName(), new TextPaint(paint), (int) (glyRadius / 0.45f),
                 Layout.Alignment.ALIGN_NORMAL, 1.0f, 0f, true);
         canvas.translate(cx, cy + glyRadius + mTextGlyphDivider);
@@ -156,11 +182,6 @@ public class MultiGlyphView extends IconView {
         canvas.drawText(Utils.timeToSeconds(timeCost), rectF.left, rectF.top - mTextSize / 2, paint);
         paint.reset();
     }
-
-    private void drawResult(Canvas canvas, Paint paint, RectF rectF, boolean result) {
-//        canvas.
-    }
-
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {

@@ -41,6 +41,7 @@ public class GlyphInfo extends LearnAndPractise implements Parcelable, Comparabl
         learnCount = in.readInt();
         practiseCount = in.readInt();
         practiseCorrect = in.readInt();
+        practiseBest = in.readLong();
     }
 
     public GlyphInfo() {
@@ -58,6 +59,7 @@ public class GlyphInfo extends LearnAndPractise implements Parcelable, Comparabl
         dest.writeInt(learnCount);
         dest.writeInt(practiseCount);
         dest.writeInt(practiseCorrect);
+        dest.writeLong(practiseBest);
     }
 
     @Override

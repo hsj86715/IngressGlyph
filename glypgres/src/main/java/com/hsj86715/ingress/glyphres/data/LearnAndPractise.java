@@ -4,12 +4,13 @@ class LearnAndPractise {
     protected int learnCount;
     protected int practiseCount;
     protected int practiseCorrect;
+    protected long practiseBest;
 
     public int getLearnCount() {
         return learnCount;
     }
 
-    protected void setLearnCount(int learnCount) {
+    public void setLearnCount(int learnCount) {
         this.learnCount = learnCount;
     }
 
@@ -17,7 +18,7 @@ class LearnAndPractise {
         return practiseCount;
     }
 
-    protected void setPractiseCount(int practiseCount) {
+    public void setPractiseCount(int practiseCount) {
         this.practiseCount = practiseCount;
     }
 
@@ -25,7 +26,15 @@ class LearnAndPractise {
         return practiseCorrect;
     }
 
-    protected void setPractiseCorrect(int practiseCorrect) {
+    public void setPractiseCorrect(int practiseCorrect) {
         this.practiseCorrect = practiseCorrect;
+    }
+
+    public void setPractiseBest(long best) {
+        this.practiseBest = best;
+    }
+
+    public long getPractiseBest() {
+        return practiseBest;
     }
 }

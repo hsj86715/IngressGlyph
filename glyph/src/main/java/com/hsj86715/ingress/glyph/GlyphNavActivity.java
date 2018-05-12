@@ -3,10 +3,12 @@ package com.hsj86715.ingress.glyph;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.IntDef;
+import android.support.annotation.StringDef;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -22,20 +24,23 @@ import com.hsj86715.ingress.glyph.pages.RememberFragment;
 
 import java.util.Date;
 
+import cn.com.farmcode.utility.tools.Logger;
+
 import static com.hsj86715.ingress.glyph.GlyphNavActivity.Function.LEARN;
 import static com.hsj86715.ingress.glyph.GlyphNavActivity.Function.PRACTISE;
 import static com.hsj86715.ingress.glyph.GlyphNavActivity.Function.REMEMBER;
+import static com.hsj86715.ingress.glyph.GlyphNavActivity.Function.STATISTICAL;
 
 /**
  * @author hushujun
  */
 public class GlyphNavActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener {
-    private int mFunction = LEARN;
+    private String mFunction = LEARN;
 
-    @IntDef({LEARN, REMEMBER, PRACTISE})
+    @StringDef({LEARN, REMEMBER, PRACTISE, STATISTICAL})
     @interface Function {
-        int LEARN = 0, REMEMBER = 1, PRACTISE = 2;
+        String LEARN = "learn", REMEMBER = "remember", PRACTISE = "practise", STATISTICAL = "statistical";
     }
 
     private Toolbar mToolbar;
@@ -90,18 +95,27 @@ public class GlyphNavActivity extends AppCompatActivity implements
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if (mFunction == LEARN) {
-            menu.setGroupVisible(R.id.option_learn_group, true);
-            menu.setGroupVisible(R.id.option_remember_group, false);
-            menu.setGroupVisible(R.id.option_practise_group, false);
-        } else if (mFunction == REMEMBER) {
-            menu.setGroupVisible(R.id.option_learn_group, false);
-            menu.setGroupVisible(R.id.option_remember_group, true);
-            menu.setGroupVisible(R.id.option_practise_group, false);
-        } else if (mFunction == PRACTISE) {
-            menu.setGroupVisible(R.id.option_learn_group, false);
-            menu.setGroupVisible(R.id.option_remember_group, true);
-            menu.setGroupVisible(R.id.option_practise_group, true);
+        switch (mFunction) {
+            case LEARN:
+                menu.setGroupVisible(R.id.option_learn_group, true);
+                menu.setGroupVisible(R.id.option_remember_group, false);
+                menu.setGroupVisible(R.id.option_practise_group, false);
+                break;
+            case REMEMBER:
+                menu.setGroupVisible(R.id.option_learn_group, false);
+                menu.setGroupVisible(R.id.option_remember_group, true);
+                menu.setGroupVisible(R.id.option_practise_group, false);
+                break;
+            case PRACTISE:
+                menu.setGroupVisible(R.id.option_learn_group, false);
+                menu.setGroupVisible(R.id.option_remember_group, true);
+                menu.setGroupVisible(R.id.option_practise_group, true);
+                break;
+            case STATISTICAL:
+                menu.setGroupVisible(R.id.option_learn_group, false);
+                break;
+            default:
+                break;
         }
         return super.onPrepareOptionsMenu(menu);
     }
@@ -116,25 +130,13 @@ public class GlyphNavActivity extends AppCompatActivity implements
     public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_learn:
-                mFunction = LEARN;
-                if (!(mCurrentFrag instanceof LearnFragment)) {
-                    mCurrentFrag = new LearnFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.content_container, mCurrentFrag).commit();
-                }
+                switch2Frag(LEARN);
                 break;
             case R.id.nav_remember:
-                mFunction = REMEMBER;
-                if (!(mCurrentFrag instanceof RememberFragment)) {
-                    mCurrentFrag = new RememberFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.content_container, mCurrentFrag).commit();
-                }
+                switch2Frag(REMEMBER);
                 break;
             case R.id.nav_practise:
-                mFunction = PRACTISE;
-                if (!(mCurrentFrag instanceof PractiseFragment)) {
-                    mCurrentFrag = new PractiseFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.content_container, mCurrentFrag).commit();
-                }
+                switch2Frag(PRACTISE);
                 break;
             case R.id.nav_share:
                 shareTheApp();
@@ -158,6 +160,34 @@ public class GlyphNavActivity extends AppCompatActivity implements
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void switch2Frag(@Function String whichFrag) {
+        Logger.i("switch2Frag >>> " + whichFrag);
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        Fragment fragment = fm.findFragmentByTag(whichFrag);
+        if (fragment == null) {
+            fragment = getFragment(whichFrag);
+            ft.replace(R.id.content_container, fragment, whichFrag).commitAllowingStateLoss();
+        } else {
+            ft.show(fragment).commitAllowingStateLoss();
+        }
+        mCurrentFrag = fragment;
+        mFunction = whichFrag;
+    }
+
+    private Fragment getFragment(@Function String whichFrag) {
+        switch (whichFrag) {
+            case LEARN:
+                return new LearnFragment();
+            case REMEMBER:
+                return new RememberFragment();
+            case PRACTISE:
+                return new PractiseFragment();
+            default:
+                return null;
+        }
     }
 
     private void shareTheApp() {

@@ -245,6 +245,7 @@ public class GlyphModel {
         info.setLearnCount(cursor.getInt(cursor.getColumnIndex(GlyphInfoColumn.LEARN_COUNT)));
         info.setPractiseCount(cursor.getInt(cursor.getColumnIndex(GlyphInfoColumn.PRACTISE_COUNT)));
         info.setPractiseCorrect(cursor.getInt(cursor.getColumnIndex(GlyphInfoColumn.PRACTISE_CORRECT)));
+        info.setPractiseBest(cursor.getLong(cursor.getColumnIndex(GlyphInfoColumn.PRACTISE_BEST)));
         return info;
     }
 
@@ -316,8 +317,12 @@ public class GlyphModel {
                     HackListColumn.FOURTH, HackListColumn.FIFTH};
             while (cursor.moveToNext()) {
                 HackList hackList = new HackList();
+                hackList.setId(cursor.getLong(cursor.getColumnIndex(HackListColumn._ID)));
                 int innerLength = cursor.getInt(cursor.getColumnIndex(HackListColumn.LENGTH));
                 hackList.setLength(innerLength);
+                hackList.setPractiseCount(cursor.getInt(cursor.getColumnIndex(HackListColumn.PRACTISE_COUNT)));
+                hackList.setPractiseCorrect(cursor.getInt(cursor.getColumnIndex(HackListColumn.PRACTISE_CORRECT)));
+                hackList.setPractiseBest(cursor.getLong(cursor.getColumnIndex(HackListColumn.PRACTISE_BEST)));
                 long headId = cursor.getLong(cursor.getColumnIndex(HackListColumn.HEAD));
                 hackList.setHead(glyphInfoMap.get(headId));
                 GlyphInfo[] infos = new GlyphInfo[innerLength];
@@ -459,10 +464,13 @@ public class GlyphModel {
         }
     }
 
-    public int updateGlyphLearCount(GlyphInfo glyphInfo) {
+    public int updateGlyphLearnOrPractise(GlyphInfo glyphInfo) {
         SQLiteDatabase database = mHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(GlyphBaseColumn.LEARN_COUNT, glyphInfo.getLearnCount() + 1);
+        values.put(GlyphBaseColumn.LEARN_COUNT, glyphInfo.getLearnCount());
+        values.put(GlyphBaseColumn.PRACTISE_COUNT, glyphInfo.getPractiseCount());
+        values.put(GlyphBaseColumn.PRACTISE_CORRECT, glyphInfo.getPractiseCorrect());
+        values.put(GlyphBaseColumn.PRACTISE_BEST, glyphInfo.getPractiseBest());
         return database.update(DataOpenHelper.TABLE_BASE, values, GlyphBaseColumn._ID + "=?",
                 new String[]{String.valueOf(glyphInfo.getId())});
     }
@@ -502,5 +510,15 @@ public class GlyphModel {
         SQLiteDatabase database = mHelper.getWritableDatabase();
         return database.delete(DataOpenHelper.TABLE_EDIT_TEMP, EditTempColumn.GLYPH_ID + "=?",
                 new String[]{String.valueOf(glyphId)});
+    }
+
+    public int updateHackListPractise(HackList hackList) {
+        SQLiteDatabase database = mHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(HackListColumn.PRACTISE_COUNT, hackList.getPractiseCount());
+        values.put(HackListColumn.PRACTISE_CORRECT, hackList.getPractiseCorrect());
+        values.put(HackListColumn.PRACTISE_BEST, hackList.getPractiseBest());
+        return database.update(DataOpenHelper.TABLE_LIST, values, HackListColumn._ID + "=?",
+                new String[]{String.valueOf(hackList.getId())});
     }
 }

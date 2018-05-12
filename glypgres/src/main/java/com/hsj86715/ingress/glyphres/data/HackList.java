@@ -14,9 +14,18 @@ import cn.com.farmcode.utility.tools.Logger;
  */
 
 public class HackList extends LearnAndPractise implements Comparable<HackList> {
+    private long id;
     private GlyphInfo head;
     private int length;
     private GlyphInfo[] sequences;
+
+    public long getId() {
+        return id;
+    }
+
+    protected void setId(long id) {
+        this.id = id;
+    }
 
     public GlyphInfo getHead() {
         return head;

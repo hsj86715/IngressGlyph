@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.hsj86715.ingress.glyph.R;
+import com.hsj86715.ingress.glyphres.data.GlyphInfo;
 import com.hsj86715.ingress.glyphres.data.GlyphModel;
 import com.hsj86715.ingress.glyphres.data.HackList;
 import com.hsj86715.ingress.glyphres.view.MultiGlyphView;
@@ -21,6 +23,8 @@ import com.hsj86715.ingress.glyphres.view.practise.PractiseView;
 
 import java.util.List;
 import java.util.Random;
+
+import cn.com.farmcode.utility.tools.Logger;
 
 /**
  * @author hushujun
@@ -31,13 +35,15 @@ public class PractiseFragment extends Fragment implements PractiseView.Callback 
     private MultiGlyphView mHackResultView;
 
     private int mPractiseIdx = 0;
+    private int mRandomCurrent = 0;
     private boolean isRandom = false;
 
     private FirebaseAnalytics mFirebaseAnalytics;
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.frag_practise, container, false);
     }
 
@@ -47,6 +53,8 @@ public class PractiseFragment extends Fragment implements PractiseView.Callback 
         mPractiseView = view.findViewById(R.id.practice_view);
         mHackResultView = view.findViewById(R.id.practise_result);
         mPractiseView.setCallback(this);
+        new HackListTask().execute(2);
+        updateToolBarSubTitle(R.string.option_menu_hack2);
     }
 
     @Override
@@ -69,18 +77,23 @@ public class PractiseFragment extends Fragment implements PractiseView.Callback 
         switch (id) {
             case R.id.remember_hack2:
                 length = 2;
+                updateToolBarSubTitle(R.string.option_menu_hack2);
                 break;
             case R.id.remember_hack3:
                 length = 3;
+                updateToolBarSubTitle(R.string.option_menu_hack3);
                 break;
             case R.id.remember_hack4:
                 length = 4;
+                updateToolBarSubTitle(R.string.option_menu_hack4);
                 break;
             case R.id.remember_hack5:
                 length = 5;
+                updateToolBarSubTitle(R.string.option_menu_hack5);
                 break;
             case R.id.practise_random:
                 length = -1;
+                updateToolBarSubTitle(R.string.option_menu_random);
             default:
                 break;
         }
@@ -89,14 +102,24 @@ public class PractiseFragment extends Fragment implements PractiseView.Callback 
         } else {
             isRandom = false;
         }
+        mPractiseIdx = 0;
         new HackListTask().execute(length);
         return super.onOptionsItemSelected(item);
+    }
+
+    private void updateToolBarSubTitle(int titleRes) {
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        if (activity != null) {
+            activity.getSupportActionBar().setSubtitle(titleRes);
+        }
     }
 
     private void handleTaskResult(List<HackList> hackLists) {
         mHackLists = hackLists;
         if (mHackLists != null) {
-            updatePractiseHackList(0);
+            if (mPractiseView != null) {
+                mPractiseView.setHackList(mHackLists.get(mPractiseIdx));
+            }
         }
     }
 
@@ -108,18 +131,37 @@ public class PractiseFragment extends Fragment implements PractiseView.Callback 
     }
 
     @Override
-    public void onTryStepEnd(int hackIdx, long stepTime) {
-
+    public void onTryStepEnd(int hackIdx, long stepTime, boolean result) {
+        GlyphInfo glyphInfo = mHackLists.get(mPractiseIdx).getSequences()[hackIdx];
+        glyphInfo.setPractiseCount(glyphInfo.getPractiseCount() + 1);
+        if (result) {
+            glyphInfo.setPractiseCorrect(glyphInfo.getPractiseCorrect() + 1);
+        }
+        if (stepTime > 0 && glyphInfo.getPractiseBest() > stepTime) {
+            glyphInfo.setPractiseBest(stepTime);
+        }
+        new UpdateGlyphTask().execute(glyphInfo);
     }
 
     @Override
-    public void onPractiseEnd(long totalTime, long[] tryStepCosts) {
-        mHackResultView.setSequences(mHackLists.get(mPractiseIdx).getSequences(), tryStepCosts);
-    }
-
-    @Override
-    public void onPractiseResult(boolean[] results) {
-        mHackResultView.setSequenceResult(results);
+    public void onPractiseEnd(long totalTime, long[] tryStepCosts, boolean[] results) {
+        mHackResultView.setSequenceResult(mHackLists.get(mPractiseIdx).getSequences(), tryStepCosts, results);
+        HackList hackList = mHackLists.get(mPractiseIdx);
+        hackList.setPractiseCount(hackList.getPractiseCount() + 1);
+        boolean success = true;
+        for (boolean result : results) {
+            if (!result) {
+                success = false;
+                break;
+            }
+        }
+        if (success) {
+            hackList.setPractiseCorrect(hackList.getPractiseCorrect() + 1);
+        }
+        if (totalTime > 0 && totalTime < hackList.getPractiseBest()) {
+            hackList.setPractiseBest(totalTime);
+        }
+        new UpdateHackListTask().execute(hackList);
     }
 
     @Override
@@ -127,7 +169,18 @@ public class PractiseFragment extends Fragment implements PractiseView.Callback 
         if (mHackLists == null || mHackLists.isEmpty()) {
             return;
         }
-        updatePractiseHackList(1);
+        if (isRandom) {
+            Random random = new Random();
+            mRandomCurrent = random.nextInt(mHackLists.size());
+            mPractiseView.setHackList(mHackLists.get(mRandomCurrent));
+        } else {
+            if (mPractiseIdx >= mHackLists.size() - 1) {
+                Snackbar.make(mPractiseView, R.string.toast_practise_list_end, Snackbar.LENGTH_SHORT).show();
+            } else {
+                mPractiseIdx++;
+                mPractiseView.setHackList(mHackLists.get(mPractiseIdx));
+            }
+        }
     }
 
     @Override
@@ -135,28 +188,29 @@ public class PractiseFragment extends Fragment implements PractiseView.Callback 
         if (mHackLists == null || mHackLists.isEmpty()) {
             return;
         }
-        updatePractiseHackList(-1);
-    }
-
-    private void updatePractiseHackList(int move) {
         if (isRandom) {
             Random random = new Random();
-            int idx = random.nextInt(mHackLists.size());
-            if (mPractiseView != null) {
-                mPractiseView.setHackList(mHackLists.get(idx));
-            }
+            mRandomCurrent = random.nextInt(mHackLists.size());
+            mPractiseView.setHackList(mHackLists.get(mRandomCurrent));
         } else {
-            mPractiseIdx += move;
-            if (mPractiseIdx >= mHackLists.size()) {
-                Snackbar.make(mPractiseView, R.string.toast_practise_list_end, Snackbar.LENGTH_SHORT).show();
-                return;
-            } else if (mPractiseIdx < 0) {
+            if (mPractiseIdx <= 0) {
                 Snackbar.make(mPractiseView, R.string.toast_practise_list_first, Snackbar.LENGTH_SHORT).show();
-                return;
-            }
-            if (mPractiseView != null) {
+            } else {
+                mPractiseIdx--;
                 mPractiseView.setHackList(mHackLists.get(mPractiseIdx));
             }
+        }
+    }
+
+    @Override
+    public void retryCurrentHackList() {
+        if (mHackLists == null || mHackLists.isEmpty()) {
+            return;
+        }
+        if (isRandom) {
+            mPractiseView.setHackList(mHackLists.get(mRandomCurrent));
+        } else {
+            mPractiseView.setHackList(mHackLists.get(mPractiseIdx));
         }
     }
 
@@ -169,6 +223,32 @@ public class PractiseFragment extends Fragment implements PractiseView.Callback 
         @Override
         protected void onPostExecute(List<HackList> hackLists) {
             handleTaskResult(hackLists);
+        }
+    }
+
+    private class UpdateGlyphTask extends AsyncTask<GlyphInfo, Void, Integer> {
+        @Override
+        protected Integer doInBackground(GlyphInfo... glyphInfos) {
+            return GlyphModel.getInstance(getActivity()).updateGlyphLearnOrPractise(glyphInfos[0]);
+        }
+
+        @Override
+        protected void onPostExecute(Integer integer) {
+            Logger.i("UpdateGlyphTask#onPostExecute: " + integer);
+            super.onPostExecute(integer);
+        }
+    }
+
+    private class UpdateHackListTask extends AsyncTask<HackList, Void, Integer> {
+        @Override
+        protected Integer doInBackground(HackList... hackLists) {
+            return GlyphModel.getInstance(getActivity()).updateHackListPractise(hackLists[0]);
+        }
+
+        @Override
+        protected void onPostExecute(Integer integer) {
+            Logger.i("UpdateHackListTask#onPostExecute: " + integer);
+            super.onPostExecute(integer);
         }
     }
 }

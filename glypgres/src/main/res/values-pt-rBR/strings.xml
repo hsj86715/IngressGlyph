@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Seqüência de ingresso</string>
+    <string name="app_name">Prática de ingresso</string>
     <string name="start_loading">Carregar...</string>
     <string name="loading_first">O carregamento pode precisar de alguns segundos, esperando...</string>
     <string name="develop_by">Desenvolvido por: resistência, ID: hsj86715</string>
@@ -39,4 +39,6 @@
     <string name="toast_feedback_no_app">Pesaroso, nenhum apps pode terminar a ação do gabarito.</string>
     <string name="nav_share_text">Uma vez que você usa este app, suas habilidades para o ingresso serão melhoradas rapidamente. Aprenda glifos e lembre-se de todas as seqüências hack indoor, e melhorar o seu desempenho ao ar livre. Aqui está o link https://Play.google.com/Store/apps/Details?ID=CN.com.farmcode.ingress.Sequence</string>
     <string name="about_app_text">&#160;&#160;&#160;&#160;O aplicativo de seqüência de ingresso é um assistente para ingresso.\n&#160;&#160;&#160;&#160;Os dados utilizados neste aplicativo são coletados no site de ingresso e em outras organizações, ou jogadores. Ele ajuda os jogadores a lembrar os glifos e seqüências hack o mais rapidamente possível dentro de casa, uma vez que você melhorou a sua velocidade e precisão em desenhar os glifos ou seqüências hack, você vai ganhar mais recompensas jogo generoso.\n&#160;&#160;&#160;&#160;Agradecimentos para http://www.iconfont.cn a fonte aberta os ícones do App, e este código de fonte do App  é aberto em https://github.com/hsj86715/IngressGlyph</string>
+    <string name="toast_practise_list_end">Atual é o último nesta lista de hack</string>
+    <string name="toast_practise_list_first">Atual é o primeiro nesta lista de hack</string>
 </resources>

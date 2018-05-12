@@ -17,6 +17,7 @@ import android.view.SurfaceHolder;
 
 import com.hsj86715.ingress.glyphres.data.GlyphInfo;
 import com.hsj86715.ingress.glyphres.data.HackList;
+import com.hsj86715.ingress.glyphres.tools.Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,7 +34,6 @@ class DrawThread extends Thread {
 
     static final int MSG_STEP_CHANGE = 0;
     static final int MSG_TRY_STEP_TIME = 1;
-    static final int MSG_TRY_RESULT = 2;
 
     protected boolean isDrawing = false;
     private static final int PREPARE_INTERVAL = 1000;
@@ -55,6 +55,7 @@ class DrawThread extends Thread {
     private List<PointF> mPossiblePoints;
     private SparseArray<PointF[]> mUserGlyphPath = new SparseArray<>();
     private long[] mUserStepCost;
+    private boolean[] mUserStepResults;
 
     final float mPointRadius;
     final int mCenter;
@@ -68,6 +69,7 @@ class DrawThread extends Thread {
     private int mTryHackIdx = 0;
 
     private HackList mHackList;
+    private long mCurrentListCostTime = 0;
 
     DrawThread(float density, int measuredWidth, SurfaceHolder holder, @NonNull Handler uiHandler) {
         super("Practise-Draw-Thread");
@@ -110,21 +112,27 @@ class DrawThread extends Thread {
             mUserGlyphPath.put(mTryHackIdx, mPossiblePoints.toArray(new PointF[mPossiblePoints.size()]));
         }
         mUserStepCost[mTryHackIdx] = stepTime;
+        mUserStepResults[mTryHackIdx] = compareResult(mTryHackIdx);
+
         Message msg = mUIHandler.obtainMessage(MSG_TRY_STEP_TIME);
         msg.arg1 = mTryHackIdx;
-        msg.obj = stepTime;
+        msg.arg2 = (int) stepTime;
+        msg.obj = mUserStepResults[mTryHackIdx];
         mUIHandler.sendMessage(msg);
 
         mTryHackIdx++;
         if (mTryHackIdx >= mHackList.getLength()) {
-            long tryTotalTime = TimeCounter.stop();
-            Logger.e("Try total cost:" + tryTotalTime);
+            mCurrentListCostTime = TimeCounter.stop();
+            Logger.e("Try total cost:" + mCurrentListCostTime);
             setStep(PractiseView.STEP_STOP);
 
             Message message = mUIHandler.obtainMessage(MSG_STEP_CHANGE);
             message.arg1 = PractiseView.STEP_STOP;
-            message.arg2 = (int) tryTotalTime;
-            message.obj = mUserStepCost;
+            TryEndResult result = new TryEndResult();
+            result.totalTime = mCurrentListCostTime;
+            result.stepCosts = mUserStepCost;
+            result.stepResults = mUserStepResults;
+            message.obj = result;
             mUIHandler.sendMessage(message);
 
             mTryHackIdx = 0;
@@ -264,12 +272,13 @@ class DrawThread extends Thread {
         if (mShowHackIdx >= mHackList.getLength()) {
             setStep(PractiseView.STEP_TRY);
             mUserStepCost = new long[mHackList.getLength()];
+            mUserStepResults = new boolean[mHackList.getLength()];
 
             Message msg = mUIHandler.obtainMessage(MSG_STEP_CHANGE);
             msg.arg1 = PractiseView.STEP_TRY;
             mUIHandler.sendMessage(msg);
 
-            TimeCounter.start();
+            TimeCounter.start();//try to draw the hack sequences, start time counter
             mShowHackIdx = 0;
         }
     }
@@ -291,9 +300,11 @@ class DrawThread extends Thread {
             canvas.drawPath(mPossibleGlyphPath, paint);
             paint.reset();
         }
-        GlyphInfo glyphInfo = mHackList.getSequences()[mTryHackIdx];
-        drawSequenceName(canvas, glyphInfo.getName(), paint, mCenter,
-                (mRadius + mPointRadius) * 2 + 24 * mDensity);
+        if (mTryHackIdx < mHackList.getSequences().length) {
+            GlyphInfo glyphInfo = mHackList.getSequences()[mTryHackIdx];
+            drawSequenceName(canvas, glyphInfo.getName(), paint, mCenter,
+                    (mRadius + mPointRadius) * 2 + 24 * mDensity);
+        }
     }
 
     private void drawStopStep(Canvas canvas, Paint paint) {
@@ -304,8 +315,10 @@ class DrawThread extends Thread {
             mGlyphPoints.clear();
         }
         drawHexagram(canvas, paint);
-        drawSequenceName(canvas, Arrays.toString(compareResult()), paint, mCenter,
-                (mRadius + mPointRadius) * 2 + 24 * mDensity);
+        if (mCurrentListCostTime > 0) {
+            drawSequenceName(canvas, Utils.timeToSeconds(mCurrentListCostTime), paint, mCenter,
+                    (mRadius + mPointRadius) * 2 + 24 * mDensity);
+        }
     }
 
     private void findPossibleGlyphPath() {
@@ -336,27 +349,25 @@ class DrawThread extends Thread {
         }
     }
 
-    private boolean[] compareResult() {
-        int size = mGlyphPath.size();
-        boolean[] results = new boolean[size];
+    private boolean compareResult(int index) {
+        boolean result = false;
 //        List<Line> glyphLines;
 //        List<Line> userLines;
-        for (int i = 0; i < mGlyphPath.size(); i++) {
-            PointF[] pointG = mGlyphPath.get(i);
+        PointF[] pointG = mGlyphPath.get(index);
 //            glyphLines = new ArrayList<>();
 //            for (int j = 0; j < pointFS.length - 1; j++) {
 //                Line line = new Line(pointFS[j], pointFS[j + 1]);
 //                glyphLines.add(line);
 //            }
 //
-            PointF[] pointU = mUserGlyphPath.get(i);
-            List<PointF> pointFListG = new ArrayList<>(Arrays.asList(pointG));
-            List<PointF> pointFListU = new ArrayList<>(Arrays.asList(pointU));
-            if (pointFListU.removeAll(pointFListG)) {
-                results[i] = pointFListU.size() == 0;
-            } else {
-                results[i] = false;
-            }
+        PointF[] pointU = mUserGlyphPath.get(index);
+        List<PointF> pointFListG = new ArrayList<>(Arrays.asList(pointG));
+        List<PointF> pointFListU = new ArrayList<>(Arrays.asList(pointU));
+        if (pointFListU.removeAll(pointFListG)) {
+            result = pointFListU.size() == 0;
+        } else {
+            result = false;
+        }
 //            userLines = new ArrayList<>();
 //            for (int j = 0; j < pointFS.length - 1; j++) {
 //                Line line = new Line(pointFS[j], pointFS[j + 1]);
@@ -368,11 +379,7 @@ class DrawThread extends Thread {
 //            } else {
 //                results[i] = false;
 //            }
-        }
-        Message message = mUIHandler.obtainMessage(MSG_TRY_RESULT);
-        message.obj = results;
-        mUIHandler.sendMessage(message);
-        return results;
+        return result;
     }
 
     private void drawHexagram(Canvas canvas, Paint paint) {
@@ -485,4 +492,10 @@ class DrawThread extends Thread {
 //                    || (start.equals(line.end) && end.equals(line.start));
 //        }
 //    }
+
+    protected class TryEndResult {
+        long totalTime;
+        boolean[] stepResults;
+        long[] stepCosts;
+    }
 }

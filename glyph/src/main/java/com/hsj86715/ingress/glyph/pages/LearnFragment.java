@@ -19,7 +19,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.hsj86715.ingress.glyph.EditGlyphActivity;
 import com.hsj86715.ingress.glyph.R;
 import com.hsj86715.ingress.glyph.view.BaseRecyclerAdapter;
 import com.hsj86715.ingress.glyph.view.SimpleItemDecoration;
@@ -51,7 +50,8 @@ public class LearnFragment extends Fragment implements SequenceClickListener {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.frag_learn, container, false);
     }
 
@@ -172,6 +172,7 @@ public class LearnFragment extends Fragment implements SequenceClickListener {
             Snackbar.make(mGlyphView, R.string.toast_last_is_drawing, Snackbar.LENGTH_SHORT).show();
         } else {
             updatePreview(glyphInfo);
+            glyphInfo.setLearnCount(glyphInfo.getLearnCount() + 1);
             new UpdateLearnCountTask().execute(glyphInfo);
         }
     }
@@ -232,7 +233,7 @@ public class LearnFragment extends Fragment implements SequenceClickListener {
     private class UpdateLearnCountTask extends AsyncTask<GlyphInfo, Void, Integer> {
         @Override
         protected Integer doInBackground(GlyphInfo... longs) {
-            return GlyphModel.getInstance(getActivity()).updateGlyphLearCount(longs[0]);
+            return GlyphModel.getInstance(getActivity()).updateGlyphLearnOrPractise(longs[0]);
         }
     }
 

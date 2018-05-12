@@ -21,7 +21,6 @@ import cn.com.farmcode.utility.tools.Logger;
 import cn.com.farmcode.utility.tools.TimeCounter;
 
 import static com.hsj86715.ingress.glyphres.view.practise.DrawThread.MSG_STEP_CHANGE;
-import static com.hsj86715.ingress.glyphres.view.practise.DrawThread.MSG_TRY_RESULT;
 import static com.hsj86715.ingress.glyphres.view.practise.DrawThread.MSG_TRY_STEP_TIME;
 
 
@@ -34,6 +33,8 @@ public class PractiseView extends SurfaceView implements SurfaceHolder.Callback,
     public static final int STEP_SHOW = 1;
     public static final int STEP_TRY = 2;
     public static final int STEP_STOP = 3;
+
+    private static final int MINI_FLING_VELOCITY = 1000;
 
     @IntDef({STEP_PREPARE, STEP_SHOW, STEP_TRY, STEP_STOP})
     public @interface Step {
@@ -52,33 +53,33 @@ public class PractiseView extends SurfaceView implements SurfaceHolder.Callback,
          *
          * @param hackIdx  the index of glyph in hack list
          * @param stepTime current glyph drawing time by user
+         * @param result   current drawing is correct or not
          */
-        void onTryStepEnd(int hackIdx, long stepTime);
+        void onTryStepEnd(int hackIdx, long stepTime, boolean result);
 
         /**
          * Called when the whole hack list drawing finished.
          *
          * @param totalTime    the total time from first glyph draw begin to the last glyph draw end.
          * @param tryStepCosts each glyph drawing time cost by user
+         * @param results      practise result for each glyph in hack list.
          */
-        void onPractiseEnd(long totalTime, long[] tryStepCosts);
+        void onPractiseEnd(long totalTime, long[] tryStepCosts, boolean[] results);
 
         /**
-         * Called when the practise result compute complete.
-         *
-         * @param results practise result for each glyph in hack list.
-         */
-        void onPractiseResult(boolean[] results);
-
-        /**
-         * Call when fling the view with velocityX>300 in STOP step
+         * Called when fling the view with velocityX>300 in STOP step
          */
         void toNextHackList();
 
         /**
-         * Call when fling the view with velocityX<-300 in STOP step
+         * Called when fling the view with velocityX<-300 in STOP step
          */
         void toPreviousHackList();
+
+        /**
+         * Called when fling the view with Math.abs(velocityY)>300 in STOP step
+         */
+        void retryCurrentHackList();
     }
 
     private SurfaceHolder mHolder;
@@ -120,17 +121,13 @@ public class PractiseView extends SurfaceView implements SurfaceHolder.Callback,
                 int step = msg.arg1;
                 mCallback.onStepChanged(step);
                 if (step == STEP_STOP && msg.obj != null) {
-                    mCallback.onPractiseEnd(msg.arg2, (long[]) msg.obj);
+                    DrawThread.TryEndResult result = (DrawThread.TryEndResult) msg.obj;
+                    mCallback.onPractiseEnd(result.totalTime, result.stepCosts, result.stepResults);
                 }
                 return true;
             case MSG_TRY_STEP_TIME:
                 if (msg.obj != null) {
-                    mCallback.onTryStepEnd(msg.arg1, (Long) msg.obj);
-                }
-                return true;
-            case MSG_TRY_RESULT:
-                if (msg.obj != null) {
-                    mCallback.onPractiseResult((boolean[]) msg.obj);
+                    mCallback.onTryStepEnd(msg.arg1, (long) msg.arg2, (Boolean) msg.obj);
                 }
                 return true;
             default:
@@ -269,13 +266,17 @@ public class PractiseView extends SurfaceView implements SurfaceHolder.Callback,
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
         if (Math.abs(velocityX) > Math.abs(velocityY)) {
-            if (Math.abs(velocityX) > 300) {
+            if (Math.abs(velocityX) > MINI_FLING_VELOCITY) {
                 if (velocityX > 0) {
                     mCallback.toNextHackList();
                 } else {
                     mCallback.toPreviousHackList();
                 }
                 return true;
+            }
+        } else if (Math.abs(velocityX) < Math.abs(velocityY)) {
+            if (Math.abs(velocityY) > MINI_FLING_VELOCITY) {
+                mCallback.retryCurrentHackList();
             }
         }
         return false;
