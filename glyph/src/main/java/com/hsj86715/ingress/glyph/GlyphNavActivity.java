@@ -1,6 +1,7 @@
 package com.hsj86715.ingress.glyph;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.StringDef;
@@ -21,6 +22,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import com.hsj86715.ingress.glyph.pages.LearnFragment;
 import com.hsj86715.ingress.glyph.pages.PractiseFragment;
 import com.hsj86715.ingress.glyph.pages.RememberFragment;
+import com.hsj86715.ingress.glyph.pages.StatisticalFragment;
 
 import java.util.Date;
 
@@ -100,19 +102,25 @@ public class GlyphNavActivity extends AppCompatActivity implements
                 menu.setGroupVisible(R.id.option_learn_group, true);
                 menu.setGroupVisible(R.id.option_remember_group, false);
                 menu.setGroupVisible(R.id.option_practise_group, false);
+                menu.setGroupVisible(R.id.option_statistical_group, false);
                 break;
             case REMEMBER:
                 menu.setGroupVisible(R.id.option_learn_group, false);
                 menu.setGroupVisible(R.id.option_remember_group, true);
                 menu.setGroupVisible(R.id.option_practise_group, false);
+                menu.setGroupVisible(R.id.option_statistical_group, false);
                 break;
             case PRACTISE:
                 menu.setGroupVisible(R.id.option_learn_group, false);
                 menu.setGroupVisible(R.id.option_remember_group, true);
                 menu.setGroupVisible(R.id.option_practise_group, true);
+                menu.setGroupVisible(R.id.option_statistical_group, false);
                 break;
             case STATISTICAL:
                 menu.setGroupVisible(R.id.option_learn_group, false);
+                menu.setGroupVisible(R.id.option_remember_group, false);
+                menu.setGroupVisible(R.id.option_practise_group, false);
+                menu.setGroupVisible(R.id.option_statistical_group, true);
                 break;
             default:
                 break;
@@ -130,13 +138,20 @@ public class GlyphNavActivity extends AppCompatActivity implements
     public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_learn:
+                changedScreenOrientation(false);
                 switch2Frag(LEARN);
                 break;
             case R.id.nav_remember:
+                changedScreenOrientation(false);
                 switch2Frag(REMEMBER);
                 break;
             case R.id.nav_practise:
+                changedScreenOrientation(false);
                 switch2Frag(PRACTISE);
+                break;
+            case R.id.nav_statistical:
+                changedScreenOrientation(true);
+                switch2Frag(STATISTICAL);
                 break;
             case R.id.nav_share:
                 shareTheApp();
@@ -162,6 +177,19 @@ public class GlyphNavActivity extends AppCompatActivity implements
         return true;
     }
 
+    private void changedScreenOrientation(boolean toLandScape) {
+        int orientation = getRequestedOrientation();
+        if (toLandScape) {
+            if (orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            }
+        } else {
+            if (orientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            }
+        }
+    }
+
     private void switch2Frag(@Function String whichFrag) {
         Logger.i("switch2Frag >>> " + whichFrag);
         FragmentManager fm = getSupportFragmentManager();
@@ -185,6 +213,8 @@ public class GlyphNavActivity extends AppCompatActivity implements
                 return new RememberFragment();
             case PRACTISE:
                 return new PractiseFragment();
+            case STATISTICAL:
+                return new StatisticalFragment();
             default:
                 return null;
         }

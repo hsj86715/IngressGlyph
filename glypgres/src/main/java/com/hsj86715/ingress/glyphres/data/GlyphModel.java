@@ -339,6 +339,25 @@ public class GlyphModel {
         return hackLists;
     }
 
+    public Map<String, List<HackList>> getHackList(List<HackList> hackLists) {
+        if (hackLists == null || hackLists.isEmpty()) {
+            return null;
+        }
+        Map<String, List<HackList>> hackListMap = new HashMap<>();
+        for (HackList hackList : hackLists) {
+            String key = hackList.getHead().getName();
+            if (hackListMap.containsKey(key)) {
+                List<HackList> subList = hackListMap.get(key);
+                subList.add(hackList);
+            } else {
+                List<HackList> subList = new ArrayList<>();
+                subList.add(hackList);
+                hackListMap.put(key, subList);
+            }
+        }
+        return hackListMap;
+    }
+
     public Path getGlyphPaths(long pathId) {
         SQLiteDatabase database = mHelper.getReadableDatabase();
         Cursor cursor = query(database, DataOpenHelper.TABLE_PATH, PathColumn._ID + "=?",

@@ -21,6 +21,11 @@
     <string name="option_menu_hack4">4 Glyph Hack Sequences</string>
     <string name="option_menu_hack5">5 Glyph Hack Sequences</string>
     <string name="option_menu_random">Random</string>
+    <string name="option_menu_base_learn">Glyph Learn Count</string>
+    <string name="option_menu_base_practise">Glyph Practise Count</string>
+    <string name="option_menu_hack_practise">Hack List Practise Count</string>
+    <string name="option_menu_hack_practise_cost">Hack List Practise Time Cost</string>
+    <string name="option_menu_hack_length">Hack List Length percentage</string>
     <string name="learn_glyph_name">Name: </string>
     <string name="learn_glyph_alisa">Alisa: </string>
     <string name="learn_glyph_cat">Category: </string>

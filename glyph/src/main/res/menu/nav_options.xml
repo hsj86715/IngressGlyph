@@ -35,4 +35,26 @@
             android:title="@string/option_menu_random"
             app:showAsAction="never" />
     </group>
+    <group android:id="@+id/option_statistical_group">
+        <item
+            android:id="@+id/statistical_glyph_learn"
+            android:title="@string/option_menu_base_learn"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/statistical_glyph_practise"
+            android:title="@string/option_menu_base_practise"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/statistical_hack_practise"
+            android:title="@string/option_menu_hack_practise"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/statistical_hack_practise_cost"
+            android:title="@string/option_menu_hack_practise_cost"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/statistical_hack_length"
+            android:title="@string/option_menu_hack_length"
+            app:showAsAction="never" />
+    </group>
 </menu>
