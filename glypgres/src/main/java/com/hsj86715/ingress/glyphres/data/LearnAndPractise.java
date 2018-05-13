@@ -1,6 +1,6 @@
 package com.hsj86715.ingress.glyphres.data;
 
-public class LearnAndPractise {
+class LearnAndPractise {
     protected int learnCount;
     protected int practiseCount;
     protected int practiseCorrect;
