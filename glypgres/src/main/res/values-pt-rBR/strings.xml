@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Prática de ingresso</string>
-    <string name="start_loading">Carregar...</string>
-    <string name="loading_first">O carregamento pode precisar de alguns segundos, esperando...</string>
+    <string name="start_loading">Carregar&#83230;</string>
+    <string name="loading_first">O carregamento pode precisar de alguns segundos, esperando&#83230;</string>
     <string name="develop_by">Desenvolvido por: resistência, ID: hsj86715</string>
     <string name="nav_drawer_open">Abra a gaveta da navegação</string>
     <string name="nav_drawer_close">Fechar gaveta de navegação</string>
-    <string name="nav_header_subtitle">Um assistente para o jogo de ingresso.</string>
+    <string name="nav_header_subtitle">Um assistente de jogo para um agente novato de ingresso.</string>
     <string name="nav_menu_learn">Aprender</string>
     <string name="nav_menu_remember">Lembrar</string>
     <string name="nav_menu_practise">Praticar</string>
@@ -21,6 +21,7 @@
     <string name="option_menu_hack3">3 seqüências de hack glifo</string>
     <string name="option_menu_hack4">4 seqüências de hack glifo</string>
     <string name="option_menu_hack5">5 seqüências de hack glifo</string>
+    <string name="option_menu_random">Aleatório</string>
     <string name="learn_glyph_name">Nome: </string>
     <string name="learn_glyph_alisa">Alisa: </string>
     <string name="learn_glyph_cat">Categoria: </string>
@@ -36,9 +37,9 @@
     <string name="toast_edit_save_success">Salvar o sucesso</string>
     <string name="toast_edit_save_fail">Salvar falhou, tente mais tarde.</string>
     <string name="toast_share_no_app">Pesaroso, nenhum apps pode terminar a ação da parte.</string>
-    <string name="toast_feedback_no_app">Pesaroso, nenhum apps pode terminar a ação do gabarito.</string>
-    <string name="nav_share_text">Uma vez que você usa este app, suas habilidades para o ingresso serão melhoradas rapidamente. Aprenda glifos e lembre-se de todas as seqüências hack indoor, e melhorar o seu desempenho ao ar livre. Aqui está o link https://Play.google.com/Store/apps/Details?ID=CN.com.farmcode.ingress.Sequence</string>
-    <string name="about_app_text">&#160;&#160;&#160;&#160;O aplicativo de seqüência de ingresso é um assistente para ingresso.\n&#160;&#160;&#160;&#160;Os dados utilizados neste aplicativo são coletados no site de ingresso e em outras organizações, ou jogadores. Ele ajuda os jogadores a lembrar os glifos e seqüências hack o mais rapidamente possível dentro de casa, uma vez que você melhorou a sua velocidade e precisão em desenhar os glifos ou seqüências hack, você vai ganhar mais recompensas jogo generoso.\n&#160;&#160;&#160;&#160;Agradecimentos para http://www.iconfont.cn a fonte aberta os ícones do App, e este código de fonte do App  é aberto em https://github.com/hsj86715/IngressGlyph</string>
+    <string name="toast_feedback_no_app">Pesaroso, nenhum apps pode terminar a pação do gabarito.</string>
+    <string name="nav_share_text">Uma vez que você usa este app, suas habilidades para o ingresso serão melhoradas rapidamente. Aprenda glifos e pratique todas as seqüências de hack indoor, e melhorar o seu desempenho ao ar livre. Aqui está o link https://Play.google.com/Store/apps/Details?ID=CN.com.farmcode.ingress.Sequence</string>
+    <string name="about_app_text">&#160;&#160;&#160;&#160;A aplicação prática de ingresso é um assistente do agente novato de Ingres.\n&#160;&#160;&#160;&#160;Os dados utilizados neste aplicativo são coletados no site de ingresso e em outras organizações, ou jogadores. Ele ajuda os jogadores a lembrar os glifos e seqüências hack o mais rapidamente possível dentro de casa, uma vez que você melhorou a sua velocidade e precisão em desenhar os glifos ou seqüências hack, você vai ganhar mais recompensas jogo generoso.\n&#160;&#160;&#160;&#160;Agradecimentos para http://www.iconfont.cn a fonte aberta os ícones do App</string>
     <string name="toast_practise_list_end">Atual é o último nesta lista de hack</string>
     <string name="toast_practise_list_first">Atual é o primeiro nesta lista de hack</string>
 </resources>

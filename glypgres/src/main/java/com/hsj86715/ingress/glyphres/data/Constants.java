@@ -16,4 +16,7 @@ public class Constants {
     public @interface Category {
 
     }
+
+    public static final int X_ANIMATE_DURATION = 250;
+    public static final int Y_ANIMATE_DURATION = X_ANIMATE_DURATION * 5;
 }

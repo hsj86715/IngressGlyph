@@ -8,44 +8,41 @@ import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.BarLineChartBase;
+import com.github.mikephil.charting.charts.Chart;
+import com.github.mikephil.charting.charts.CombinedChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.CombinedData;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.model.GradientColor;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.hsj86715.ingress.glyph.R;
+import com.hsj86715.ingress.glyph.view.IndexAxisValueFormatter;
+import com.hsj86715.ingress.glyph.view.IntegerAxisValueFormatter;
+import com.hsj86715.ingress.glyph.view.XYMarkerView;
 import com.hsj86715.ingress.glyphres.data.Constants;
 import com.hsj86715.ingress.glyphres.data.GlyphInfo;
 import com.hsj86715.ingress.glyphres.data.GlyphModel;
 import com.hsj86715.ingress.glyphres.data.HackList;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
-
-import lecho.lib.hellocharts.gesture.ZoomType;
-import lecho.lib.hellocharts.listener.ViewportChangeListener;
-import lecho.lib.hellocharts.model.Axis;
-import lecho.lib.hellocharts.model.AxisValue;
-import lecho.lib.hellocharts.model.Column;
-import lecho.lib.hellocharts.model.ColumnChartData;
-import lecho.lib.hellocharts.model.ComboLineColumnChartData;
-import lecho.lib.hellocharts.model.Line;
-import lecho.lib.hellocharts.model.LineChartData;
-import lecho.lib.hellocharts.model.PieChartData;
-import lecho.lib.hellocharts.model.PointValue;
-import lecho.lib.hellocharts.model.SliceValue;
-import lecho.lib.hellocharts.model.SubcolumnValue;
-import lecho.lib.hellocharts.model.Viewport;
-import lecho.lib.hellocharts.util.ChartUtils;
-import lecho.lib.hellocharts.view.AbstractChartView;
-import lecho.lib.hellocharts.view.ColumnChartView;
-import lecho.lib.hellocharts.view.ComboLineColumnChartView;
-import lecho.lib.hellocharts.view.PieChartView;
 
 import static com.hsj86715.ingress.glyph.pages.StatisticalFragment.StatisType.GLYPH_LEARN;
 import static com.hsj86715.ingress.glyph.pages.StatisticalFragment.StatisType.GLYPH_PRACTISE;
@@ -56,14 +53,17 @@ import static com.hsj86715.ingress.glyph.pages.StatisticalFragment.StatisType.HA
 /**
  * @author hushujun
  */
-public class StatisticalFragment extends Fragment implements ViewportChangeListener {
+public class StatisticalFragment extends Fragment {
     @IntDef({GLYPH_LEARN, GLYPH_PRACTISE, HACK_PRACTISE, HACK_PRACTISE_COST, HACK_LENGTH})
     @interface StatisType {
         int GLYPH_LEARN = 0, GLYPH_PRACTISE = 1, HACK_PRACTISE = 2, HACK_PRACTISE_COST = 3, HACK_LENGTH = 4;
     }
 
+    private static final int X_ANIMATE_DURATION = 250;
+    private static final int Y_ANIMATE_DURATION = X_ANIMATE_DURATION * 5;
+
     private ViewGroup mContainer;
-    private AbstractChartView mChartView;
+    private Chart mMPChart;
 
     private List<GlyphInfo> mGlyphInfos;
     private List<HackList> mHackLists;
@@ -83,10 +83,6 @@ public class StatisticalFragment extends Fragment implements ViewportChangeListe
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mContainer = view.findViewById(R.id.statistical_container);
-//        mChartView = new ColumnChartView(view.getContext());
-//        mContainer.addView(mChartView);
-//
-//        mChartView.setZoomType(ZoomType.HORIZONTAL);
         new BaseGlyphTask().execute();
     }
 
@@ -112,11 +108,7 @@ public class StatisticalFragment extends Fragment implements ViewportChangeListe
                 if (mGlyphInfos == null || mGlyphInfos.isEmpty()) {
                     new BaseGlyphTask().execute();
                 } else {
-                    if (mChartView != null && mChartView instanceof ColumnChartView) {
-                        return true;
-                    } else {
-                        generateGlyphLearn(mGlyphInfos);
-                    }
+                    generateGlyphLearn(mGlyphInfos);
                 }
                 break;
             case R.id.statistical_glyph_practise:
@@ -148,11 +140,7 @@ public class StatisticalFragment extends Fragment implements ViewportChangeListe
                 if (mHackLists == null || mHackLists.isEmpty()) {
                     new HackListTask().execute();
                 } else {
-                    if (mChartView != null && mChartView instanceof PieChartView) {
-                        return true;
-                    } else {
-                        generateHackLength(mHackLists);
-                    }
+                    generateHackLength(mHackLists);
                 }
                 break;
             default:
@@ -162,152 +150,176 @@ public class StatisticalFragment extends Fragment implements ViewportChangeListe
     }
 
     private void generateGlyphLearn(List<GlyphInfo> glyphInfos) {
-        ColumnChartView chartView = new ColumnChartView(getContext());
-        chartView.setZoomType(ZoomType.HORIZONTAL);
+        BarChart barChart = new BarChart(getContext());
+        barChart.setDrawBarShadow(false);
+        barChart.setDrawValueAboveBar(true);
+        barChart.getDescription().setEnabled(false);
+        barChart.setMaxVisibleValueCount(20);
+        barChart.setScaleYEnabled(false);
+        barChart.setDrawGridBackground(false);
 
         mContainer.removeAllViews();
-        mContainer.addView(chartView);
-        mChartView = chartView;
+        mContainer.addView(barChart, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT));
+        mMPChart = barChart;
 
         if (glyphInfos == null || glyphInfos.isEmpty()) {
-            chartView.setColumnChartData(null);
+            barChart.setData(null);
             return;
         }
-        int numSubcolumns = 1;
-        int numColumns = glyphInfos.size();
-        List<Column> columns = new ArrayList<>();
-        List<SubcolumnValue> values;
-        List axisXValues = new ArrayList();
 
-        for (int i = 0; i < numColumns; i++) {
-            values = new ArrayList<>();
-            for (int j = 0; j < numSubcolumns; j++) {
-                GlyphInfo glyphInfo = glyphInfos.get(i);
-                values.add(new SubcolumnValue(glyphInfo.getLearnCount(), ChartUtils.pickColor()));
-                axisXValues.add(new AxisValue(i).setLabel(glyphInfo.getName()));
-            }
-            Column column = new Column(values);
-            column.setHasLabelsOnlyForSelected(false);
-            columns.add(column);
+        IAxisValueFormatter xAxisFormatter = initChartXAxis(barChart, false);
+        IAxisValueFormatter yAxisFormatter = initChartYAxis(barChart);
+
+        initChartLegend(barChart);
+
+        XYMarkerView mv = new XYMarkerView(getContext(), xAxisFormatter, yAxisFormatter);
+        mv.setChartView(barChart); // For bounds control
+        barChart.setMarker(mv); // Set the marker to the chart
+
+        BarDataSet dataSet;
+        ArrayList<BarEntry> yVals = new ArrayList<>();
+        for (int i = 0; i < glyphInfos.size(); i++) {
+            GlyphInfo glyphInfo = glyphInfos.get(i);
+            yVals.add(new BarEntry(i, glyphInfo.getLearnCount()));
+            ((IndexAxisValueFormatter) xAxisFormatter).add(glyphInfo.getName());
         }
-        ColumnChartData data = new ColumnChartData(columns);
-        data.setAxisXBottom(new Axis(axisXValues).setHasLines(true).setTextColor(Color.BLACK)
-                .setName("Name").setHasTiltedLabels(true).setMaxLabelChars(8));
-        data.setAxisYLeft(new Axis().setHasLines(true).setName("Learn Count").setTextColor(Color.BLACK)
-                .setMaxLabelChars(5));
-        chartView.setColumnChartData(data);
+        dataSet = new BarDataSet(yVals, getString(R.string.option_menu_base_learn));
+        dataSet.setDrawIcons(false);
+
+        dataSet.setGradientColors(initChartBarGradientColor());
+        BarData barData = new BarData(dataSet);
+        barData.setValueTextSize(10f);
+        barData.setBarWidth(0.9f);
+
+        barChart.setData(barData);
+        barChart.animateXY(X_ANIMATE_DURATION, Y_ANIMATE_DURATION);
     }
 
     private void generateGlyphPractise(List<GlyphInfo> glyphInfos) {
-        ComboLineColumnChartView chartView = new ComboLineColumnChartView(getContext());
-        chartView.setZoomType(ZoomType.HORIZONTAL);
+        CombinedChart comChart = new CombinedChart(getContext());
+        comChart.getDescription().setEnabled(false);
+        comChart.setDrawGridBackground(false);
+        comChart.setDrawBarShadow(false);
+        comChart.setScaleYEnabled(false);
+        comChart.setHighlightFullBarEnabled(false);
+        comChart.setDrawOrder(new CombinedChart.DrawOrder[]{
+                CombinedChart.DrawOrder.BAR, CombinedChart.DrawOrder.LINE});
 
         mContainer.removeAllViews();
-        mContainer.addView(chartView);
-        mChartView = chartView;
+        mContainer.addView(comChart, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT));
+        mMPChart = comChart;
 
         if (glyphInfos == null || glyphInfos.isEmpty()) {
-            chartView.setComboLineColumnChartData(null);
+            comChart.setData(null);
             return;
         }
 
-        int numSubcolumns = 1;
-        int numColumns = glyphInfos.size();
-        List<Column> columns = new ArrayList<>();
-        List axisXValues = new ArrayList();
+        IAxisValueFormatter xAxisFormatter = initChartXAxis(comChart, true);
+        IAxisValueFormatter yAxisFormatter = initChartYAxis(comChart);
 
-        List<Line> lines = new ArrayList<>();
-        List<PointValue> pointValues = new ArrayList<>();
+        initChartLegend(comChart);
 
-        for (int i = 0; i < numColumns; i++) {
-            List<SubcolumnValue> columnValues = new ArrayList<>();
-            for (int j = 0; j < numSubcolumns; j++) {
-                GlyphInfo glyphInfo = glyphInfos.get(i);
-                columnValues.add(new SubcolumnValue(glyphInfo.getPractiseCount(), ChartUtils.pickColor()));
-                axisXValues.add(new AxisValue(i).setLabel(glyphInfo.getName()));
+        XYMarkerView mv = new XYMarkerView(getContext(), xAxisFormatter, yAxisFormatter);
+        mv.setChartView(comChart); // For bounds control
+        comChart.setMarker(mv); // Set the marker to the chart
 
-                pointValues.add(new PointValue(i, glyphInfo.getPractiseCorrect()));
-            }
-            Column column = new Column(columnValues);
-            column.setHasLabelsOnlyForSelected(false);
-            columns.add(column);
+        ArrayList<BarEntry> yVals = new ArrayList<>();
+        ArrayList<Entry> lineVals = new ArrayList<Entry>();
+        for (int i = 0; i < glyphInfos.size(); i++) {
+            GlyphInfo glyphInfo = glyphInfos.get(i);
+            yVals.add(new BarEntry(i + 0.5f, glyphInfo.getPractiseCount()));
+            lineVals.add(new Entry(i + 0.5f, glyphInfo.getPractiseCorrect()));
+            ((IndexAxisValueFormatter) xAxisFormatter).add(glyphInfo.getName());
         }
-        ColumnChartData columnData = new ColumnChartData(columns);
+        BarDataSet barDataSet = new BarDataSet(yVals, getString(R.string.option_menu_base_learn));
+        barDataSet.setDrawIcons(false);
 
-        Line line = new Line(pointValues);
-        line.setColor(ChartUtils.COLORS[0]);
-        line.setCubic(false);
-        line.setHasLabels(false);
-        line.setHasLines(true);
-        line.setHasPoints(true);
-        lines.add(line);
-        LineChartData lineData = new LineChartData(lines);
+        barDataSet.setGradientColors(initChartBarGradientColor());
+        BarData barData = new BarData(barDataSet);
+        barData.setValueTextSize(10f);
+        barData.setBarWidth(0.9f);
 
-        ComboLineColumnChartData chartData = new ComboLineColumnChartData(columnData, lineData);
-        chartData.setAxisXBottom(new Axis(axisXValues).setHasLines(true).setTextColor(Color.BLACK)
-                .setName("Name").setHasTiltedLabels(true).setMaxLabelChars(8));
-        chartData.setAxisYLeft(new Axis().setHasLines(true).setName("Practise Count").setTextColor(Color.BLACK)
-                .setMaxLabelChars(5));
-        chartView.setComboLineColumnChartData(chartData);
+        LineData lineData = new LineData();
+        LineDataSet set = new LineDataSet(lineVals, "Practise Correct");
+        set.setColor(Color.rgb(240, 238, 70));
+        set.setLineWidth(2.5f);
+        set.setCircleColor(Color.rgb(240, 238, 70));
+        set.setCircleRadius(5f);
+        set.setFillColor(Color.rgb(240, 238, 70));
+        set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        set.setDrawValues(true);
+        set.setValueTextSize(10f);
+        set.setValueTextColor(Color.rgb(240, 238, 70));
+
+        set.setAxisDependency(YAxis.AxisDependency.LEFT);
+        lineData.addDataSet(set);
+
+        CombinedData data = new CombinedData();
+        data.setData(lineData);
+        data.setData(barData);
+        comChart.setData(data);
+        comChart.animateXY(X_ANIMATE_DURATION, Y_ANIMATE_DURATION);
     }
 
     private void generateHackPractise(List<HackList> hackLists) {
-        ComboLineColumnChartView chartView = new ComboLineColumnChartView(getContext());
-        chartView.setZoomType(ZoomType.HORIZONTAL);
-
-        mContainer.removeAllViews();
-        mContainer.addView(chartView);
-        mChartView = chartView;
-        if (hackLists == null || hackLists.isEmpty()) {
-            chartView.setComboLineColumnChartData(null);
-            return;
-        }
-
-        Map<String, List<HackList>> hackListMap = GlyphModel.getInstance(getContext()).getHackList(hackLists);
-        Set<String> keySet = hackListMap.keySet();
-        Iterator<String> iterator = keySet.iterator();
-
-        List<Column> columns = new ArrayList<>();
-        List axisXValues = new ArrayList();
-
-        List<Line> lines = new ArrayList<>();
-        List<PointValue> pointValues = new ArrayList<>();
-        int index = 0;
-        Random random = new Random();
-        while (iterator.hasNext()) {
-            String key = iterator.next();
-            axisXValues.add(new AxisValue(index).setLabel(key));
-            List<HackList> subHackList = hackListMap.get(key);
-            List<SubcolumnValue> columnValues = new ArrayList<>();
-            for (int i = 0; i < subHackList.size(); i++) {
-                HackList hackList = subHackList.get(i);
-                columnValues.add(new SubcolumnValue(random.nextInt(20), ChartUtils.pickColor()));
-
-                pointValues.add(new PointValue(index, random.nextInt(10)));
-                index++;
-            }
-            Column column = new Column(columnValues);
-            column.setHasLabelsOnlyForSelected(false);
-            columns.add(column);
-            index++;
-        }
-        ColumnChartData columnData = new ColumnChartData(columns);
-
-        Line line = new Line(pointValues);
-        line.setColor(ChartUtils.COLORS[0]);
-        line.setCubic(false);
-        line.setHasLabels(false);
-        line.setHasLines(true);
-        line.setHasPoints(true);
-        lines.add(line);
-        LineChartData lineData = new LineChartData(lines);
-
-        ComboLineColumnChartData chartData = new ComboLineColumnChartData(columnData, lineData);
-        chartData.setAxisXBottom(new Axis(axisXValues).setHasLines(true).setTextColor(Color.BLACK)
-                .setName("Head").setHasTiltedLabels(true).setMaxLabelChars(8));
-        chartData.setAxisYLeft(new Axis().setHasLines(true).setName("Practise Count").setTextColor(Color.BLACK)
-                .setMaxLabelChars(5));
-        chartView.setComboLineColumnChartData(chartData);
+//        ComboLineColumnChartView chartView = new ComboLineColumnChartView(getContext());
+//        chartView.setZoomType(ZoomType.HORIZONTAL);
+//
+//        mContainer.removeAllViews();
+//        mContainer.addView(chartView);
+//        mChartView = chartView;
+//        if (hackLists == null || hackLists.isEmpty()) {
+//            chartView.setComboLineColumnChartData(null);
+//            return;
+//        }
+//
+//        Map<String, List<HackList>> hackListMap = GlyphModel.getInstance(getContext()).getHackList(hackLists);
+//        Set<String> keySet = hackListMap.keySet();
+//        Iterator<String> iterator = keySet.iterator();
+//
+//        List<Column> columns = new ArrayList<>();
+//        List axisXValues = new ArrayList();
+//
+//        List<Line> lines = new ArrayList<>();
+//        List<PointValue> pointValues = new ArrayList<>();
+//        int index = 0;
+//        Random random = new Random();
+//        while (iterator.hasNext()) {
+//            String key = iterator.next();
+//            axisXValues.add(new AxisValue(index).setLabel(key));
+//            List<HackList> subHackList = hackListMap.get(key);
+//            List<SubcolumnValue> columnValues = new ArrayList<>();
+//            for (int i = 0; i < subHackList.size(); i++) {
+//                HackList hackList = subHackList.get(i);
+//                columnValues.add(new SubcolumnValue(random.nextInt(20), ChartUtils.pickColor()));
+//
+//                pointValues.add(new PointValue(index, random.nextInt(10)));
+//                index++;
+//            }
+//            Column column = new Column(columnValues);
+//            column.setHasLabelsOnlyForSelected(false);
+//            columns.add(column);
+//            index++;
+//        }
+//        ColumnChartData columnData = new ColumnChartData(columns);
+//
+//        Line line = new Line(pointValues);
+//        line.setColor(ChartUtils.COLORS[0]);
+//        line.setCubic(false);
+//        line.setHasLabels(false);
+//        line.setHasLines(true);
+//        line.setHasPoints(true);
+//        lines.add(line);
+//        LineChartData lineData = new LineChartData(lines);
+//
+//        ComboLineColumnChartData chartData = new ComboLineColumnChartData(columnData, lineData);
+//        chartData.setAxisXBottom(new Axis(axisXValues).setHasLines(true).setTextColor(Color.BLACK)
+//                .setName("Head").setHasTiltedLabels(true).setMaxLabelChars(8));
+//        chartData.setAxisYLeft(new Axis().setHasLines(true).setName("Practise Count").setTextColor(Color.BLACK)
+//                .setMaxLabelChars(5));
+//        chartView.setComboLineColumnChartData(chartData);
     }
 
     private void generateHackPractiseCost(List<HackList> hackLists) {
@@ -315,45 +327,108 @@ public class StatisticalFragment extends Fragment implements ViewportChangeListe
     }
 
     private void generateHackLength(List<HackList> hackLists) {
-        PieChartView chartView = new PieChartView(getContext());
-        chartView.setZoomType(ZoomType.HORIZONTAL);
-
-        mContainer.removeAllViews();
-        mContainer.addView(chartView);
-        mChartView = chartView;
-        if (hackLists == null || hackLists.isEmpty()) {
-            chartView.setPieChartData(null);
-            return;
-        }
-        int[] count = new int[4];
-        final int index_2 = 0, index_3 = 1, index_4 = 2, index_5 = 3;
-        for (HackList hackList : hackLists) {
-            if (hackList.getLength() == 2) {
-                count[index_2] += hackList.getPractiseCount();
-            } else if (hackList.getLength() == 3) {
-                count[index_3] += hackList.getPractiseCount();
-            } else if (hackList.getLength() == 4) {
-                count[index_4] += hackList.getPractiseCount();
-            } else if (hackList.getLength() == 5) {
-                count[index_5] += hackList.getPractiseCount();
-            }
-        }
-        List<SliceValue> values = new ArrayList<>();
-        for (int i = 0; i < count.length; i++) {
-            SliceValue sliceValue = new SliceValue(count[i], ChartUtils.pickColor());
-            values.add(sliceValue);
-        }
-        PieChartData data = new PieChartData(values);
-        data.setHasLabels(true);
-        data.setHasLabelsOnlyForSelected(false);
-        data.setHasLabelsOutside(false);
-        data.setHasCenterCircle(false);
-        chartView.setPieChartData(data);
+//        PieChartView chartView = new PieChartView(getContext());
+//        chartView.setZoomType(ZoomType.HORIZONTAL);
+//
+//        mContainer.removeAllViews();
+//        mContainer.addView(chartView);
+//        mChartView = chartView;
+//        if (hackLists == null || hackLists.isEmpty()) {
+//            chartView.setPieChartData(null);
+//            return;
+//        }
+//        int[] count = new int[4];
+//        final int index_2 = 0, index_3 = 1, index_4 = 2, index_5 = 3;
+//        for (HackList hackList : hackLists) {
+//            if (hackList.getLength() == 2) {
+//                count[index_2] += hackList.getPractiseCount();
+//            } else if (hackList.getLength() == 3) {
+//                count[index_3] += hackList.getPractiseCount();
+//            } else if (hackList.getLength() == 4) {
+//                count[index_4] += hackList.getPractiseCount();
+//            } else if (hackList.getLength() == 5) {
+//                count[index_5] += hackList.getPractiseCount();
+//            }
+//        }
+//        List<SliceValue> values = new ArrayList<>();
+//        for (int i = 0; i < count.length; i++) {
+//            SliceValue sliceValue = new SliceValue(count[i], ChartUtils.pickColor());
+//            values.add(sliceValue);
+//        }
+//        PieChartData data = new PieChartData(values);
+//        data.setHasLabels(true);
+//        data.setHasLabelsOnlyForSelected(false);
+//        data.setHasLabelsOutside(false);
+//        data.setHasCenterCircle(false);
+//        chartView.setPieChartData(data);
     }
 
-    @Override
-    public void onViewportChanged(Viewport viewport) {
-        mChartView.setCurrentViewport(viewport);
+    private IAxisValueFormatter initChartXAxis(BarLineChartBase barChart, boolean miniZero) {
+        IAxisValueFormatter xAxisFormatter = new IndexAxisValueFormatter<String>();
+
+        XAxis xAxis = barChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawGridLines(false);
+        xAxis.setGranularity(1f); // only intervals of 1 day
+        xAxis.setLabelCount(7);
+        if (miniZero) {
+            xAxis.setAxisMinimum(0f);
+        }
+        xAxis.setValueFormatter(xAxisFormatter);
+        return xAxisFormatter;
+    }
+
+    private IAxisValueFormatter initChartYAxis(BarLineChartBase barChart) {
+        IAxisValueFormatter yAxisFormatter = new IntegerAxisValueFormatter();
+
+        YAxis leftAxis = barChart.getAxisLeft();
+        leftAxis.setLabelCount(8, false);
+        leftAxis.setValueFormatter(yAxisFormatter);
+        leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
+        leftAxis.setSpaceTop(5f);
+        leftAxis.setSpaceBottom(0);
+        leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
+
+        YAxis rightAxis = barChart.getAxisRight();
+        rightAxis.setDrawGridLines(false);
+        rightAxis.setLabelCount(8, false);
+        rightAxis.setValueFormatter(yAxisFormatter);
+        rightAxis.setSpaceTop(5f);
+        rightAxis.setSpaceBottom(0);
+        rightAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
+        return yAxisFormatter;
+    }
+
+    private List<GradientColor> initChartBarGradientColor() {
+        int[] colorRes = new int[]{android.R.color.holo_blue_bright, android.R.color.holo_blue_light,
+                android.R.color.holo_blue_dark, android.R.color.holo_green_light, android.R.color.holo_green_dark,
+                android.R.color.holo_orange_light, android.R.color.holo_orange_dark, android.R.color.holo_purple,
+                android.R.color.holo_red_light, android.R.color.holo_red_dark};
+        List<GradientColor> gradientColors = new ArrayList<>();
+        int startIdx;
+        int endIdx;
+        for (int i = 0; i < colorRes.length; i++) {
+            startIdx = i;
+            endIdx = startIdx + 1;
+            if (endIdx == colorRes.length) {
+                endIdx = 0;
+            }
+            gradientColors.add(new GradientColor(ContextCompat.getColor(getContext(), colorRes[startIdx]),
+                    ContextCompat.getColor(getContext(), colorRes[endIdx])));
+        }
+        return gradientColors;
+    }
+
+    private void initChartLegend(Chart chart) {
+        Legend l = chart.getLegend();
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
+        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        l.setDrawInside(false);
+        l.setForm(Legend.LegendForm.SQUARE);
+        l.setFormSize(10f);
+        l.setTextSize(12f);
+        l.setXEntrySpace(4f);
     }
 
     private class BaseGlyphTask extends AsyncTask<Void, Void, List<GlyphInfo>> {

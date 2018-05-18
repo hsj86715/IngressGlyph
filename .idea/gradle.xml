@@ -8,9 +8,10 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/MPChartExample" />
+            <option value="$PROJECT_DIR$/MPChartLib" />
             <option value="$PROJECT_DIR$/glypgres" />
             <option value="$PROJECT_DIR$/glyph" />
-            <option value="$PROJECT_DIR$/mydemo" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

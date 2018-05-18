@@ -41,12 +41,15 @@ public class Utils {
         return arrayPath;
     }
 
-    public static String timeToSeconds(long time) {
+    public static String timeToSecondStr(long time) {
+        return timeToSeconds(time) + " s";
+    }
+
+    public static float timeToSeconds(long time) {
         if (time < 0) {
-            return "";
+            return 0f;
         }
-        float sec = time / 1000.0f;
-        return sec + " s";
+        return time / 1000.0f;
     }
 
     public static String timeToMinSec(long time) {

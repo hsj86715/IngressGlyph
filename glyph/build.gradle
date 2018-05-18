@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
 
 android {
     signingConfigs {
@@ -35,5 +36,6 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':glypgres')
+    implementation project(':MPChartLib')
 }
 apply plugin: 'com.google.gms.google-services'

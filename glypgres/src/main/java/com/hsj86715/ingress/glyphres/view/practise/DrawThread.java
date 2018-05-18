@@ -35,7 +35,7 @@ class DrawThread extends Thread {
     static final int MSG_STEP_CHANGE = 0;
     static final int MSG_TRY_STEP_TIME = 1;
 
-    protected boolean isDrawing = false;
+    protected boolean isDrawing = true;
     private static final int PREPARE_INTERVAL = 1000;
     private static final int SHOW_INTERVAL = 2000;
     private static final int TRY_INTERVAL = 30;
@@ -316,7 +316,7 @@ class DrawThread extends Thread {
         }
         drawHexagram(canvas, paint);
         if (mCurrentListCostTime > 0) {
-            drawSequenceName(canvas, Utils.timeToSeconds(mCurrentListCostTime), paint, mCenter,
+            drawSequenceName(canvas, Utils.timeToSecondStr(mCurrentListCostTime), paint, mCenter,
                     (mRadius + mPointRadius) * 2 + 24 * mDensity);
         }
     }
@@ -342,8 +342,12 @@ class DrawThread extends Thread {
                         startx = pointF.x;
                         starty = pointF.y;
                     }
-                    mPossiblePoints.add(pointF);
-                    break;
+                    if (mPossiblePoints.contains(pointF)) {
+                        break;
+                    } else {
+                        mPossiblePoints.add(pointF);
+                        break;
+                    }
                 }
             }
         }
@@ -363,10 +367,18 @@ class DrawThread extends Thread {
         PointF[] pointU = mUserGlyphPath.get(index);
         List<PointF> pointFListG = new ArrayList<>(Arrays.asList(pointG));
         List<PointF> pointFListU = new ArrayList<>(Arrays.asList(pointU));
-        if (pointFListU.removeAll(pointFListG)) {
-            result = pointFListU.size() == 0;
+        if (pointFListU.size() >= pointFListG.size()) {
+            if (pointFListU.removeAll(pointFListG)) {
+                result = pointFListU.size() == 0;
+            } else {
+                result = false;
+            }
         } else {
-            result = false;
+            if (pointFListG.removeAll(pointFListU)) {
+                result = pointFListG.size() == 0;
+            } else {
+                result = false;
+            }
         }
 //            userLines = new ArrayList<>();
 //            for (int j = 0; j < pointFS.length - 1; j++) {

@@ -179,7 +179,7 @@ public class MultiGlyphView extends IconView {
         paint.setTextAlign(Paint.Align.LEFT);
         paint.setTextSize(mTextSize / 2);
         paint.setColor(mTextColor);
-        canvas.drawText(Utils.timeToSeconds(timeCost), rectF.left, rectF.top - mTextSize / 2, paint);
+        canvas.drawText(Utils.timeToSecondStr(timeCost), rectF.left, rectF.top - mTextSize / 2, paint);
         paint.reset();
     }
 

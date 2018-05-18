@@ -6,7 +6,7 @@
     <string name="develop_by">开发：蓝军， ID: hsj86715</string>
     <string name="nav_drawer_open">打开导航抽屉</string>
     <string name="nav_drawer_close">关闭导航抽屉</string>
-    <string name="nav_header_subtitle">Ingress的游戏助手</string>
+    <string name="nav_header_subtitle">Ingress新手特工的游戏助手</string>
     <string name="nav_menu_learn">学习</string>
     <string name="nav_menu_remember">记忆</string>
     <string name="nav_menu_practise">练习</string>
@@ -21,6 +21,7 @@
     <string name="option_menu_hack3">3铭文入侵序列</string>
     <string name="option_menu_hack4">4铭文入侵序列</string>
     <string name="option_menu_hack5">5铭文入侵序列</string>
+    <string name="option_menu_random">随机</string>
     <string name="learn_glyph_name">名称: </string>
     <string name="learn_glyph_alisa">别名: </string>
     <string name="learn_glyph_cat">类别: </string>
@@ -37,8 +38,8 @@
     <string name="toast_edit_save_fail">保存失败，请稍后重试。</string>
     <string name="toast_share_no_app">对不起, 没有应用程序可以完成分享操作。</string>
     <string name="toast_feedback_no_app">对不起, 没有应用程序可以完成反馈操作。</string>
-    <string name="nav_share_text">一旦你使用这个应用程序，你的Ingress技能将得到迅速改善。在室内学习铭文并记住所有的黑客序列，从而并提升您在户外的游戏表现。这里是链接 https://play.google.com/store/apps/details?id=cn.com.farmcode.ingress.sequence</string>
-    <string name="about_app_text">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Ingress Sequence应用程序是Ingress的助手。\n&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;此应用程序中使用的数据是从Ingress网站和其他第三方组织或玩家收集的。它帮助玩家在室内尽快记住铭文和黑客序列，一旦你提高了你绘制标志铭文或黑客序列的速度和准确性，你将获得更丰厚的游戏奖励。\n&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;感谢 http://www.iconfont.cn 开源了应用程序图标，这个应用程序的源代码也开源在 https://github.com/hsj86715/IngressGlyph</string>
+    <string name="nav_share_text">一旦你使用这个应用程序，你的Ingress技能将得到迅速改善。在室内学习铭文并练习所有的黑客序列，从而并提升您在户外的游戏表现。这里是链接 https://play.google.com/store/apps/details?id=cn.com.farmcode.ingress.sequence</string>
+    <string name="about_app_text">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Ingress练习应用程序是Ingress新手特工的助手。\n&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;此应用程序中使用的数据是从Ingress网站和其他第三方组织或玩家收集的。它帮助玩家在室内尽快记住铭文和黑客序列，一旦你提高了你绘制标志铭文或黑客序列的速度和准确性，你将获得更丰厚的游戏奖励。\n&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;感谢 http://www.iconfont.cn 开源了应用程序图标</string>
     <string name="toast_practise_list_end">当前已经是第一个入侵序列</string>
     <string name="toast_practise_list_first">当前已经是最后一个入侵序列</string>
 </resources>

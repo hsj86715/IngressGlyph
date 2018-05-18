@@ -8,12 +8,15 @@ buildscript {
         minSdk = 16
         targetSdk = 27
         supportLibsVersion = '27.1.1'
-        appVersionCode = 120
-        appVersionName = "1.2.0"
+        appVersionCode = 121
+        appVersionName = "1.2.1"
     }
     repositories {
         jcenter()
         google()
+        maven {
+            url 'https://maven.fabric.io/public'
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.2'
@@ -22,6 +25,8 @@ buildscript {
         // in the individual module build.gradle files
 //        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version" //kotlin依赖
         classpath 'com.google.gms:google-services:3.2.1'
+        classpath 'io.fabric.tools:gradle:1.25.1'
+        classpath "io.realm:realm-gradle-plugin:4.2.0"
     }
 }
 
@@ -34,6 +39,9 @@ allprojects {
         }
         maven {
             url 'https://jitpack.io'
+        }
+        maven {
+            url 'https://maven.google.com/'
         }
     }
 }

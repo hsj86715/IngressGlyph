@@ -27,14 +27,13 @@ import static com.hsj86715.ingress.glyphres.view.practise.DrawThread.MSG_TRY_STE
 /**
  * @author hushujun
  */
-public class PractiseView extends SurfaceView implements SurfaceHolder.Callback, Handler.Callback,
-        GestureDetector.OnGestureListener {
+public class PractiseView extends SurfaceView implements SurfaceHolder.Callback, Handler.Callback {
     public static final int STEP_PREPARE = 0;
     public static final int STEP_SHOW = 1;
     public static final int STEP_TRY = 2;
     public static final int STEP_STOP = 3;
 
-    private static final int MINI_FLING_VELOCITY = 1000;
+    private static final int MINI_FLING_VELOCITY = 500;
 
     @IntDef({STEP_PREPARE, STEP_SHOW, STEP_TRY, STEP_STOP})
     public @interface Step {
@@ -144,7 +143,32 @@ public class PractiseView extends SurfaceView implements SurfaceHolder.Callback,
         //保持屏幕长亮
         setKeepScreenOn(true);
         mHolder.setFormat(PixelFormat.TRANSLUCENT);
-        mDetectorCompat = new GestureDetectorCompat(context, this);
+        mDetectorCompat = new GestureDetectorCompat(context, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onDown(MotionEvent e) {
+                return true;
+            }
+
+            @Override
+            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+                if (Math.abs(velocityX) > Math.abs(velocityY)) {
+                    if (Math.abs(velocityX) > MINI_FLING_VELOCITY) {
+                        if (velocityX > 0) {
+                            mCallback.toPreviousHackList();
+                        } else {
+                            mCallback.toNextHackList();
+                        }
+                        return true;
+                    }
+                } else if (Math.abs(velocityX) < Math.abs(velocityY)) {
+                    if (Math.abs(velocityY) > MINI_FLING_VELOCITY) {
+                        mCallback.retryCurrentHackList();
+                        return true;
+                    }
+                }
+                return super.onFling(e1, e2, velocityX, velocityY);
+            }
+        });
     }
 
     public void setHackList(HackList hackList) {
@@ -236,50 +260,6 @@ public class PractiseView extends SurfaceView implements SurfaceHolder.Callback,
                 break;
         }
         return true;
-    }
-
-    @Override
-    public boolean onDown(MotionEvent e) {
-        return true;
-    }
-
-    @Override
-    public void onShowPress(MotionEvent e) {
-
-    }
-
-    @Override
-    public boolean onSingleTapUp(MotionEvent e) {
-        return false;
-    }
-
-    @Override
-    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-        return false;
-    }
-
-    @Override
-    public void onLongPress(MotionEvent e) {
-
-    }
-
-    @Override
-    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        if (Math.abs(velocityX) > Math.abs(velocityY)) {
-            if (Math.abs(velocityX) > MINI_FLING_VELOCITY) {
-                if (velocityX > 0) {
-                    mCallback.toNextHackList();
-                } else {
-                    mCallback.toPreviousHackList();
-                }
-                return true;
-            }
-        } else if (Math.abs(velocityX) < Math.abs(velocityY)) {
-            if (Math.abs(velocityY) > MINI_FLING_VELOCITY) {
-                mCallback.retryCurrentHackList();
-            }
-        }
-        return false;
     }
 
     @Override

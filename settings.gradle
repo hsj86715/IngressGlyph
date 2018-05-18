@@ -1,1 +1,1 @@
-include ':glyph', ':glypgres', ':mydemo'
+include ':glyph', ':glypgres', 'MPChartLib', 'MPChartExample'

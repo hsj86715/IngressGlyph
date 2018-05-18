@@ -138,21 +138,21 @@ public class GlyphNavActivity extends AppCompatActivity implements
     public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_learn:
-                changedScreenOrientation(false);
+//                changedScreenOrientation(false);
                 switch2Frag(LEARN);
                 break;
             case R.id.nav_remember:
-                changedScreenOrientation(false);
+//                changedScreenOrientation(false);
                 switch2Frag(REMEMBER);
                 break;
             case R.id.nav_practise:
-                changedScreenOrientation(false);
+//                changedScreenOrientation(false);
                 switch2Frag(PRACTISE);
                 break;
-            case R.id.nav_statistical:
-                changedScreenOrientation(true);
-                switch2Frag(STATISTICAL);
-                break;
+//            case R.id.nav_statistical:
+//                changedScreenOrientation(true);
+//                switch2Frag(STATISTICAL);
+//                break;
             case R.id.nav_share:
                 shareTheApp();
 
