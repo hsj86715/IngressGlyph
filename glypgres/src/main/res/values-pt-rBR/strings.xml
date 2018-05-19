@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Prática de ingresso</string>
-    <string name="start_loading">Carregar&#83230;</string>
-    <string name="loading_first">O carregamento pode precisar de alguns segundos, esperando&#83230;</string>
+    <string name="start_loading">Carregar...</string>
+    <string name="loading_first">O carregamento pode precisar de alguns segundos, esperando...</string>
     <string name="develop_by">Desenvolvido por: resistência, ID: hsj86715</string>
     <string name="nav_drawer_open">Abra a gaveta da navegação</string>
     <string name="nav_drawer_close">Fechar gaveta de navegação</string>

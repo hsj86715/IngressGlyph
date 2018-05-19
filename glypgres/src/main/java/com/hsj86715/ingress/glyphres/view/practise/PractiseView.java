@@ -34,6 +34,11 @@ public class PractiseView extends SurfaceView implements SurfaceHolder.Callback,
     public static final int STEP_STOP = 3;
 
     private static final int MINI_FLING_VELOCITY = 500;
+    /**
+     * The touch event move edge, 5 px
+     */
+    private static final int EDGE_REGION = 5;
+    private boolean isUped = false;
 
     @IntDef({STEP_PREPARE, STEP_SHOW, STEP_TRY, STEP_STOP})
     public @interface Step {
@@ -225,6 +230,7 @@ public class PractiseView extends SurfaceView implements SurfaceHolder.Callback,
         float y = event.getY();
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+                isUped = false;
                 TimeCounter.stepStart();
 
                 mDrawThread.mMovePath.clear();
@@ -251,10 +257,10 @@ public class PractiseView extends SurfaceView implements SurfaceHolder.Callback,
 
                 if (mDrawThread != null) {
                     mDrawThread.tryNextSequence(stepTime);
+                    mDrawThread.mTouchPath.reset();
+                    mDrawThread.mPossibleGlyphPath.reset();
+                    mDrawThread.mMovePath.clear();
                 }
-                mDrawThread.mTouchPath.reset();
-                mDrawThread.mPossibleGlyphPath.reset();
-                mDrawThread.mMovePath.clear();
                 break;
             default:
                 break;
@@ -266,8 +272,8 @@ public class PractiseView extends SurfaceView implements SurfaceHolder.Callback,
     public void surfaceCreated(SurfaceHolder holder) {
         if (mDrawThread == null) {
             mDrawThread = new DrawThread(getResources().getDisplayMetrics().density, getMeasuredWidth(), mHolder, mUIHandler);
+            mDrawThread.start();
         }
-        mDrawThread.start();
         mDrawThread.isDrawing = true;
     }
 

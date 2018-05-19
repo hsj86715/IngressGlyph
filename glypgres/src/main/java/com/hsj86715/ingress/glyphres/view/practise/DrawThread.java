@@ -83,7 +83,7 @@ class DrawThread extends Thread {
         mTouchPaint.setStyle(Paint.Style.STROKE);
         mTouchPaint.setStrokeJoin(Paint.Join.ROUND);
         mTouchPaint.setStrokeCap(Paint.Cap.ROUND);
-        mTouchPaint.setMaskFilter(new BlurMaskFilter(10, BlurMaskFilter.Blur.SOLID));
+        mTouchPaint.setMaskFilter(new BlurMaskFilter(15, BlurMaskFilter.Blur.SOLID));
 
         mPaint = new Paint();
 
@@ -151,6 +151,10 @@ class DrawThread extends Thread {
     public void run() {
         super.run();
         while (isDrawing) {
+            mCanvas = mHolder.lockCanvas();
+            if (mCanvas == null) {
+                continue;
+            }
             int interval;
             switch (mStep) {
                 case PractiseView.STEP_PREPARE:
@@ -168,7 +172,7 @@ class DrawThread extends Thread {
                     break;
             }
             long start = System.currentTimeMillis();
-            draw();
+            draw(mCanvas);
             long end = System.currentTimeMillis();
 
             if (end - start < interval) {
@@ -181,24 +185,25 @@ class DrawThread extends Thread {
         }
     }
 
-    private void draw() {
+    private void draw(Canvas canvas) {
         try {
-            mCanvas = mHolder.lockCanvas();
             switch (mStep) {
                 case PractiseView.STEP_PREPARE:
-                    drawPrepareStep(mCanvas, mPaint);
+                    drawPrepareStep(canvas, mPaint);
                     break;
                 case PractiseView.STEP_SHOW:
-                    drawShowStep(mCanvas, mPaint);
+                    drawShowStep(canvas, mPaint);
                     break;
                 case PractiseView.STEP_TRY:
-                    drawTryStep(mCanvas, mPaint);
+                    drawTryStep(canvas, mPaint);
                     break;
                 case PractiseView.STEP_STOP:
                 default:
-                    drawStopStep(mCanvas, mPaint);
+                    drawStopStep(canvas, mPaint);
                     break;
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             if (mCanvas != null) {
                 mHolder.unlockCanvasAndPost(mCanvas);
@@ -342,9 +347,7 @@ class DrawThread extends Thread {
                         startx = pointF.x;
                         starty = pointF.y;
                     }
-                    if (mPossiblePoints.contains(pointF)) {
-                        break;
-                    } else {
+                    if (mPossiblePoints.isEmpty() || !mPossiblePoints.get(mPossiblePoints.size() - 1).equals(pointF)) {
                         mPossiblePoints.add(pointF);
                         break;
                     }
@@ -355,15 +358,7 @@ class DrawThread extends Thread {
 
     private boolean compareResult(int index) {
         boolean result = false;
-//        List<Line> glyphLines;
-//        List<Line> userLines;
         PointF[] pointG = mGlyphPath.get(index);
-//            glyphLines = new ArrayList<>();
-//            for (int j = 0; j < pointFS.length - 1; j++) {
-//                Line line = new Line(pointFS[j], pointFS[j + 1]);
-//                glyphLines.add(line);
-//            }
-//
         PointF[] pointU = mUserGlyphPath.get(index);
         List<PointF> pointFListG = new ArrayList<>(Arrays.asList(pointG));
         List<PointF> pointFListU = new ArrayList<>(Arrays.asList(pointU));
@@ -380,17 +375,6 @@ class DrawThread extends Thread {
                 result = false;
             }
         }
-//            userLines = new ArrayList<>();
-//            for (int j = 0; j < pointFS.length - 1; j++) {
-//                Line line = new Line(pointFS[j], pointFS[j + 1]);
-//                userLines.add(line);
-//            }
-//
-//            if (userLines.removeAll(glyphLines)) {
-//                results[i] = userLines.size() == 0;
-//            } else {
-//                results[i] = false;
-//            }
         return result;
     }
 
@@ -481,29 +465,6 @@ class DrawThread extends Thread {
         paint.getTextBounds(name, 0, name.length(), textBounds);
         canvas.drawText(name, cx, cy - textBounds.centerY(), paint);
     }
-
-//    private class Line {
-//        private PointF start;
-//        private PointF end;
-//
-//        Line(PointF start, PointF end) {
-//            this.start = start;
-//            this.end = end;
-//        }
-//
-//        @Override
-//        public boolean equals(Object o) {
-//            if (this == o) {
-//                return true;
-//            }
-//            if (o == null || getClass() != o.getClass()) {
-//                return false;
-//            }
-//            Line line = (Line) o;
-//            return (start.equals(line.start) && end.equals(line.end))
-//                    || (start.equals(line.end) && end.equals(line.start));
-//        }
-//    }
 
     protected class TryEndResult {
         long totalTime;

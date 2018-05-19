@@ -36,7 +36,8 @@ public class PractiseFragment extends Fragment implements PractiseView.Callback 
 
     private int mPractiseIdx = 0;
     private int mRandomCurrent = 0;
-    private boolean isRandom = false;
+    private boolean isRandom = true;
+    private Random mRandom = new Random();
 
     private FirebaseAnalytics mFirebaseAnalytics;
 
@@ -53,8 +54,8 @@ public class PractiseFragment extends Fragment implements PractiseView.Callback 
         mPractiseView = view.findViewById(R.id.practice_view);
         mHackResultView = view.findViewById(R.id.practise_result);
         mPractiseView.setCallback(this);
-        new HackListTask().execute(2);
-        updateToolBarSubTitle(R.string.option_menu_hack2);
+        new HackListTask().execute(0);
+        updateToolBarSubTitle(R.string.option_menu_random);
     }
 
     @Override
@@ -116,11 +117,17 @@ public class PractiseFragment extends Fragment implements PractiseView.Callback 
 
     private void handleTaskResult(List<HackList> hackLists) {
         mHackLists = hackLists;
-        if (mHackLists != null) {
-            if (mPractiseView != null) {
-                mPractiseView.setHackList(mHackLists.get(mPractiseIdx));
-            }
+        if (mHackLists == null || mPractiseView == null) {
+            return;
         }
+        int index;
+        if (isRandom) {
+            mRandomCurrent = mRandom.nextInt(hackLists.size());
+            index = mRandomCurrent;
+        } else {
+            index = mPractiseIdx;
+        }
+        mPractiseView.setHackList(mHackLists.get(index));
     }
 
     @Override
@@ -132,7 +139,13 @@ public class PractiseFragment extends Fragment implements PractiseView.Callback 
 
     @Override
     public void onTryStepEnd(int hackIdx, long stepTime, boolean result) {
-        GlyphInfo glyphInfo = mHackLists.get(mPractiseIdx).getSequences()[hackIdx];
+        int index;
+        if (isRandom) {
+            index = mRandomCurrent;
+        } else {
+            index = mPractiseIdx;
+        }
+        GlyphInfo glyphInfo = mHackLists.get(index).getSequences()[hackIdx];
         glyphInfo.setPractiseCount(glyphInfo.getPractiseCount() + 1);
         if (result) {
             glyphInfo.setPractiseCorrect(glyphInfo.getPractiseCorrect() + 1);
@@ -145,8 +158,14 @@ public class PractiseFragment extends Fragment implements PractiseView.Callback 
 
     @Override
     public void onPractiseEnd(long totalTime, long[] tryStepCosts, boolean[] results) {
-        mHackResultView.setSequenceResult(mHackLists.get(mPractiseIdx).getSequences(), tryStepCosts, results);
-        HackList hackList = mHackLists.get(mPractiseIdx);
+        int index;
+        if (isRandom) {
+            index = mRandomCurrent;
+        } else {
+            index = mPractiseIdx;
+        }
+        mHackResultView.setSequenceResult(mHackLists.get(index).getSequences(), tryStepCosts, results);
+        HackList hackList = mHackLists.get(index);
         hackList.setPractiseCount(hackList.getPractiseCount() + 1);
         boolean success = true;
         for (boolean result : results) {
@@ -169,9 +188,13 @@ public class PractiseFragment extends Fragment implements PractiseView.Callback 
         if (mHackLists == null || mHackLists.isEmpty()) {
             return;
         }
+
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Event.VIEW_ITEM, "Next");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
         if (isRandom) {
-            Random random = new Random();
-            mRandomCurrent = random.nextInt(mHackLists.size());
+            mRandomCurrent = mRandom.nextInt(mHackLists.size());
             mPractiseView.setHackList(mHackLists.get(mRandomCurrent));
         } else {
             if (mPractiseIdx >= mHackLists.size() - 1) {
@@ -188,9 +211,13 @@ public class PractiseFragment extends Fragment implements PractiseView.Callback 
         if (mHackLists == null || mHackLists.isEmpty()) {
             return;
         }
+
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Event.VIEW_ITEM, "Previous");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
         if (isRandom) {
-            Random random = new Random();
-            mRandomCurrent = random.nextInt(mHackLists.size());
+            mRandomCurrent = mRandom.nextInt(mHackLists.size());
             mPractiseView.setHackList(mHackLists.get(mRandomCurrent));
         } else {
             if (mPractiseIdx <= 0) {
