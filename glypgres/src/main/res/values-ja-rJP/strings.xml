@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Ingress練習</string>
     <string name="start_loading">読み込み。。。</string>
     <string name="loading_first">ローディングは数秒を、待っている必要があるかもしれない。。。</string>
     <string name="develop_by">開発: 抵抗、ID: hsj86715</string>

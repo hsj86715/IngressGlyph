@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Prática de ingresso</string>
     <string name="start_loading">Carregar...</string>
     <string name="loading_first">O carregamento pode precisar de alguns segundos, esperando...</string>
     <string name="develop_by">Desenvolvido por: resistência, ID: hsj86715</string>
