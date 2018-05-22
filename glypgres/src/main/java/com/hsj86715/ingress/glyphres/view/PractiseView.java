@@ -373,6 +373,9 @@ public class PractiseView extends SurfaceView implements SurfaceHolder.Callback,
 
         void setHackList(HackList hackList) {
             mHackList = hackList;
+            mShowHackIdx = 0;
+            mTryHackIdx = 0;
+            mPrepareCountDown = 3;
             setStep(PractiseView.STEP_PREPARE);
             Message msg = mUIHandler.obtainMessage(MSG_STEP_CHANGE);
             msg.arg1 = PractiseView.STEP_PREPARE;
@@ -632,9 +635,12 @@ public class PractiseView extends SurfaceView implements SurfaceHolder.Callback,
         }
 
         private boolean compareResult(int index) {
-            boolean result = false;
             PointF[] pointG = mGlyphPath.get(index);
             PointF[] pointU = mUserGlyphPath.get(index);
+            if (pointU == null || pointU.length < 1) {
+                return false;
+            }
+            boolean result = false;
             List<PointF> pointFListG = new ArrayList<>(Arrays.asList(pointG));
             List<PointF> pointFListU = new ArrayList<>(Arrays.asList(pointU));
             if (pointFListU.size() >= pointFListG.size()) {
