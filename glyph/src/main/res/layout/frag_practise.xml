@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.hsj86715.ingress.glyphres.view.practise.PractiseView
+    <com.hsj86715.ingress.glyphres.view.PractiseView
         android:id="@+id/practice_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

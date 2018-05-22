@@ -19,7 +19,7 @@ import com.hsj86715.ingress.glyphres.data.GlyphInfo;
 import com.hsj86715.ingress.glyphres.data.GlyphModel;
 import com.hsj86715.ingress.glyphres.data.HackList;
 import com.hsj86715.ingress.glyphres.view.MultiGlyphView;
-import com.hsj86715.ingress.glyphres.view.practise.PractiseView;
+import com.hsj86715.ingress.glyphres.view.PractiseView;
 
 import java.util.List;
 import java.util.Random;
