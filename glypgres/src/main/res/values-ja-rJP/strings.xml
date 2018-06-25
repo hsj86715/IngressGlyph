@@ -10,6 +10,7 @@
     <string name="nav_menu_remember">覚えて</string>
     <string name="nav_menu_practise">練習</string>
     <string name="nav_menu_statistical">統計</string>
+    <string name="nav_menu_cheat">情報</string>
     <string name="nav_menu_about">に関しては</string>
     <string name="nav_menu_communicate">通信</string>
     <string name="nav_menu_share">共有</string>

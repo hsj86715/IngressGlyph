@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.hsj86715.ingress.glyph.pages.CheatFragment;
 import com.hsj86715.ingress.glyph.pages.LearnFragment;
 import com.hsj86715.ingress.glyph.pages.PractiseFragment;
 import com.hsj86715.ingress.glyph.pages.RememberFragment;
@@ -28,6 +29,7 @@ import java.util.Date;
 
 import cn.com.farmcode.utility.tools.Logger;
 
+import static com.hsj86715.ingress.glyph.GlyphNavActivity.Function.CHEAT;
 import static com.hsj86715.ingress.glyph.GlyphNavActivity.Function.LEARN;
 import static com.hsj86715.ingress.glyph.GlyphNavActivity.Function.PRACTISE;
 import static com.hsj86715.ingress.glyph.GlyphNavActivity.Function.REMEMBER;
@@ -40,12 +42,14 @@ public class GlyphNavActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener {
     private String mFunction = LEARN;
 
-    @StringDef({LEARN, REMEMBER, PRACTISE, STATISTICAL})
+    @StringDef({LEARN, REMEMBER, PRACTISE, STATISTICAL, CHEAT})
     @interface Function {
-        String LEARN = "learn", REMEMBER = "remember", PRACTISE = "practise", STATISTICAL = "statistical";
+        String LEARN = "learn", REMEMBER = "remember", PRACTISE = "practise", STATISTICAL = "statistical",
+                CHEAT = "information";
     }
 
     private Toolbar mToolbar;
+    private DrawerLayout mDrawer;
     private Fragment mCurrentFrag;
     private FirebaseAnalytics mFirebaseAnalytics;
 
@@ -56,10 +60,10 @@ public class GlyphNavActivity extends AppCompatActivity implements
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        mDrawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, mToolbar, R.string.nav_drawer_open, R.string.nav_drawer_close);
-        drawer.addDrawerListener(toggle);
+                this, mDrawer, mToolbar, R.string.nav_drawer_open, R.string.nav_drawer_close);
+        mDrawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -103,25 +107,35 @@ public class GlyphNavActivity extends AppCompatActivity implements
                 menu.setGroupVisible(R.id.option_remember_group, false);
                 menu.setGroupVisible(R.id.option_practise_group, false);
                 menu.setGroupVisible(R.id.option_statistical_group, false);
+                menu.setGroupVisible(R.id.option_cheat_group, false);
                 break;
             case REMEMBER:
                 menu.setGroupVisible(R.id.option_learn_group, false);
                 menu.setGroupVisible(R.id.option_remember_group, true);
                 menu.setGroupVisible(R.id.option_practise_group, false);
                 menu.setGroupVisible(R.id.option_statistical_group, false);
+                menu.setGroupVisible(R.id.option_cheat_group, false);
                 break;
             case PRACTISE:
                 menu.setGroupVisible(R.id.option_learn_group, false);
                 menu.setGroupVisible(R.id.option_remember_group, true);
                 menu.setGroupVisible(R.id.option_practise_group, true);
                 menu.setGroupVisible(R.id.option_statistical_group, false);
+                menu.setGroupVisible(R.id.option_cheat_group, false);
                 break;
             case STATISTICAL:
                 menu.setGroupVisible(R.id.option_learn_group, false);
                 menu.setGroupVisible(R.id.option_remember_group, false);
                 menu.setGroupVisible(R.id.option_practise_group, false);
                 menu.setGroupVisible(R.id.option_statistical_group, true);
+                menu.setGroupVisible(R.id.option_cheat_group, false);
                 break;
+            case CHEAT:
+                menu.setGroupVisible(R.id.option_learn_group, false);
+                menu.setGroupVisible(R.id.option_remember_group, false);
+                menu.setGroupVisible(R.id.option_practise_group, false);
+                menu.setGroupVisible(R.id.option_statistical_group, false);
+                menu.setGroupVisible(R.id.option_cheat_group, true);
             default:
                 break;
         }
@@ -153,6 +167,9 @@ public class GlyphNavActivity extends AppCompatActivity implements
 //                changedScreenOrientation(true);
 //                switch2Frag(STATISTICAL);
 //                break;
+            case R.id.nav_cheat:
+                switch2Frag(CHEAT);
+                break;
             case R.id.nav_share:
                 shareTheApp();
 
@@ -215,6 +232,8 @@ public class GlyphNavActivity extends AppCompatActivity implements
                 return new PractiseFragment();
             case STATISTICAL:
                 return new StatisticalFragment();
+            case CHEAT:
+                return new CheatFragment();
             default:
                 return null;
         }

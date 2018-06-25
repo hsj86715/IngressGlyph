@@ -10,6 +10,7 @@
     <string name="nav_menu_remember">Remember</string>
     <string name="nav_menu_practise">Practise</string>
     <string name="nav_menu_statistical">Statistical</string>
+    <string name="nav_menu_cheat">Cheat</string>
     <string name="nav_menu_about">About</string>
     <string name="nav_menu_communicate">Communicate</string>
     <string name="nav_menu_share">Share</string>
@@ -27,7 +28,7 @@
     <string name="option_menu_hack_practise_cost">Hack List Practise Time Cost</string>
     <string name="option_menu_hack_length">Hack List Length percentage</string>
     <string name="learn_glyph_name">Name: </string>
-    <string name="learn_glyph_alisa">Alisa: </string>
+    <string name="learn_glyph_alisa">Alias: </string>
     <string name="learn_glyph_cat">Category: </string>
     <string name="learn_glyph_paths">More path: </string>
     <string name="learn_glyph_alisa_empty">(None)</string>

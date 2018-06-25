@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cheat_scroll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <!--step 1-->
+        <include layout="@layout/cheat_player" />
+
+        <include layout="@layout/cheat_portal" />
+
+        <include layout="@layout/cheat_link_amp" />
+        <!--step 2-->
+        <!--<ViewStub-->
+            <!--android:id="@+id/cheat_2"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout="@layout/cheat_step_2" />-->
+        <include layout="@layout/cheat_links_mitigation" />
+
+        <include layout="@layout/cheat_shield" />
+
+        <include layout="@layout/cheat_heat_sink" />
+
+        <include layout="@layout/cheat_multi_hack" />
+
+        <include layout="@layout/cheat_force_amp" />
+        <!--step 3-->
+        <!--<ViewStub-->
+            <!--android:id="@+id/cheat_3"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout="@layout/cheat_step_3" />-->
+        <include layout="@layout/cheat_turret" />
+
+        <include layout="@layout/cheat_xmp_burster" />
+
+        <include layout="@layout/cheat_ultra_strike" />
+
+        <include layout="@layout/cheat_resonator" />
+
+        <include layout="@layout/cheat_access_points" />
+    </LinearLayout>
+
+</ScrollView>

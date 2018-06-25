@@ -57,4 +57,58 @@
             android:title="@string/option_menu_hack_length"
             app:showAsAction="never" />
     </group>
+    <group android:id="@+id/option_cheat_group">
+        <item
+            android:id="@+id/cheat_player"
+            android:title="Player"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/cheat_portal"
+            android:title="Portal"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/cheat_link_amp"
+            android:title="Link Amp"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/cheat_link_mitigation"
+            android:title="Links Mitigation"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/cheat_shield"
+            android:title="Shield"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/cheat_heat_sink"
+            android:title="Heat Sink"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/cheat_multi_hack"
+            android:title="Multi-hack"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/cheat_force_amp"
+            android:title="Force Amp"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/cheat_turret"
+            android:title="Turret"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/cheat_xmp_burster"
+            android:title="Xmp Burster"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/cheat_ultra_strike"
+            android:title="Ultra Strike"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/cheat_resonator"
+            android:title="Resonator"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/cheat_access_points"
+            android:title="Access Points"
+            app:showAsAction="never" />
+    </group>
 </menu>

@@ -8,4 +8,5 @@
     <dimen name="page_horizontal_padding">8dp</dimen>
     <dimen name="page_vertical_padding">2dp</dimen>
     <dimen name="learn_glyph_size">250dp</dimen>
+    <dimen name="cheat_row_height">32dp</dimen>
 </resources>

@@ -51,11 +51,16 @@ public class PractiseView extends SurfaceView implements SurfaceHolder.Callback,
     public static final int STEP_STOP = 3;
 
     private static final int MINI_FLING_VELOCITY = 500;
+    private int DEFAULT_PADDING;
     /**
      * The touch event move edge, 5 px
      */
     private static final int EDGE_REGION = 5;
     private boolean isUped = false;
+
+    private static final int BG_COLOR = Color.BLACK;
+    private static final int PATH_COLOR = Color.parseColor("#87CEFA");
+    private static final int CIRCLE_COLOR = Color.parseColor("#B0C4DE");
 
     @IntDef({STEP_PREPARE, STEP_SHOW, STEP_TRY, STEP_STOP})
     public @interface Step {
@@ -157,6 +162,7 @@ public class PractiseView extends SurfaceView implements SurfaceHolder.Callback,
     }
 
     private void init(Context context, AttributeSet attrs) {
+        DEFAULT_PADDING = (int) (15 * context.getResources().getDisplayMetrics().density);
         mUIHandler = new Handler(context.getMainLooper(), this);
         mHolder = this.getHolder();
         mHolder.addCallback(this);
@@ -233,12 +239,12 @@ public class PractiseView extends SurfaceView implements SurfaceHolder.Callback,
         if (mDrawRunnable == null) {
             return super.onTouchEvent(event);
         }
-        if (mDrawRunnable.isStopStep() && mCallback != null) {
+        if (mDrawRunnable.isStopStep() && mCallback != null && mDetectorCompat != null) {
             return mDetectorCompat.onTouchEvent(event);
         } else if (mDrawRunnable.isInTryStep()) {
             return handleTryMotionEvent(event);
         }
-        return true;
+        return super.onTouchEvent(event);
     }
 
     private boolean handleTryMotionEvent(MotionEvent event) {
@@ -257,10 +263,17 @@ public class PractiseView extends SurfaceView implements SurfaceHolder.Callback,
                 mDrawRunnable.mMovePath.add(new float[]{mLastX, mLastY});
                 break;
             case MotionEvent.ACTION_MOVE:
+                if (!TimeCounter.isIsStepStarted()) {
+                    TimeCounter.stepStart();
+                }
                 float dx = Math.abs(x - mLastX);
                 float dy = Math.abs(y - mLastY);
                 if (dx >= 3 || dy >= 3) {
-                    mDrawRunnable.mTouchPath.quadTo(mLastX, mLastY, (mLastX + x) / 2, (mLastY + y) / 2);
+                    if (mDrawRunnable.mTouchPath.isEmpty()) {
+                        mDrawRunnable.mTouchPath.moveTo(x, y);
+                    } else {
+                        mDrawRunnable.mTouchPath.quadTo(mLastX, mLastY, (mLastX + x) / 2, (mLastY + y) / 2);
+                    }
                     mLastX = x;
                     mLastY = y;
 
@@ -362,10 +375,11 @@ public class PractiseView extends SurfaceView implements SurfaceHolder.Callback,
             mTouchPaint.setMaskFilter(new BlurMaskFilter(15, BlurMaskFilter.Blur.SOLID));
 
             mPaint = new Paint();
+            int maxWidth = measuredWidth - DEFAULT_PADDING * 2;
 
-            mPointRadius = measuredWidth / 15 > 10 * mDensity ? 10 * mDensity : measuredWidth / 15;
+            mPointRadius = maxWidth / 15 > 10 * mDensity ? 10 * mDensity : maxWidth / 15;
             mCenter = measuredWidth / 2;
-            mRadius = mCenter - mPointRadius;
+            mRadius = mCenter - DEFAULT_PADDING - mPointRadius;
 
             mTouchPath = new Path();
             mPossibleGlyphPath = new Path();
@@ -492,7 +506,7 @@ public class PractiseView extends SurfaceView implements SurfaceHolder.Callback,
         private void drawPrepareStep(Canvas canvas, Paint paint) {
             Logger.i("drawPrepareStep, " + mPrepareCountDown);
             canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.SRC);
-            canvas.drawColor(Color.WHITE);
+            canvas.drawColor(BG_COLOR);
 
             Path path = new Path();
             for (int degree = 30; degree < 360; degree += 60) {
@@ -540,7 +554,7 @@ public class PractiseView extends SurfaceView implements SurfaceHolder.Callback,
         private void drawShowStep(Canvas canvas, Paint paint) {
             Logger.i("drawShowStep");
             canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.SRC);
-            canvas.drawColor(Color.WHITE);
+            canvas.drawColor(BG_COLOR);
 
             if (mGlyphPoints != null && mGlyphPoints.size() > 0) {
                 mGlyphPoints.clear();
@@ -569,7 +583,7 @@ public class PractiseView extends SurfaceView implements SurfaceHolder.Callback,
         private void drawTryStep(Canvas canvas, Paint paint) {
             Logger.i("drawTryStep");
             canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.SRC);
-            canvas.drawColor(Color.WHITE);
+            canvas.drawColor(BG_COLOR);
             if (mGlyphPoints != null && mGlyphPoints.size() > 0) {
                 mGlyphPoints.clear();
             }
@@ -579,7 +593,7 @@ public class PractiseView extends SurfaceView implements SurfaceHolder.Callback,
                 findPossibleGlyphPath();
                 paint.setStrokeWidth(mRadius / 20 > 15 ? 15 : mRadius / 20);
                 paint.setStrokeCap(Paint.Cap.ROUND);
-                paint.setARGB(255, 0, 0, 0);
+                paint.setColor(PATH_COLOR);
                 canvas.drawPath(mPossibleGlyphPath, paint);
                 paint.reset();
             }
@@ -593,7 +607,7 @@ public class PractiseView extends SurfaceView implements SurfaceHolder.Callback,
         private void drawStopStep(Canvas canvas, Paint paint) {
             Logger.i("drawStopStep");
             canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.SRC);
-            canvas.drawColor(Color.WHITE);
+            canvas.drawColor(BG_COLOR);
             if (mGlyphPoints != null && mGlyphPoints.size() > 0) {
                 mGlyphPoints.clear();
             }
@@ -602,6 +616,7 @@ public class PractiseView extends SurfaceView implements SurfaceHolder.Callback,
                 drawSequenceName(canvas, Utils.timeToSecondStr(mCurrentListCostTime), paint, mCenter,
                         (mRadius + mPointRadius) * 2 + 24 * mDensity);
             }
+            drawArrowHint(canvas, paint, mCenter);
         }
 
         private void findPossibleGlyphPath() {
@@ -660,18 +675,18 @@ public class PractiseView extends SurfaceView implements SurfaceHolder.Callback,
         }
 
         private void drawHexagram(Canvas canvas, Paint paint) {
-            drawEmptyCircle(mRadius, mRadius, paint, canvas, mPointRadius);
+            drawEmptyCircle(mCenter - mPointRadius, mCenter - mPointRadius, paint, canvas, mPointRadius);
             float cx, cy;
             Path path = new Path();
             for (int degree = 30; degree < 360; degree += 60) {
                 if (degree % 90 != 0) {
                     cx = (float) (Math.cos(Math.toRadians(degree)) * mRadius / 2);
                     cy = (float) (Math.sin(Math.toRadians(degree)) * mRadius / 2);
-                    drawEmptyCircle(mRadius + cx, mRadius - cy, paint, canvas, mPointRadius);
+                    drawEmptyCircle(mCenter - mPointRadius + cx, mCenter - mPointRadius - cy, paint, canvas, mPointRadius);
                 }
                 cx = (float) (Math.cos(Math.toRadians(degree)) * mRadius);
                 cy = (float) (Math.sin(Math.toRadians(degree)) * mRadius);
-                drawEmptyCircle(cx + mRadius, mRadius - cy, paint, canvas, mPointRadius);
+                drawEmptyCircle(cx + mCenter - mPointRadius, mCenter - mPointRadius - cy, paint, canvas, mPointRadius);
                 if (degree == 30) {
                     path.moveTo((float) (cx + mCenter + Math.cos(Math.toRadians(degree)) * mPointRadius),
                             (float) (mCenter - cy - Math.sin(Math.toRadians(degree)) * mPointRadius));
@@ -693,10 +708,10 @@ public class PractiseView extends SurfaceView implements SurfaceHolder.Callback,
             paint.reset();
             cx += pointRadius;
             cy += pointRadius;
-            paint.setARGB(255, 128, 128, 128);
+            paint.setColor(CIRCLE_COLOR);
             canvas.drawCircle(cx, cy, pointRadius, paint);
-            paint.setARGB(255, 255, 255, 255);
-            canvas.drawCircle(cx, cy, pointRadius * 0.75f, paint);
+            paint.setColor(BG_COLOR);
+            canvas.drawCircle(cx, cy, pointRadius * 0.85f, paint);
             mGlyphPoints.add(new PointF(cx, cy));
 
             paint.reset();
@@ -713,7 +728,7 @@ public class PractiseView extends SurfaceView implements SurfaceHolder.Callback,
         private void drawPath(Canvas canvas, Paint paint, GlyphInfo glyphInfo, List<PointF> glyphPoints, float glyRadius) {
             paint.setStrokeWidth(glyRadius / 20 > 15 ? 15 : glyRadius / 20);
             paint.setStrokeCap(Paint.Cap.ROUND);
-            paint.setARGB(255, 0, 0, 0);
+            paint.setColor(PATH_COLOR);
             int[] path = glyphInfo.getPath();
 
             if (path == null || path.length < 1) {
@@ -745,6 +760,21 @@ public class PractiseView extends SurfaceView implements SurfaceHolder.Callback,
             Rect textBounds = new Rect();
             paint.getTextBounds(name, 0, name.length(), textBounds);
             canvas.drawText(name, cx, cy - textBounds.centerY(), paint);
+        }
+
+        private void drawArrowHint(Canvas canvas, Paint paint, float cy) {
+            paint.reset();
+            paint.setTextAlign(Paint.Align.LEFT);
+            paint.setTypeface(Typeface.DEFAULT);
+            paint.setTextSize(18 * mDensity);
+            paint.setARGB(255, 128, 128, 128);
+            Rect textBound = new Rect();
+            paint.getTextBounds("<<", 0, 2, textBound);
+            canvas.drawText("<<", 0, cy - textBound.centerY(), paint);
+
+            paint.setTextAlign(Paint.Align.RIGHT);
+            paint.getTextBounds(">>", 0, 2, textBound);
+            canvas.drawText(">>", getWidth(), cy - textBound.centerY(), paint);
         }
 
     }

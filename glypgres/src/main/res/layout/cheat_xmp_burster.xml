@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/cheat_xmp_burster_header"
+        style="@style/cheat_row_head_style"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:text="Xmp Burster" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/cheat_row_height"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <TextView
+            style="@style/cheat_row_style"
+            android:text="Level" />
+
+        <View style="@style/cheat_col_divider" />
+
+        <TextView
+            style="@style/cheat_row_style"
+            android:text="Cost" />
+
+        <View style="@style/cheat_col_divider" />
+
+        <TextView
+            style="@style/cheat_row_style"
+            android:text="Damage" />
+
+        <View style="@style/cheat_col_divider" />
+
+        <TextView
+            style="@style/cheat_row_style"
+            android:text="Range" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/cheat_row_height"
+        android:background="#44045944"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <TextView
+            style="@style/cheat_row_style"
+            android:text="1"
+            android:textColor="#DEFB7C" />
+
+        <View style="@style/cheat_col_divider" />
+
+        <TextView
+            style="@style/cheat_row_style"
+            android:text="50XM" />
+
+        <View style="@style/cheat_col_divider" />
+
+        <TextView
+            style="@style/cheat_row_style"
+            android:text="150XM" />
+
+        <View style="@style/cheat_col_divider" />
+
+        <TextView
+            style="@style/cheat_row_style"
+            android:text="42m" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/cheat_row_height"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <TextView
+            style="@style/cheat_row_style"
+            android:text="2"
+            android:textColor="#EDBB68" />
+
+        <View style="@style/cheat_col_divider" />
+
+        <TextView
+            style="@style/cheat_row_style"
+            android:text="100XM" />
+
+        <View style="@style/cheat_col_divider" />
+
+        <TextView
+            style="@style/cheat_row_style"
+            android:text="300XM" />
+
+        <View style="@style/cheat_col_divider" />
+
+        <TextView
+            style="@style/cheat_row_style"
+            android:text="46m" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/cheat_row_height"
+        android:background="#44045944"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <TextView
+            style="@style/cheat_row_style"
+            android:text="3"
+            android:textColor="#DD776D" />
+
+        <View style="@style/cheat_col_divider" />
+
+        <TextView
+            style="@style/cheat_row_style"
+            android:text="150XM" />
+
+        <View style="@style/cheat_col_divider" />
+
+        <TextView
+            style="@style/cheat_row_style"
+            android:text="500XM" />
+
+        <View style="@style/cheat_col_divider" />
+
+        <TextView
+            style="@style/cheat_row_style"
+            android:text="58m" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/cheat_row_height"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <TextView
+            style="@style/cheat_row_style"
+            android:text="4"
+            android:textColor="#F76372" />
+
+        <View style="@style/cheat_col_divider" />
+
+        <TextView
+            style="@style/cheat_row_style"
+            android:text="200XM" />
+
+        <View style="@style/cheat_col_divider" />
+
+        <TextView
+            style="@style/cheat_row_style"
+            android:text="900XM" />
+
+        <View style="@style/cheat_col_divider" />
+
+        <TextView
+            style="@style/cheat_row_style"
+            android:text="72m" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/cheat_row_height"
+        android:background="#44045944"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <TextView
+            style="@style/cheat_row_style"
+            android:text="5"
+            android:textColor="#D15082" />
+
+        <View style="@style/cheat_col_divider" />
+
+        <TextView
+            style="@style/cheat_row_style"
+            android:text="250XM" />
+
+        <View style="@style/cheat_col_divider" />
+
+        <TextView
+            style="@style/cheat_row_style"
+            android:text="1,200XM" />
+
+        <View style="@style/cheat_col_divider" />
+
+        <TextView
+            style="@style/cheat_row_style"
+            android:text="90m" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/cheat_row_height"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <TextView
+            style="@style/cheat_row_style"
+            android:text="6"
+            android:textColor="#DD50BE" />
+
+        <View style="@style/cheat_col_divider" />
+
+        <TextView
+            style="@style/cheat_row_style"
+            android:text="300XM" />
+
+        <View style="@style/cheat_col_divider" />
+
+        <TextView
+            style="@style/cheat_row_style"
+            android:text="1,500XM" />
+
+        <View style="@style/cheat_col_divider" />
+
+        <TextView
+            style="@style/cheat_row_style"
+            android:text="112m" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/cheat_row_height"
+        android:background="#44045944"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <TextView
+            style="@style/cheat_row_style"
+            android:text="7"
+            android:textColor="#9C5CC2" />
+
+        <View style="@style/cheat_col_divider" />
+
+        <TextView
+            style="@style/cheat_row_style"
+            android:text="350XM" />
+
+        <View style="@style/cheat_col_divider" />
+
+        <TextView
+            style="@style/cheat_row_style"
+            android:text="1,800XM" />
+
+        <View style="@style/cheat_col_divider" />
+
+        <TextView
+            style="@style/cheat_row_style"
+            android:text="138m" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/cheat_row_height"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <TextView
+            style="@style/cheat_row_style"
+            android:text="8"
+            android:textColor="#5E47C1" />
+
+        <View style="@style/cheat_col_divider" />
+
+        <TextView
+            style="@style/cheat_row_style"
+            android:text="400XM" />
+
+        <View style="@style/cheat_col_divider" />
+
+        <TextView
+            style="@style/cheat_row_style"
+            android:text="2,700XM" />
+
+        <View style="@style/cheat_col_divider" />
+
+        <TextView
+            style="@style/cheat_row_style"
+            android:text="168m" />
+
+    </LinearLayout>
+</merge>

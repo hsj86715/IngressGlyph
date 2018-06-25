@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/cheat_links_mitigation_header"
+        style="@style/cheat_row_head_style"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:text="Links Mitigation" />
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/cheat_row_height"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="0" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="1" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="2" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="3" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="4" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="5" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="6" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="7" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="8" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="9" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="10" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="11" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="12" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="13" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="15" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="17" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="20" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="23" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="28" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="37" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="53" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="92" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="386" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/cheat_row_height"
+                android:background="#44045944"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="0" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="16" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="28" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="37" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="43" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="48" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="51" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="53" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="55" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="57" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="58" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="59" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="60" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="61" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="62" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="63" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="64" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="65" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="66" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="67" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="68" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="69" />
+
+                <TextView
+                    style="@style/cheat_row_style"
+                    android:layout_width="40dp"
+                    android:text="70" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </HorizontalScrollView>
+</merge>

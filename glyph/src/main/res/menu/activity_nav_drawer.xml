@@ -18,9 +18,13 @@
             android:icon="@drawable/ic_menu_practise"
             android:title="@string/nav_menu_practise" />
         <!--<item-->
-            <!--android:id="@+id/nav_statistical"-->
-            <!--android:icon="@drawable/ic_menu_statistical"-->
-            <!--android:title="@string/nav_menu_statistical" />-->
+        <!--android:id="@+id/nav_statistical"-->
+        <!--android:icon="@drawable/ic_menu_statistical"-->
+        <!--android:title="@string/nav_menu_statistical" />-->
+        <item
+            android:id="@+id/nav_cheat"
+            android:icon="@drawable/ic_menu_cheat"
+            android:title="@string/nav_menu_cheat" />
     </group>
 
     <item android:title="@string/nav_menu_communicate">

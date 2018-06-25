@@ -27,9 +27,9 @@ dependencies {
     api "com.android.support:appcompat-v7:$supportLibsVersion"
     api "com.android.support:recyclerview-v7:$supportLibsVersion"
     api "com.android.support:design:$supportLibsVersion"
-    api 'cn.com.farmcode:developUtility.tools:1.0.3'
-    api 'com.google.firebase:firebase-core:15.0.2'
-    api 'com.google.firebase:firebase-crash:15.0.2'
+    api 'cn.com.farmcode:developUtility.tools:1.0.4'
+    api 'com.google.firebase:firebase-core:16.0.1'
+    api 'com.google.firebase:firebase-crash:16.0.1'
 //    api 'com.github.lecho:hellocharts-android:v1.5.8'
     api('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') {
         transitive = true
