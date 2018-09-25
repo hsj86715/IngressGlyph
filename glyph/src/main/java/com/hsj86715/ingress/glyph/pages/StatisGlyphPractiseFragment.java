@@ -1,5 +1,6 @@
 package com.hsj86715.ingress.glyph.pages;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -78,7 +79,11 @@ public class StatisGlyphPractiseFragment extends Fragment {
         xAxis.setAxisMinimum(0f);
         xAxis.setGranularity(1f);
         xAxis.setValueFormatter(xAxisFormatter);
+    }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
         new BaseGlyphTask().execute();
     }
 

@@ -83,13 +83,13 @@ public class StatisticalFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mContainer = view.findViewById(R.id.statistical_container);
-        new BaseGlyphTask().execute();
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(activity);
+        new BaseGlyphTask().execute();
     }
 
     @Override

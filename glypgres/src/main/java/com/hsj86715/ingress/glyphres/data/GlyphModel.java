@@ -40,13 +40,13 @@ public class GlyphModel {
         mHelper = new DataOpenHelper(context.getApplicationContext());
     }
 
-    public static GlyphModel getInstance(Context context) {
-        synchronized (GlyphModel.class) {
-            if (sInstance == null) {
+    public static synchronized GlyphModel getInstance(Context context) {
+        if (sInstance == null) {
+            synchronized (GlyphModel.class) {
                 sInstance = new GlyphModel(context);
             }
-            return sInstance;
         }
+        return sInstance;
     }
 
     public void initBaseData() {

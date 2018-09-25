@@ -48,9 +48,6 @@ public class RememberFragment extends Fragment {
         mSequenceAdapter = new HackSequencesAdapter();
         if (savedInstanceState != null) {
             mSequencesLength = savedInstanceState.getInt("sequencesLength", 2);
-            updateSequenceLength(mSequencesLength);
-        } else {
-            updateSequenceLength(2);
         }
     }
 
@@ -58,6 +55,7 @@ public class RememberFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(activity);
+        updateSequenceLength(mSequencesLength <= 2 ? 2 : mSequencesLength);
     }
 
     private void updateSequenceLength(int length) {

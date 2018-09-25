@@ -54,7 +54,6 @@ public class PractiseFragment extends Fragment implements PractiseView.Callback 
         mPractiseView = view.findViewById(R.id.practice_view);
         mHackResultView = view.findViewById(R.id.practise_result);
         mPractiseView.setCallback(this);
-        new HackListTask().execute(0);
         updateToolBarSubTitle(R.string.option_menu_random);
     }
 
@@ -62,6 +61,7 @@ public class PractiseFragment extends Fragment implements PractiseView.Callback 
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(activity);
+        new HackListTask().execute(0);
     }
 
     @Override

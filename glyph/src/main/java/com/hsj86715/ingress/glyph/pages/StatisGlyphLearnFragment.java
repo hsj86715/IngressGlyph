@@ -1,5 +1,6 @@
 package com.hsj86715.ingress.glyph.pages;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -92,7 +93,11 @@ public class StatisGlyphLearnFragment extends Fragment {
         XYMarkerView mv = new XYMarkerView(getContext(), xAxisFormatter, yAxisFormatter);
         mv.setChartView(mBarChart); // For bounds control
         mBarChart.setMarker(mv); // Set the marker to the chart
+    }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
         new BaseGlyphTask().execute();
     }
 

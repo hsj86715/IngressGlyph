@@ -24,6 +24,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.hsj86715.ingress.glyphres.BuildConfig;
 import com.hsj86715.ingress.glyphres.R;
 import com.hsj86715.ingress.glyphres.data.GlyphInfo;
 import com.hsj86715.ingress.glyphres.data.HackList;

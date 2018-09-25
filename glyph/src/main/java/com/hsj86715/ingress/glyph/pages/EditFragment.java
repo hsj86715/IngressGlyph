@@ -1,5 +1,6 @@
 package com.hsj86715.ingress.glyph.pages;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -80,6 +81,11 @@ public class EditFragment extends Fragment {
 
 
         mCurrentGlyph = getArguments().getParcelable("glyph");
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
         if (mCurrentGlyph != null) {
             mNameTx.setText(mCurrentGlyph.getName());
             new CatTask().execute();
