@@ -1,14 +1,14 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion compileSdk
-    buildToolsVersion buildTools
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
-        minSdkVersion minSdk
-        targetSdkVersion targetSdk
-        versionCode appVersionCode
-        versionName appVersionName
+        minSdkVersion 16
+        targetSdkVersion 28
+        versionCode 126
+        versionName '1.2.6'
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -23,13 +23,13 @@ android {
 
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
-    api "com.android.support:support-v4:$supportLibsVersion"
-    api "com.android.support:appcompat-v7:$supportLibsVersion"
-    api "com.android.support:recyclerview-v7:$supportLibsVersion"
-    api "com.android.support:design:$supportLibsVersion"
+    api 'com.android.support:support-v4:28.0.0'
+    api 'com.android.support:appcompat-v7:28.0.0'
+    api 'com.android.support:recyclerview-v7:28.0.0'
+    api 'com.android.support:design:28.0.0'
     api 'cn.com.farmcode:developUtility.tools:1.0.4'
-    api 'com.google.firebase:firebase-core:16.0.3'
-    api 'com.google.firebase:firebase-crash:16.2.0'
+    api 'com.google.firebase:firebase-core:16.0.8'
+    api 'com.google.firebase:firebase-crash:16.2.1'
 //    api 'com.github.lecho:hellocharts-android:v1.5.8'
     api('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') {
         transitive = true

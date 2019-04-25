@@ -80,13 +80,14 @@ public class LearnFragment extends Fragment implements SequenceClickListener {
 //        });
 
         mGlyphsRv.addItemDecoration(new SimpleItemDecoration());
+        showBaseSequences();
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(activity);
-        showBaseSequences();
+        new BaseGlyphTask().execute();
     }
 
     @Override
@@ -123,7 +124,6 @@ public class LearnFragment extends Fragment implements SequenceClickListener {
                 mLayoutManager = new GridLayoutManager(getActivity(), 3);
                 mGlyphsRv.setLayoutManager(mLayoutManager);
             }
-            new BaseGlyphTask().execute();
         }
     }
 
