@@ -1,0 +1,41 @@
+{
+  "splash_loading": "Chargement",
+  "nav_header_subtitle": "Un Assistant pour un nouvel agent d'infiltration.",
+  "nav_menu_learn": "Apprendre",
+  "nav_menu_remember": "Rappelez-vous",
+  "nav_menu_practise": "Pratiquer",
+  "nav_menu_statics": "Statistique",
+  "nav_menu_cheat": "Informations",
+  "nav_menu_share": "Partager",
+  "nav_menu_feedback": "Commentaires",
+  "nav_menu_about": "Sur",
+
+  "option_menu_hack_all": "Tous les HackList",
+  "no_data": "Aucune donnée！",
+  "learn_glyph_name": "Nom: ",
+  "learn_glyph_alisa": "Alisa: ",
+  "learn_glyph_paths": "Plus de chemin: ",
+  "learn_glyph_alisa_empty": "(Aucun)",
+  "learn_glyph_edit": "Modifier",
+
+  "practise_switch_hackList": "Commutateur HackList",
+
+  "edit_menu_save": "Sauver",
+
+  "toast_edit_error_on_null": "Il ya quelque chose de mal avec l'action, essayez plus tard.",
+  "toast_edit_save_hint": "La modification n'a pas été sauvegardée, quitter sans enregistrer?",
+  "toast_action_exit_yes": "Sortie",
+  "toast_edit_save_no_change": "Aucun contenu modifié",
+  "toast_edit_save_success": "Enregistrer le succès",
+  "toast_edit_save_fail": "L'enregistrement a échoué, essayez plus tard.",
+  "toast_share_no_app": "Désolé, aucune apps ne peut terminer l'action de partage.",
+  "toast_feedback_no_app": "Désolé, aucune apps ne peut compléter l'action de rétroaction.",
+  "toast_practise_list_end": "Le courant est le premier dans cette liste de hack",
+  "toast_practise_list_first": "Current est le dernier dans cette liste de hack",
+  "nav_share_text": "Apprenez les glyphes et pratiquez toutes les séquences de hack à l'intérieur, et améliorez vos performances à l'extérieur. Voici le lien https://play.google.com/store/apps/details?id=cn.com.farmcode.ingress.sequence",
+  "about_app_subject": "\t\t\t\tL'application Agent Assistant est une assistante pour les nouveaux agents d'Ingress.",
+  "about_app_detail": "\t\t\t\tLes données utilisées dans cette application sont collectées sur le site Web d'Ingress ou sur des organisations tierces, ou des joueurs. Il aide les joueurs à se souvenir des glyphes et hacklist dès que possible. Améliorez votre vitesse et votre précision, gagnez des récompenses de jeu plus généreuses.",
+  "about_tks_list": "\t\t\t\tGrâce au soutien puissant apporté par les projets open source suivants.",
+  "about_tks_osp_name": "Nom OSP",
+  "about_tks_ops_website": "site internet"
+}

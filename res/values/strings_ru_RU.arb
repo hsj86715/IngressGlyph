@@ -1,0 +1,41 @@
+{
+  "splash_loading": "Загрузка",
+  "nav_header_subtitle": "Помощник для нового агента входящей.",
+  "nav_menu_learn": "Узнать",
+  "nav_menu_remember": "Помните",
+  "nav_menu_practise": "Практике",
+  "nav_menu_statics": "Статистических",
+  "nav_menu_cheat": "Информация",
+  "nav_menu_share": "Предоставить общий доступ",
+  "nav_menu_feedback": "Обратной связи",
+  "nav_menu_about": "О",
+
+  "option_menu_hack_all": "Все HackList",
+  "no_data": "Нет данных!",
+  "learn_glyph_name": "Имя: ",
+  "learn_glyph_alisa": "Алиса: ",
+  "learn_glyph_paths": "Больше пути: ",
+  "learn_glyph_alisa_empty": "(Ни один)",
+  "learn_glyph_edit": "Редактировать",
+
+  "practise_switch_hackList": "Переключатель",
+
+  "edit_menu_save": "Сохранить",
+
+  "toast_edit_error_on_null": "Что-то не так с действием, попробуйте позже.",
+  "toast_edit_save_hint": "Изменение не сохраняется, выход без сохранения?",
+  "toast_action_exit_yes": "Выход",
+  "toast_edit_save_no_change": "Содержимое не изменено",
+  "toast_edit_save_success": "Сохранить успех",
+  "toast_edit_save_fail": "Не удалось сохранить, попробуйте позже.",
+  "toast_share_no_app": "К сожалению, никакие приложения не могут завершить акцию.",
+  "toast_feedback_no_app": "К сожалению, никакие приложения не могут завершить действие обратной связи.",
+  "toast_practise_list_end": "Ток является первым в этом рубить список",
+  "toast_practise_list_first": "Ток является последним в этом рубить список",
+  "nav_share_text": "Узнайте глифов и практиковать все хак последовательности в помещении, и улучшить производительность на открытом воздухе. Вот ссылка https://play.google.com/store/apps/details?id=cn.com.farmcode.ingress.sequence",
+  "about_app_subject": "\t\t\t\tПриложение Agent Assistant является помощником новых агентов Ingress.",
+  "about_app_detail": "\t\t\t\tДанные, используемые в этом приложении, собираются с веб-сайта Ingress или третьих организаций или игроков. Это поможет игрокам запомнить глифы и хакеры как можно скорее. Улучшили свою скорость и точность, получите более щедрые награды игры.",
+  "about_tks_list": "\t\t\t\tБлагодаря мощной поддержке, предоставляемой следующими проектами с открытым исходным кодом.",
+  "about_tks_osp_name": "Имя OSP",
+  "about_tks_ops_website": "Сайт"
+}

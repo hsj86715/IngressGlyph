@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <item name="frag_statis_glyph_learn" type="layout">@layout/frag_statis_barchart</item>
-    <item name="frag_statis_glyph_practise" type="layout">@layout/frag_statis_combinedchart</item>
-    <item name="frag_statis_hack_practise" type="layout">@layout/frag_statis_combinedchart</item>
-</resources>

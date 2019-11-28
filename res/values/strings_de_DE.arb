@@ -1,0 +1,42 @@
+{
+  "splash_loading": "Laden",
+  "nav_header_subtitle": "Ein Assistent für neue Ingress Agent.",
+  "nav_menu_learn": "Lernen",
+  "nav_menu_remember": "Erinnern",
+  "nav_menu_practise": "Üben",
+  "nav_menu_statics": "Statistische",
+  "nav_menu_cheat": "Informationen",
+  "nav_menu_share": "Freigeben",
+  "nav_menu_feedback": "Feedback",
+  "nav_menu_about": "Über",
+
+  "option_menu_hack_all": "Alle HackList",
+
+  "no_data": "Keine Daten！",
+  "learn_glyph_name": "Namen: ",
+  "learn_glyph_alisa": "Alisa: ",
+  "learn_glyph_paths": "Mehr Pfad: ",
+  "learn_glyph_alisa_empty": "(Keine)",
+  "learn_glyph_edit": "Bearbeiten",
+
+  "practise_switch_hackList": "Switch HackList",
+
+  "edit_menu_save": "Speichern",
+
+  "toast_edit_error_on_null": "Es ist etwas falsch mit der Aktion, versuchen Sie es später.",
+  "toast_edit_save_hint": "Die Änderung wurde nicht gespeichert, Exit Without Save?",
+  "toast_action_exit_yes": "Ausfahrt",
+  "toast_edit_save_no_change": "Kein Inhalt geändert",
+  "toast_edit_save_success": "Erfolg sparen",
+  "toast_edit_save_fail": "Speichern fehlgeschlagen, versuchen Sie es später.",
+  "toast_share_no_app": "Leider können keine apps die Freigabe Aktion abschließen.",
+  "toast_feedback_no_app": "Leider können keine apps die Feedback Aktion abschließen.",
+  "toast_practise_list_end": "Current ist die erste in diesem Hack-Liste",
+  "toast_practise_list_first": "Current ist der letzte in diesem Hack-Liste",
+  "nav_share_text": "Lerne Glyphen und übe alle Hack-Sequenzen drinnen und verbessere deine Leistung im Freien. Hier ist der Link https://play.google.com/store/apps/details?id=cn.com.farmcode.ingress.sequence",
+  "about_app_subject": "\t\t\t\tDie Agent Assistant-App ist ein Assistent für neue Agenten von Ingress.",
+  "about_app_detail": "\t\t\t\tDie in dieser App verwendeten Daten werden von der Ingress-Website oder von dritten Organisationen oder Spielern gesammelt. Es hilft Spielern, sich die Glyphen und Hackliste so schnell wie möglich zu merken. Verbesserte Geschwindigkeit und Genauigkeit, erhalten sie großzügigere Spielbelohnungen.",
+  "about_tks_list": "\t\t\t\tDank der leistungsstarken Unterstützung durch die folgenden Open-Source-Projekte.",
+  "about_tks_osp_name": "OSP-Name",
+  "about_tks_ops_website": "Website"
+}

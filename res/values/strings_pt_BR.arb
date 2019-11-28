@@ -1,0 +1,41 @@
+{
+  "splash_loading": "Carregar",
+  "nav_header_subtitle": "Um assistente de jogo para um agente novato de ingresso.",
+  "nav_menu_learn": "Aprender",
+  "nav_menu_remember": "Lembrar",
+  "nav_menu_practise": "Praticar",
+  "nav_menu_statics": "Estatística",
+  "nav_menu_cheat": "Informações",
+  "nav_menu_share": "Compartilhar",
+  "nav_menu_feedback": "Feedback",
+  "nav_menu_about": "Sobre",
+
+  "option_menu_hack_all": "Todos hacklist",
+  "no_data": "Sem dados!",
+  "learn_glyph_name": "Nome: ",
+  "learn_glyph_alisa": "Alisa: ",
+  "learn_glyph_paths": "Mais caminho: ",
+  "learn_glyph_alisa_empty": "(Nenhum)",
+  "learn_glyph_edit": "Editar",
+
+  "practise_switch_hackList": "Switch HackList",
+
+  "edit_menu_save": "Salvar",
+
+  "toast_edit_error_on_null": "Há algo de errado com a ação, tente mais tarde.",
+  "toast_edit_save_hint": "A modificação não foi salva, Exit sem salvar?",
+  "toast_action_exit_yes": "Saída",
+  "toast_edit_save_no_change": "Nenhum conteúdo alterado",
+  "toast_edit_save_success": "Salvar o sucesso",
+  "toast_edit_save_fail": "Salvar falhou, tente mais tarde.",
+  "toast_share_no_app": "Pesaroso, nenhum apps pode terminar a ação da parte.",
+  "toast_feedback_no_app": "Pesaroso, nenhum apps pode terminar a pação do gabarito.",
+  "toast_practise_list_end": "Atual é o primeiro nesta lista de hack",
+  "toast_practise_list_first": "Atual é o último nesta lista de hack",
+  "nav_share_text": "Aprenda glifos e pratique todas as sequências de hackers dentro de casa e melhore seu desempenho ao ar livre. Aqui está o link https://play.google.com/store/apps/details?id=cn.com.farmcode.ingress.sequence",
+  "about_app_subject": "\t\t\t\tO aplicativo Assistente de Agente é assistente de novos agentes da Ingress.",
+  "about_app_detail": "\t\t\t\tOs dados utilizados neste aplicativo são coletados no site da Ingress ou em terceiros organizações, ou jogadores. Ele ajuda os jogadores a lembrar os glifos e hacklist o mais rapidamente possível. Melhorou sua velocidade e precisão, ganhar recompensas de jogo mais generosos.",
+  "about_tks_list": "\t\t\t\tGraças ao poderoso apoio prestado pelos seguintes projetos de código aberto.",
+  "about_tks_osp_name": "Nome OSP",
+  "about_tks_ops_website": "Site"
+}

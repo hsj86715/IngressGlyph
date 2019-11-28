@@ -1,0 +1,41 @@
+{
+  "splash_loading": "資料載入中",
+  "nav_header_subtitle": "Ingress新手特工的遊戲助手",
+  "nav_menu_learn": "學習",
+  "nav_menu_remember": "記憶",
+  "nav_menu_practise": "練習",
+  "nav_menu_statics": "統計",
+  "nav_menu_cheat": "攻略",
+  "nav_menu_share": "分享",
+  "nav_menu_feedback": "回饋",
+  "nav_menu_about": "關於",
+
+  "option_menu_hack_all": "所有序列",
+  "no_data": "沒有相關資料！",
+  "learn_glyph_name": "名稱: ",
+  "learn_glyph_alisa": "别名: ",
+  "learn_glyph_paths": "更多繪製順序: ",
+  "learn_glyph_alisa_empty": "（無）",
+  "learn_glyph_edit": "修改",
+
+  "practise_switch_hackList": "切換入侵序列",
+
+  "edit_menu_save": "保存",
+
+  "toast_edit_error_on_null": "當前操作行為出現異常，請稍後重試。",
+  "toast_edit_save_hint": "修改的內容尚未保存，不保存退出？",
+  "toast_action_exit_yes": "退出",
+  "toast_edit_save_no_change": "沒有內容被改變",
+  "toast_edit_save_success": "保存成功",
+  "toast_edit_save_fail": "保存失敗，請稍後重試。",
+  "toast_share_no_app": "對不起, 沒有應用程式可以完成分享操作。",
+  "toast_feedback_no_app": "對不起, 沒有應用程式可以完成回饋操作。",
+  "toast_practise_list_end": "當前已經是最後一個入侵序列",
+  "toast_practise_list_first": "當前已經是第一個入侵序列",
+  "nav_share_text": "在室內學習銘文並練習所有的駭客序列，從而提升您在戶外的遊戲表現。這裡是連結 HTTPs://play.google.com/store/apps/details?id=cn.com.farmcode.ingress.sequence",
+  "about_app_subject": "\t\t\t\t\t\t\t\tAgent Assistant應用程式是Ingress新手特工的助手。",
+  "about_app_detail": "\t\t\t\t\t\t\t\t此應用程式中使用的資料從Ingress網站或協力廠商組織或玩家收集。 它可以説明玩家儘快記住圖形和入侵序列。 提高您的速度和準確性，獲得更豐富的遊戲獎勵。",
+  "about_tks_list": "\t\t\t\t\t\t\t\t多謝以下開源項目提供的強大支持:",
+  "about_tks_osp_name": "項目名稱",
+  "about_tks_ops_website": "項目網址"
+}

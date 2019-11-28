@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/IngressGlyph.iml" filepath="$PROJECT_DIR$/IngressGlyph.iml" />
-      <module fileurl="file://$PROJECT_DIR$/MPChartExample/MPChartExample.iml" filepath="$PROJECT_DIR$/MPChartExample/MPChartExample.iml" />
-      <module fileurl="file://$PROJECT_DIR$/MPChartLib/MPChartLib.iml" filepath="$PROJECT_DIR$/MPChartLib/MPChartLib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/glypgres/glypgres.iml" filepath="$PROJECT_DIR$/glypgres/glypgres.iml" />
-      <module fileurl="file://$PROJECT_DIR$/glyph/glyph.iml" filepath="$PROJECT_DIR$/glyph/glyph.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ingress_assistant.iml" filepath="$PROJECT_DIR$/ingress_assistant.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/ingress_assistant_android.iml" filepath="$PROJECT_DIR$/android/ingress_assistant_android.iml" />
     </modules>
   </component>
 </project>

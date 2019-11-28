@@ -1,0 +1,41 @@
+{
+  "splash_loading": "読み込み",
+  "nav_header_subtitle": "Ingress初心者エージェントのためのゲームアシスタント。",
+  "nav_menu_learn": "学ぶ",
+  "nav_menu_remember": "覚えて",
+  "nav_menu_practise": "練習",
+  "nav_menu_statics": "統計",
+  "nav_menu_cheat": "情報",
+  "nav_menu_share": "共有",
+  "nav_menu_feedback": "フィードバック",
+  "nav_menu_about": "に関しては",
+
+  "option_menu_hack_all": "すべてのハックリスト",
+  "no_data": "データなし!",
+  "learn_glyph_name": "名前: ",
+  "learn_glyph_alisa": "アリサ: ",
+  "learn_glyph_paths": "その他のパス: ",
+  "learn_glyph_alisa_empty": "(なし)",
+  "learn_glyph_edit": "編集",
+
+  "practise_switch_hackList": "ハックリストの切り替え",
+
+  "edit_menu_save": "保存",
+
+  "toast_edit_error_on_null": "行動に何か問題があり、後で試してみてください。",
+  "toast_edit_save_hint": "変更は保存されていません。",
+  "toast_action_exit_yes": "終了",
+  "toast_edit_save_no_change": "コンテンツが変更されない",
+  "toast_edit_save_success": "成功の保存",
+  "toast_edit_save_fail": "保存に失敗しました。",
+  "toast_share_no_app": "アプリが共有アクションを完了できません。",
+  "toast_feedback_no_app": "アプリはフィードバックアクションを完了できません。",
+  "toast_practise_list_end": "現在は、このハックリストの最後です",
+  "toast_practise_list_first": "現在のこのハックリストの最初の",
+  "nav_share_text": "グリフを学び、屋内ですべてのハックシーケンスを練習し、屋外であなたのパフォーマンスを向上させます。リンクhttps://play.google.com/store/apps/details?id=cn.com.farmcode.ingress.sequence",
+  "about_app_subject": "\t\t\t\tエージェント アシスタント アプリは、Ingress の新しいエージェントのアシスタントです。",
+  "about_app_detail": "\t\t\t\tこのアプリで使用されるデータは、Ingressのウェブサイトや第三の組織、またはプレイヤーから収集されます。これは、プレイヤーができるだけ早くグリフやハックリストを覚えておくのに役立ちます。あなたのスピードと精度を向上させ、より寛大なゲームの報酬を得ます。",
+  "about_tks_list": "\t\t\t\t次のオープンソースプロジェクトが提供する強力なサポートのおかげです。",
+  "about_tks_osp_name": "OSP 名",
+  "about_tks_ops_website": "ウェブサイト"
+}
