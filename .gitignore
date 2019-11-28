@@ -19,7 +19,6 @@
 # VS Code which you may wish to be included in version control, so this line
 # is commented out by default.
 #.vscode/
-*.jks
 
 # Flutter/Dart/Pub related
 **/doc/api/
@@ -38,6 +37,9 @@
 **/android/gradlew.bat
 **/android/local.properties
 **/android/**/GeneratedPluginRegistrant.java
+#**/android/**/google-services.json
+**/android/**/*.jks
+#**/android/**/private_key.pepk
 
 # iOS/XCode related
 **/ios/**/*.mode1v3
