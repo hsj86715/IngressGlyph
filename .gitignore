@@ -37,9 +37,9 @@
 **/android/gradlew.bat
 **/android/local.properties
 **/android/**/GeneratedPluginRegistrant.java
-#**/android/**/google-services.json
+**/android/**/google-services.json
 **/android/**/*.jks
-#**/android/**/private_key.pepk
+**/android/**/private_key.pepk
 
 # iOS/XCode related
 **/ios/**/*.mode1v3
