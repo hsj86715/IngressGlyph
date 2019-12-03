@@ -27,6 +27,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
+      themeMode: ThemeMode.system,
       localizationsDelegates: [
         S.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -39,9 +42,6 @@ class MyApp extends StatelessWidget {
 //          S.delegate.resolution(fallback: const Locale('en', ''),withCountry: false),
 //      localeListResolutionCallback:
 //          S.delegate.listResolution(fallback: const Locale('en', ''),withCountry: false),
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
       onGenerateRoute: RouterTool().router.generator,
     );
   }

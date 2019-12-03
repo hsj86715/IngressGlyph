@@ -20,6 +20,7 @@ class AboutPage extends StatelessWidget {
     "fl_chart": "https://github.com/imaNNeoFighT/fl_chart",
     "i18n": "https://plugins.jetbrains.com/plugin/10128-flutter-i18n/"
   };
+
   void _jumpUrl(String url) {
     canLaunch(url).then((success) {
       if (success) {
@@ -41,12 +42,14 @@ class AboutPage extends StatelessWidget {
             height: 30,
             alignment: Alignment.center,
             child: Text(S.of(context).about_tks_osp_name,
-                style: TextStyle(fontWeight: FontWeight.bold))),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, color: Colors.black54))),
         Container(
             height: 30,
             alignment: Alignment.center,
             child: Text(S.of(context).about_tks_ops_website,
-                style: TextStyle(fontWeight: FontWeight.bold)))
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, color: Colors.black54)))
       ])
     ];
     osps.forEach((name, website) {
@@ -77,7 +80,7 @@ class AboutPage extends StatelessWidget {
         appBar: AppBar(
             elevation: 5,
             leading: IconButton(
-                icon: Icon(Icons.arrow_back, color: Colors.white),
+                icon: Icon(Icons.arrow_back),
                 onPressed: () {
                   Navigator.pop(context);
                 }),
@@ -91,7 +94,7 @@ class AboutPage extends StatelessWidget {
             child: Column(children: <Widget>[
               Text(S.of(context).app_name,
                   style: TextStyle(
-                      fontSize: 24, color: Theme.of(context).primaryColor)),
+                      fontSize: 24, color: Theme.of(context).accentColor)),
               SizedBox(height: 8),
               FutureBuilder(
                   future: PackageInfo.fromPlatform(),

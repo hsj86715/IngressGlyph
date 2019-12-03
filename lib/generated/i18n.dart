@@ -44,12 +44,12 @@ class S implements WidgetsLocalizations {
   String get nav_menu_statics => "Statics";
   String get nav_share_text => "Learn glyphs and practise all the hack sequences indoor, and improve your performance outdoors. Here is the link https://play.google.com/store/apps/details?id=cn.com.farmcode.ingress.sequence";
   String get no_data => "No Data!";
-  String get option_menu_hack_all => "All HackList";
+  String get option_menu_hack_all => "All HackSequences";
   String get practise_shorthand_label => "Shorthand Tips";
   String get practise_shorthand_tips_hint => "Input your shorthand tips";
   String get practise_switch_hackList => "Switch HackSequence";
   String get splash_loading => "Loading";
-  String get statics_glyph_popular => "Popular Glyph Top10";
+  String get statics_glyph_popular => "Most Popular Glyph Top10";
   String get statics_sequence_level => "Levels Practise Count";
   String get statics_slowest_top => "Slowest Glyph Top10";
   String get statics_wrong_most => "Wrong Most Glyph Top10";
@@ -66,7 +66,7 @@ class S implements WidgetsLocalizations {
   String get tx_search => "Search";
   String statics_num_value(String name, String value) => "$name\nValue: $value";
   String statics_practise_correct(String name, String practise, String correct) => "$name\nPractise: $practise\nCorrect: $correct";
-  String statics_time_cost(String name, String time) => "$name\ncost: $time sec";
+  String statics_time_cost(String name, String time) => "$name\nCost: $time sec";
   String statics_time_cost_correct(String name, String time, String correct) => "$name\nCost: $time sec\nCorrect: $correct";
 }
 
@@ -173,11 +173,15 @@ class $zh_HK extends S {
   @override
   String get toast_edit_save_no_change => "沒有內容被改變";
   @override
+  String get statics_wrong_most => "錯誤次數最多嘅10个圖形";
+  @override
   String get about_tks_osp_name => "項目名稱";
   @override
   String get toast_feedback_no_app => "對不起, 沒有應用程式可以完成回饋操作。";
   @override
   String get nav_menu_statics => "統計";
+  @override
+  String get statics_slowest_top => "繪製最慢嘅10个圖形";
   @override
   String get nav_menu_about => "關於";
   @override
@@ -189,6 +193,8 @@ class $zh_HK extends S {
   @override
   String get learn_glyph_alisa_empty => "（無）";
   @override
+  String get statics_glyph_popular => "最常用嘅10个圖形";
+  @override
   String get toast_share_no_app => "對不起, 沒有應用程式可以完成共用操作。";
   @override
   String get nav_menu_practise => "練習";
@@ -196,6 +202,8 @@ class $zh_HK extends S {
   String get no_data => "冇相關數據！";
   @override
   String get nav_menu_feedback => "回饋";
+  @override
+  String get statics_sequence_level => "分等級練習計數";
   @override
   String get about_app_detail => "\t\t\t\t\t\t\t\t此應用程序中使用的數據由 ingress 網站或第三方組織或玩家收集。 它可以幫助玩家盡快記住圖形和入侵序列。 提高你嘅速度和準確性, 獲得更豐富的遊戲獎勵。";
   @override
@@ -224,6 +232,14 @@ class $zh_HK extends S {
   String get learn_glyph_edit => "修改";
   @override
   String get learn_glyph_alisa => "别名: ";
+  @override
+  String statics_time_cost_correct(String name, String time, String correct) => "$name\n耗時: $time 秒\n是否正確: $correct";
+  @override
+  String statics_practise_correct(String name, String practise, String correct) => "$name\n練習: $practise\n正確: $correct";
+  @override
+  String statics_time_cost(String name, String time) => "$name\n耗時: $time 秒";
+  @override
+  String statics_num_value(String name, String value) => "$name\n數量: $value";
 }
 
 class $zh_TW extends S {
@@ -251,11 +267,15 @@ class $zh_TW extends S {
   @override
   String get toast_edit_save_no_change => "沒有內容被改變";
   @override
+  String get statics_wrong_most => "錯誤次數最多的10個圖形";
+  @override
   String get about_tks_osp_name => "項目名稱";
   @override
   String get toast_feedback_no_app => "對不起, 沒有應用程式可以完成回饋操作。";
   @override
   String get nav_menu_statics => "統計";
+  @override
+  String get statics_slowest_top => "繪製最慢的10個圖形";
   @override
   String get nav_menu_about => "關於";
   @override
@@ -267,6 +287,8 @@ class $zh_TW extends S {
   @override
   String get learn_glyph_alisa_empty => "（無）";
   @override
+  String get statics_glyph_popular => "最常用的10個圖形";
+  @override
   String get toast_share_no_app => "對不起, 沒有應用程式可以完成分享操作。";
   @override
   String get nav_menu_practise => "練習";
@@ -274,6 +296,8 @@ class $zh_TW extends S {
   String get no_data => "沒有相關資料！";
   @override
   String get nav_menu_feedback => "回饋";
+  @override
+  String get statics_sequence_level => "分等級練習計數";
   @override
   String get about_app_detail => "\t\t\t\t\t\t\t\t此應用程式中使用的資料從Ingress網站或協力廠商組織或玩家收集。 它可以説明玩家儘快記住圖形和入侵序列。 提高您的速度和準確性，獲得更豐富的遊戲獎勵。";
   @override
@@ -302,6 +326,14 @@ class $zh_TW extends S {
   String get learn_glyph_edit => "修改";
   @override
   String get learn_glyph_alisa => "别名: ";
+  @override
+  String statics_time_cost_correct(String name, String time, String correct) => "$name\n耗時: $time 秒\n是否正確: $correct";
+  @override
+  String statics_practise_correct(String name, String practise, String correct) => "$name\n練習: $practise\n正確: $correct";
+  @override
+  String statics_time_cost(String name, String time) => "$name\n耗時: $time 秒";
+  @override
+  String statics_num_value(String name, String value) => "$name\n數量: $value";
 }
 
 class $en_US extends S {
@@ -329,11 +361,15 @@ class $en_US extends S {
   @override
   String get toast_edit_save_no_change => "No content changed";
   @override
+  String get statics_wrong_most => "Wrong Most Glyph Top10";
+  @override
   String get about_tks_osp_name => "OSP Name";
   @override
   String get toast_feedback_no_app => "Sorry, no apps can complete the feedback action.";
   @override
   String get nav_menu_statics => "Statics";
+  @override
+  String get statics_slowest_top => "Slowest Glyph Top10";
   @override
   String get nav_menu_about => "About";
   @override
@@ -345,6 +381,8 @@ class $en_US extends S {
   @override
   String get learn_glyph_alisa_empty => "(None)";
   @override
+  String get statics_glyph_popular => "Most Popular Glyph Top10";
+  @override
   String get toast_share_no_app => "Sorry, no apps can complete the share action.";
   @override
   String get nav_menu_practise => "Practise";
@@ -352,6 +390,8 @@ class $en_US extends S {
   String get no_data => "No Data!";
   @override
   String get nav_menu_feedback => "Feedback";
+  @override
+  String get statics_sequence_level => "Levels Practise Count";
   @override
   String get about_app_detail => "\t\t\t\tThe data used in this app is collected from the Ingress website or third organizations, or players. It help players to remember the glyphs and hacklist as soon as possible.Improved your speed and accuracy, gain more generous game rewards.";
   @override
@@ -371,7 +411,7 @@ class $en_US extends S {
   @override
   String get nav_menu_remember => "Remember";
   @override
-  String get option_menu_hack_all => "All HackList";
+  String get option_menu_hack_all => "All HackSequences";
   @override
   String get toast_action_exit_yes => "Exit";
   @override
@@ -380,6 +420,14 @@ class $en_US extends S {
   String get learn_glyph_edit => "Edit";
   @override
   String get learn_glyph_alisa => "Alias: ";
+  @override
+  String statics_time_cost_correct(String name, String time, String correct) => "$name\nCost: $time sec\nCorrect: $correct";
+  @override
+  String statics_practise_correct(String name, String practise, String correct) => "$name\nPractise: $practise\nCorrect: $correct";
+  @override
+  String statics_time_cost(String name, String time) => "$name\nCost: $time sec";
+  @override
+  String statics_num_value(String name, String value) => "$name\nValue: $value";
 }
 
 class $en extends S {
@@ -489,11 +537,15 @@ class $zh_CN extends S {
   @override
   String get toast_edit_save_no_change => "内容未改变";
   @override
+  String get statics_wrong_most => "错误次数最多的10个图形";
+  @override
   String get about_tks_osp_name => "项目名称";
   @override
   String get toast_feedback_no_app => "对不起, 未发现应用程序可以完成反馈操作。";
   @override
   String get nav_menu_statics => "统计";
+  @override
+  String get statics_slowest_top => "绘制最慢的10个图形";
   @override
   String get nav_menu_about => "关于";
   @override
@@ -505,6 +557,8 @@ class $zh_CN extends S {
   @override
   String get learn_glyph_alisa_empty => "（无）";
   @override
+  String get statics_glyph_popular => "最常用的10个图形";
+  @override
   String get toast_share_no_app => "对不起, 未发现应用程序可以完成分享操作。";
   @override
   String get nav_menu_practise => "练习";
@@ -512,6 +566,8 @@ class $zh_CN extends S {
   String get no_data => "没有相关数据！";
   @override
   String get nav_menu_feedback => "反馈";
+  @override
+  String get statics_sequence_level => "分等级练习计数";
   @override
   String get about_app_detail => "\t\t\t\t\t\t\t\t此应用程序中使用的数据从Ingress网站或第三方组织或玩家收集。它可以帮助玩家尽快记住图形和入侵序列。提高您的速度和准确性，获得更丰富的游戏奖励。";
   @override
@@ -540,6 +596,14 @@ class $zh_CN extends S {
   String get learn_glyph_edit => "修改";
   @override
   String get learn_glyph_alisa => "别名: ";
+  @override
+  String statics_time_cost_correct(String name, String time, String correct) => "$name\n耗时: $time 秒\n是否正确: $correct";
+  @override
+  String statics_practise_correct(String name, String practise, String correct) => "$name\n练习: $practise\n正确: $correct";
+  @override
+  String statics_time_cost(String name, String time) => "$name\n耗时: $time 秒";
+  @override
+  String statics_num_value(String name, String value) => "$name\n数量: $value";
 }
 
 class $fr_FR extends S {

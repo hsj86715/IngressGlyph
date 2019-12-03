@@ -6,7 +6,10 @@ import 'dart:math';
 ///基础绘制，画出六边形及必要的空心圆点
 class _GlyphBasePainter extends CustomPainter {
   final List<Point> _pathPoints = List(); //用于绘制序列路径的空心圆点的位置
+  final bool isDark;
   double _pointRadius;
+
+  _GlyphBasePainter(this.isDark);
 
   ///画空心小圆点
   void _drawEmptyPoint(Offset pointCenter, Paint paint, Canvas canvas,
@@ -14,7 +17,7 @@ class _GlyphBasePainter extends CustomPainter {
 //    print(pointCenter);
     if (defPaint) {
       paint.strokeWidth = 1;
-      paint.color = Colors.cyanAccent[100];
+      paint.color = isDark ? Colors.cyan[900] : Colors.cyanAccent[100];
     }
     canvas.drawCircle(pointCenter, _pointRadius, paint);
     _pathPoints.add(Point(pointCenter.dx, pointCenter.dy));
@@ -23,7 +26,7 @@ class _GlyphBasePainter extends CustomPainter {
   ///绘制边界细线
   void _drawEdgePath(Paint paint, Canvas canvas, Path path) {
     paint.strokeWidth = 1.5;
-    paint.color = Colors.cyanAccent[400];
+    paint.color = isDark ? Colors.cyan[900] : Colors.cyanAccent[400];
     paint.strokeCap = StrokeCap.round;
     canvas.drawPath(path, paint);
   }
@@ -95,10 +98,11 @@ class GlyphStaticPathPainter extends _GlyphBasePainter {
   final bool drawSeq; //是否绘制出正确的序列
   final Color seqPathColor;
 
-  GlyphStaticPathPainter(this._sequences,
+  GlyphStaticPathPainter(this._sequences, bool _isDark,
       {this.seqCost = '',
       this.drawSeq = true,
-      this.seqPathColor = Colors.blueGrey});
+      this.seqPathColor = Colors.blueGrey})
+      : super(_isDark);
 
   @override
   void _drawEmptyPoint(Offset pointCenter, Paint paint, Canvas canvas,
@@ -112,8 +116,8 @@ class GlyphStaticPathPainter extends _GlyphBasePainter {
     }
     if (_sequencePoints.isNotEmpty) {
       if (_sequencePoints.contains(Point(pointCenter.dx, pointCenter.dy))) {
-        //错误的点的颜色
-        paint.color = Colors.greenAccent[400];
+        //正确的点的颜色
+        paint.color = isDark ? Colors.green[800] : Colors.greenAccent[400];
         defPaint = false;
       }
     }
@@ -147,7 +151,8 @@ class GlyphStaticPathPainter extends _GlyphBasePainter {
       TextPainter tp = TextPainter(
           text: TextSpan(
               text: seqCost,
-              style: TextStyle(fontSize: 10, color: Colors.black)),
+              style: TextStyle(
+                  fontSize: 10, color: isDark ? Colors.white : Colors.black)),
           textDirection: TextDirection.ltr);
       tp.layout(minWidth: 10, maxWidth: 80);
       tp.paint(canvas, Offset(0, 0));
@@ -159,8 +164,8 @@ class GlyphStaticPathPainter extends _GlyphBasePainter {
 class GlyphDynamicPathPainter extends GlyphStaticPathPainter {
   var _percent = 0.0;
 
-  GlyphDynamicPathPainter(List<int> sequences, this._percent)
-      : super(sequences) {
+  GlyphDynamicPathPainter(List<int> sequences, this._percent, bool isDark)
+      : super(sequences, isDark) {
 //    print("Sequences: $sequences, Percent: $_percent");
   }
 
@@ -207,9 +212,9 @@ class GlyphPractisePainter extends GlyphStaticPathPainter {
   final bool showCorrectSeq;
   final PaintComplete paintComplete;
 
-  GlyphPractisePainter(List<int> sequences, this.fingerPath,
+  GlyphPractisePainter(List<int> sequences, this.fingerPath, bool isDark,
       {this.showCorrectSeq = false, this.paintComplete})
-      : super(sequences) {
+      : super(sequences, isDark) {
 //    print(fingerPath);
   }
 
@@ -249,7 +254,7 @@ class GlyphPractisePainter extends GlyphStaticPathPainter {
       }
     });
     //绘制手指划过的路径
-    paint.strokeWidth = 2.5;
+    paint.strokeWidth = 3.5;
     paint.color = Colors.lime[800];
     paint.strokeCap = StrokeCap.round;
     paint.maskFilter = MaskFilter.blur(BlurStyle.solid, 2.5);
@@ -258,25 +263,6 @@ class GlyphPractisePainter extends GlyphStaticPathPainter {
       paintComplete(_errorPoints.isNotEmpty, _closestPoints.length);
     }
   }
-
-//  @override
-//  void _drawEmptyPoint(Offset pointCenter, Paint paint, Canvas canvas,
-//      {bool defPaint = true}) {
-//    if (_closestPoints.contains(Point(pointCenter.dx, pointCenter.dy))) {
-//      if (_sequencePoints.contains(Point(pointCenter.dx, pointCenter.dy))) {
-////        //正确的点的颜色
-//        paint.color = Colors.greenAccent[400];
-//      } else {
-//        //错误的点的颜色
-//        paint.color = Colors.redAccent[400];
-//        _hasErr = true;
-//      }
-//      paint.strokeWidth = 2;
-//      super._drawEmptyPoint(pointCenter, paint, canvas, defPaint: false);
-//    } else {
-//      super._drawEmptyPoint(pointCenter, paint, canvas);
-//    }
-//  }
 
   ///获取临近的图像上的点
   Point _getClosestPoint(Offset offset) {

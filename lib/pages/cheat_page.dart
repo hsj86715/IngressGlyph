@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:ingress_assistant/utils/tools.dart';
 import 'package:ingress_assistant/utils/firebase_tools.dart';
 
 class CheatPage extends StatefulWidget {
@@ -80,7 +79,7 @@ class _CheatPageState extends State<CheatPage> {
         alignment: Alignment.center,
         padding: EdgeInsets.symmetric(vertical: 6),
         child:
-            Text(content, style: TextStyle(color: Colors.black, fontSize: 14)));
+            Text(content, style: Theme.of(context).textTheme.body1));
   }
 
   TableRow _buildTableRow(List<String> rowData,
@@ -97,7 +96,7 @@ class _CheatPageState extends State<CheatPage> {
                   style: TextStyle(
                       color: (specialColor == null ||
                               specialColor[column] == null)
-                          ? (defFontColor == null ? Colors.black : defFontColor)
+                          ? (defFontColor == null ? Theme.of(context).textTheme.display1.color : defFontColor)
                           : specialColor[column],
                       fontSize: fontSize == null ? 14 : fontSize)))));
     });
@@ -110,7 +109,7 @@ class _CheatPageState extends State<CheatPage> {
   Widget _buildPlayerTable() {
     return Table(
         border: TableBorder.symmetric(
-            inside: BorderSide(color: Colors.white, width: 0.4)),
+            inside: BorderSide(color: Theme.of(context).dividerColor, width: 0.4)),
         children: [
           //title
           _buildTableRow(["Level", "AP", "Medals", "XM", "Recharge"],
@@ -164,7 +163,7 @@ class _CheatPageState extends State<CheatPage> {
           4: FlexColumnWidth(2)
         },
         border: TableBorder.symmetric(
-            inside: BorderSide(color: Colors.white, width: 0.4)),
+            inside: BorderSide(color: Theme.of(context).dividerColor, width: 0.4)),
         children: [
           _buildTableRow(["Level", "Link", "Glyphs", "Hack", "ZAP"],
               fontSize: 16),
@@ -200,35 +199,43 @@ class _CheatPageState extends State<CheatPage> {
           3: FlexColumnWidth(4)
         },
         border: TableBorder.symmetric(
-            inside: BorderSide(color: Colors.white, width: 0.4)),
+            inside: BorderSide(color: Theme.of(context).dividerColor, width: 0.4)),
         children: [
           _buildTableRow(["#", "Type", "Link Range", "Link Mitigation"],
               fontSize: 16),
           //Link Amp
           _buildTableRow(["1", "Link Amp", "×2", ""],
               rowBgColor: Color(0xFFEDE6FD),
+              defFontColor: Colors.black54,
               specialColor: {"Link Amp": Color(0xFF613BF1)}),
           _buildTableRow(["2", "Link Amp", "×2.5", ""],
               rowBgColor: Color(0xFFEDE6FD),
+              defFontColor: Colors.black54,
               specialColor: {"Link Amp": Color(0xFF613BF1)}),
           _buildTableRow(["3", "Link Amp", "×2.75", ""],
               rowBgColor: Color(0xFFEDE6FD),
+              defFontColor: Colors.black54,
               specialColor: {"Link Amp": Color(0xFF613BF1)}),
           _buildTableRow(["4", "Link Amp", "×3", ""],
               rowBgColor: Color(0xFFEDE6FD),
+              defFontColor: Colors.black54,
               specialColor: {"Link Amp": Color(0xFF613BF1)}),
           //SoftBank Ultra Link
           _buildTableRow(["1", "SoftBank Ultra Link", "×5", "×1.5"],
               rowBgColor: Color(0xFFFCE6F9),
+              defFontColor: Colors.black54,
               specialColor: {"SoftBank Ultra Link": Color(0xFFFE50BF)}),
           _buildTableRow(["2", "SoftBank Ultra Link", "×6.25", "×1.625"],
               rowBgColor: Color(0xFFFCE6F9),
+              defFontColor: Colors.black54,
               specialColor: {"SoftBank Ultra Link": Color(0xFFFE50BF)}),
           _buildTableRow(["3", "SoftBank Ultra Link", "×6.825", "×1.6875"],
               rowBgColor: Color(0xFFFCE6F9),
+              defFontColor: Colors.black54,
               specialColor: {"SoftBank Ultra Link": Color(0xFFFE50BF)}),
           _buildTableRow(["4", "SoftBank Ultra Link", "×7.5", "×1.75"],
               rowBgColor: Color(0xFFFCE6F9),
+              defFontColor: Colors.black54,
               specialColor: {"SoftBank Ultra Link": Color(0xFFFE50BF)})
         ]);
   }
@@ -236,7 +243,7 @@ class _CheatPageState extends State<CheatPage> {
   Widget _buildLinksMitigationTable() {
     return Table(
       border: TableBorder.symmetric(
-          inside: BorderSide(color: Colors.white, width: 0.4)),
+          inside: BorderSide(color: Theme.of(context).dividerColor, width: 0.4)),
       children: [
         _buildTableRow(['0', '1', '2', '3', '4', '5', '6', '7'],
             rowBgColor: Color(0xFFD3F3E2)),
@@ -254,20 +261,24 @@ class _CheatPageState extends State<CheatPage> {
   Widget _buildShieldTable() {
     return Table(
         border: TableBorder.symmetric(
-            inside: BorderSide(color: Colors.white, width: 0.4)),
+            inside: BorderSide(color: Theme.of(context).dividerColor, width: 0.4)),
         children: [
           _buildTableRow(["Type", "Mitigation", "Stickiness"], fontSize: 16),
           _buildTableRow(["Common", "30", "0"],
               rowBgColor: Color(0xFFD3F3E2),
+              defFontColor: Colors.black54,
               specialColor: {"Common": Color(0xFF35975B)}),
           _buildTableRow(["Rare", "40", "150,000"],
               rowBgColor: Color(0xFFEDE6FD),
+              defFontColor: Colors.black54,
               specialColor: {"Rare": Color(0xFF613BF1)}),
           _buildTableRow(["Very Rare", "60", "450,000"],
               rowBgColor: Color(0xFFFCE6F9),
+              defFontColor: Colors.black54,
               specialColor: {"Very Rare": Color(0xFFFE50BF)}),
           _buildTableRow(["AXA", "70", "800,000"],
               rowBgColor: Color(0xFFFCE6F9),
+              defFontColor: Colors.black54,
               specialColor: {"AXA": Color(0xFFFE50BF)})
         ]);
   }
@@ -275,17 +286,20 @@ class _CheatPageState extends State<CheatPage> {
   Widget _buildHeatSinkTable() {
     return Table(
         border: TableBorder.symmetric(
-            inside: BorderSide(color: Colors.white, width: 0.4)),
+            inside: BorderSide(color: Theme.of(context).dividerColor, width: 0.4)),
         children: [
           _buildTableRow(["Type", "Time", "Time(after first)"], fontSize: 16),
           _buildTableRow(["Common", "×0.8", "×0.9"],
               rowBgColor: Color(0xFFD3F3E2),
+              defFontColor: Colors.black54,
               specialColor: {"Common": Color(0xFF35975B)}),
           _buildTableRow(["Rare", "×0.5", "×0.75"],
               rowBgColor: Color(0xFFEDE6FD),
+              defFontColor: Colors.black54,
               specialColor: {"Rare": Color(0xFF613BF1)}),
           _buildTableRow(["Very Rare", "×0.3", "×0.65"],
               rowBgColor: Color(0xFFFCE6F9),
+              defFontColor: Colors.black54,
               specialColor: {"Very Rare": Color(0xFFFE50BF)})
         ]);
   }
@@ -293,17 +307,20 @@ class _CheatPageState extends State<CheatPage> {
   Widget _buildMultiHackTable() {
     return Table(
         border: TableBorder.symmetric(
-            inside: BorderSide(color: Colors.white, width: 0.4)),
+            inside: BorderSide(color: Theme.of(context).dividerColor, width: 0.4)),
         children: [
           _buildTableRow(["Type", "Hacks", "Hacks(after first)"], fontSize: 16),
           _buildTableRow(["Common", "+4", "+2"],
               rowBgColor: Color(0xFFD3F3E2),
+              defFontColor: Colors.black54,
               specialColor: {"Common": Color(0xFF35975B)}),
           _buildTableRow(["Rare", "+8", "+4"],
               rowBgColor: Color(0xFFEDE6FD),
+              defFontColor: Colors.black54,
               specialColor: {"Rare": Color(0xFF613BF1)}),
           _buildTableRow(["Very Rare", "+12", "+6"],
               rowBgColor: Color(0xFFFCE6F9),
+              defFontColor: Colors.black54,
               specialColor: {"Very Rare": Color(0xFFFE50BF)})
         ]);
   }
@@ -316,20 +333,24 @@ class _CheatPageState extends State<CheatPage> {
           2: FlexColumnWidth(2)
         },
         border: TableBorder.symmetric(
-            inside: BorderSide(color: Colors.white, width: 0.4)),
+            inside: BorderSide(color: Theme.of(context).dividerColor, width: 0.4)),
         children: [
           _buildTableRow(["#", "Type", "Damage"], fontSize: 16),
           _buildTableRow(["1", "Force Amp", "×2"],
               rowBgColor: Color(0xFFEDE6FD),
+              defFontColor: Colors.black54,
               specialColor: {"Force Amp": Color(0xFF613BF1)}),
           _buildTableRow(["2", "Force Amp", "×2.25"],
               rowBgColor: Color(0xFFEDE6FD),
+              defFontColor: Colors.black54,
               specialColor: {"Force Amp": Color(0xFF613BF1)}),
           _buildTableRow(["3", "Force Amp", "×2.375"],
               rowBgColor: Color(0xFFEDE6FD),
+              defFontColor: Colors.black54,
               specialColor: {"Force Amp": Color(0xFF613BF1)}),
           _buildTableRow(["4", "Force Amp", "×2.5"],
               rowBgColor: Color(0xFFEDE6FD),
+              defFontColor: Colors.black54,
               specialColor: {"Force Amp": Color(0xFF613BF1)})
         ]);
   }
@@ -343,21 +364,25 @@ class _CheatPageState extends State<CheatPage> {
           3: FlexColumnWidth(3)
         },
         border: TableBorder.symmetric(
-            inside: BorderSide(color: Colors.white, width: 0.4)),
+            inside: BorderSide(color: Theme.of(context).dividerColor, width: 0.4)),
         children: [
           _buildTableRow(["#", "Type", "Attack Range", "Critical Hit"],
               fontSize: 16),
           _buildTableRow(["1", "Turret", "×2", "+30%"],
               rowBgColor: Color(0xFFEDE6FD),
+              defFontColor: Colors.black54,
               specialColor: {"Turret": Color(0xFF613BF1)}),
           _buildTableRow(["2", "Turret", "×2.25", "+37.5%"],
               rowBgColor: Color(0xFFEDE6FD),
+              defFontColor: Colors.black54,
               specialColor: {"Turret": Color(0xFF613BF1)}),
           _buildTableRow(["3", "Turret", "×2.375", "+41.25%"],
               rowBgColor: Color(0xFFEDE6FD),
+              defFontColor: Colors.black54,
               specialColor: {"Turret": Color(0xFF613BF1)}),
           _buildTableRow(["4", "Turret", "×2.5", "+45%"],
               rowBgColor: Color(0xFFEDE6FD),
+              defFontColor: Colors.black54,
               specialColor: {"Turret": Color(0xFF613BF1)})
         ]);
   }
@@ -365,7 +390,7 @@ class _CheatPageState extends State<CheatPage> {
   Widget _buildXmpBursterTable() {
     return Table(
         border: TableBorder.symmetric(
-            inside: BorderSide(color: Colors.white, width: 0.4)),
+            inside: BorderSide(color: Theme.of(context).dividerColor, width: 0.4)),
         children: [
           _buildTableRow(["Level", "Cost", "Damage", "Range"], fontSize: 16),
           _buildTableRow(["1", "50XM", "150XM", "42m"],
@@ -394,7 +419,7 @@ class _CheatPageState extends State<CheatPage> {
   Widget _buildUltraStrikeTable() {
     return Table(
         border: TableBorder.symmetric(
-            inside: BorderSide(color: Colors.white, width: 0.4)),
+            inside: BorderSide(color: Theme.of(context).dividerColor, width: 0.4)),
         children: [
           _buildTableRow(["Level", "Cost", "Damage", "Range"], fontSize: 16),
           _buildTableRow(["1", "50XM", "300XM", "10m"],
@@ -428,7 +453,7 @@ class _CheatPageState extends State<CheatPage> {
           2: FlexColumnWidth()
         },
         border: TableBorder.symmetric(
-            inside: BorderSide(color: Colors.white, width: 0.4)),
+            inside: BorderSide(color: Theme.of(context).dividerColor, width: 0.4)),
         children: [
           _buildTableRow(["Level", "Enery", "Max Deploy"], fontSize: 16),
           _buildTableRow(["1", "1,000XM", "8"],
@@ -458,7 +483,7 @@ class _CheatPageState extends State<CheatPage> {
     return Table(
         columnWidths: const {0: FlexColumnWidth(2), 1: FlexColumnWidth()},
         border: TableBorder.symmetric(
-            inside: BorderSide(color: Colors.white, width: 0.4)),
+            inside: BorderSide(color: Theme.of(context).dividerColor, width: 0.4)),
         children: [
           _buildTableRow(["Recharge", "10AP"]),
           _buildTableRow(["Upgrade", "65AP"], rowBgColor: Color(0x44045944)),

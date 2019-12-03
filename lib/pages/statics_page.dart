@@ -24,13 +24,13 @@ class _StaticsPageState extends State<StaticsPage> {
         width: queryData.size.width,
         height: 300,
         child:
-            Text(text, style: TextStyle(fontSize: 14, color: Colors.black54)));
+            Text(text, style: TextStyle(fontSize: 14, color: Theme.of(context).textTheme.display1.color)));
   }
 
   @override
   Widget build(BuildContext context) {
     TextStyle textStyle = TextStyle(
-        fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black);
+        fontSize: 20, fontWeight: FontWeight.bold, color: Theme.of(context).textTheme.title.color);
     return ListView(children: <Widget>[
       Center(
           child: Text(S.of(context).statics_glyph_popular, style: textStyle)),
@@ -49,7 +49,7 @@ class _StaticsPageState extends State<StaticsPage> {
               return _placeHolder("${S.of(context).splash_loading}...");
             }
           }),
-      Divider(height: 1, color: Colors.black87),
+      Divider(height: 1),
       SizedBox(height: 8),
       Center(
           child: Text(S.of(context).statics_sequence_level, style: textStyle)),
@@ -68,7 +68,7 @@ class _StaticsPageState extends State<StaticsPage> {
               return _placeHolder("${S.of(context).splash_loading}...");
             }
           }),
-      Divider(height: 1, color: Colors.black87),
+      Divider(height: 1),
       SizedBox(height: 8),
       Center(child: Text(S.of(context).statics_wrong_most, style: textStyle)),
       FutureBuilder(
@@ -86,7 +86,7 @@ class _StaticsPageState extends State<StaticsPage> {
               return _placeHolder("${S.of(context).splash_loading}...");
             }
           }),
-      Divider(height: 1, color: Colors.black87),
+      Divider(height: 1),
       SizedBox(height: 8),
       Center(child: Text(S.of(context).statics_slowest_top, style: textStyle)),
       FutureBuilder(

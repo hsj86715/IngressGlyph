@@ -21,7 +21,8 @@ class GlyphSequenceWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomPaint(
       size: size,
-      foregroundPainter: GlyphStaticPathPainter(sequences,
+      foregroundPainter: GlyphStaticPathPainter(
+          sequences, Theme.of(context).brightness == Brightness.dark,
           drawSeq: drawSeq, seqPathColor: seqPathColor, seqCost: timeCost),
     );
   }
@@ -91,7 +92,9 @@ class _GlyphDemonstrateWidgetState extends State<GlyphDemonstrateWidget>
           return CustomPaint(
               size: widget._size,
               foregroundPainter: GlyphDynamicPathPainter(
-                  widget._sequences, _animationController.value));
+                  widget._sequences,
+                  _animationController.value,
+                  Theme.of(context).brightness == Brightness.dark));
         });
   }
 }
@@ -181,7 +184,9 @@ class _GlyphPractiseWidgetState extends State<_GlyphPractiseWidget> {
             child: CustomPaint(
                 size: widget._size,
                 foregroundPainter: GlyphPractisePainter(
-                    widget._sequences, _fingerPath,
+                    widget._sequences,
+                    _fingerPath,
+                    Theme.of(context).brightness == Brightness.dark,
                     showCorrectSeq: _showCorrectSeq,
                     paintComplete: (bool hasErr, drawLength) {
                   print(hasErr);

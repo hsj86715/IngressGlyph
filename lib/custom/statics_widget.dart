@@ -5,7 +5,6 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:ingress_assistant/data/glyph_beans.dart';
 import 'package:ingress_assistant/custom/indicator.dart';
 import 'package:ingress_assistant/generated/i18n.dart';
-import 'package:ingress_assistant/utils/tools.dart';
 
 const List<int> colorShades = [300, 400, 500, 600, 700, 800, 900];
 Random random = Random(colorShades.length);
@@ -91,16 +90,23 @@ bool _checkToShowHorizontalGrid(int maxNum, double value) {
   return false;
 }
 
-FlLine _getDrawingGridLine(double value) {
+FlLine _getDrawingGridLine(double value, BuildContext context) {
+  Brightness brightness = Theme.of(context).brightness;
+  bool isDark = brightness == Brightness.dark;
   if (value == 0) {
-    return const FlLine(color: Colors.black, strokeWidth: 1);
+    return FlLine(
+        color: (isDark ? Colors.black : Colors.white), strokeWidth: 1);
   } else {
     return const FlLine(color: Colors.grey, strokeWidth: 0.5);
   }
 }
 
-const TextStyle _tileTextStyle =
-    TextStyle(color: Colors.black87, fontWeight: FontWeight.bold, fontSize: 14);
+TextStyle _tileTextStyle(BuildContext context) {
+  return Theme.of(context)
+      .textTheme
+      .title
+      .copyWith(fontWeight: FontWeight.bold, fontSize: 14);
+}
 
 class PieStaticsWidget extends StatefulWidget {
   final List<CountResult> staticsData;
@@ -173,7 +179,9 @@ class _PieStaticsWidgetState extends State<PieStaticsWidget> {
               return Padding(
                   padding: EdgeInsets.symmetric(vertical: 4),
                   child: Indicator(
-                      textColor: isTouched ? Colors.black : Colors.black54,
+                      textColor: isTouched
+                          ? Theme.of(context).textTheme.title.color
+                          : Theme.of(context).textTheme.display1.color,
                       color: _colorList[i % _colorList.length]
                           [colorShades[_shadeIdxs[i]]],
                       text: widget.staticsData[i].name,
@@ -259,7 +267,7 @@ class _BarStaticsWidgetState extends State<BarStaticsWidget> {
             show: true,
             bottomTitles: SideTitles(
                 showTitles: true,
-                textStyle: _tileTextStyle,
+                textStyle: _tileTextStyle(context),
                 margin: 4,
                 getTitles: (value) {
                   String tile = widget.staticsData[value.toInt()].name;
@@ -271,7 +279,7 @@ class _BarStaticsWidgetState extends State<BarStaticsWidget> {
                 }),
             leftTitles: SideTitles(
                 showTitles: true,
-                textStyle: _tileTextStyle,
+                textStyle: _tileTextStyle(context),
                 reservedSize: 36, //Y轴与左边的距离
                 getTitles: (value) {
                   if (widget.countType == CountType.NUMBER) {
@@ -285,7 +293,9 @@ class _BarStaticsWidgetState extends State<BarStaticsWidget> {
         gridData: FlGridData(
             show: true,
             drawHorizontalGrid: true,
-            getDrawingHorizontalGridLine: _getDrawingGridLine,
+            getDrawingHorizontalGridLine: (value) {
+              return _getDrawingGridLine(value, context);
+            },
             checkToShowHorizontalGrid: (value) {
               if (widget.countType == CountType.TIME) {
                 return true;
@@ -372,14 +382,14 @@ class _GroupBarStaticsWidgetState extends State<GroupBarStaticsWidget> {
             show: true,
             bottomTitles: SideTitles(
                 showTitles: true,
-                textStyle: _tileTextStyle,
+                textStyle: _tileTextStyle(context),
                 reservedSize: 30,
                 getTitles: (value) {
                   return widget.staticsData[value.toInt()].name;
                 }),
             leftTitles: SideTitles(
                 showTitles: true,
-                textStyle: _tileTextStyle,
+                textStyle: _tileTextStyle(context),
                 reservedSize: 36, //Y轴与左边的距离
                 getTitles: (value) {
                   return _getLeftNumTile(maxNum, value);
@@ -388,7 +398,9 @@ class _GroupBarStaticsWidgetState extends State<GroupBarStaticsWidget> {
         barGroups: _staticsBarData(),
         gridData: FlGridData(
             show: true,
-            getDrawingHorizontalGridLine: _getDrawingGridLine,
+            getDrawingHorizontalGridLine: (value) {
+              return _getDrawingGridLine(value, context);
+            },
             checkToShowHorizontalGrid: (value) {
               return _checkToShowHorizontalGrid(maxNum, value);
             })));
@@ -410,6 +422,7 @@ class LineStaticsWidget extends StatefulWidget {
 class _LineStaticsWidgetState extends State<LineStaticsWidget> {
   int maxNum = 0;
   int average;
+
   @override
   void initState() {
     super.initState();
@@ -510,8 +523,12 @@ class _LineStaticsWidgetState extends State<LineStaticsWidget> {
             show: true,
             drawHorizontalGrid: true,
             drawVerticalGrid: true,
-            getDrawingHorizontalGridLine: _getDrawingGridLine,
-            getDrawingVerticalGridLine: _getDrawingGridLine),
+            getDrawingHorizontalGridLine: (value) {
+              return _getDrawingGridLine(value, context);
+            },
+            getDrawingVerticalGridLine: (value) {
+              return _getDrawingGridLine(value, context);
+            }),
         titlesData: FlTitlesData(
             show: false,
             leftTitles: SideTitles(
@@ -523,12 +540,12 @@ class _LineStaticsWidgetState extends State<LineStaticsWidget> {
                     return _getLeftNumTile(maxNum, value);
                   }
                 },
-                textStyle: _tileTextStyle),
+                textStyle: _tileTextStyle(context)),
             bottomTitles: SideTitles(
                 showTitles: true,
                 getTitles: (value) {
                   return widget.staticsData[value.toInt()].name;
                 },
-                textStyle: _tileTextStyle))));
+                textStyle: _tileTextStyle(context)))));
   }
 }

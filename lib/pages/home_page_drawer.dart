@@ -63,7 +63,7 @@ class HomeDrawer extends StatelessWidget {
             accountName: Text(S.of(context).app_name),
             accountEmail: Text(S.of(context).nav_header_subtitle),
             currentAccountPicture: CircleAvatar(
-                foregroundColor: Colors.white,
+                foregroundColor: Theme.of(context).iconTheme.color,
                 radius: 24,
                 backgroundImage: AssetImage("images/zidian.png")),
             otherAccountsPictures: <Widget>[
@@ -80,10 +80,13 @@ class HomeDrawer extends StatelessWidget {
                       contentPadding:
                           EdgeInsets.only(left: 16, top: 4, bottom: 4),
                       title: Text(menus[index].title,
-                          style:
-                              TextStyle(color: Colors.black87, fontSize: 18)),
+                          style: TextStyle(
+                              color: Theme.of(context).textTheme.title.color,
+                              fontSize: 18)),
                       leading: SvgPicture.asset(menus[index].icon,
-                          width: 28, height: 28, color: Colors.black87),
+                          width: 28,
+                          height: 28,
+                          color: Theme.of(context).iconTheme.color),
                       onTap: () {
                         Navigator.pop(context); // close the drawer
                         print("Navigation Menu Selected: $index");
@@ -98,7 +101,7 @@ class HomeDrawer extends StatelessWidget {
                   },
                   separatorBuilder: (context, index) {
                     if (index == 4 || index == 6) {
-                      return Divider(height: 1, color: Colors.grey[600]);
+                      return Divider(height: 1);
                     } else {
                       return Divider(height: 0, color: Colors.transparent);
                     }

@@ -28,7 +28,8 @@ class _LearnBaePageState extends State<LearnPage> {
       //name
       Text(S.of(context).learn_glyph_name,
           textAlign: TextAlign.left,
-          style: TextStyle(color: Colors.black, fontSize: 14)),
+          style: TextStyle(
+              color: Theme.of(context).textTheme.title.color, fontSize: 14)),
       Text(_selected?.name ?? "",
           style: TextStyle(
               color: Colors.red[400],
@@ -37,15 +38,20 @@ class _LearnBaePageState extends State<LearnPage> {
       SizedBox(height: 8),
       //Alisa
       Text(S.of(context).learn_glyph_alisa,
-          style: TextStyle(color: Colors.black, fontSize: 14))
+          style: TextStyle(
+              color: Theme.of(context).textTheme.title.color, fontSize: 14))
     ];
     if (_selected == null) {
       columnWidgets.add(Text(S.of(context).learn_glyph_alisa_empty,
-          style: TextStyle(color: Colors.black87, fontSize: 14)));
+          style: TextStyle(
+              color: Theme.of(context).textTheme.display1.color,
+              fontSize: 14)));
     } else {
       if (_selected.aliasFull() == null) {
         columnWidgets.add(Text(S.of(context).learn_glyph_alisa_empty,
-            style: TextStyle(color: Colors.black87, fontSize: 14)));
+            style: TextStyle(
+                color: Theme.of(context).textTheme.display1.color,
+                fontSize: 14)));
       } else {
         columnWidgets.add(Text(_selected.aliasFull(),
             style: TextStyle(color: Colors.red[200], fontSize: 14)));
@@ -142,9 +148,7 @@ class _LearnBaePageState extends State<LearnPage> {
       padding: EdgeInsets.only(top: 8),
       child: Column(children: <Widget>[
         _buildBaseLearnHead(),
-        Padding(
-            padding: EdgeInsets.only(top: 8),
-            child: Divider(color: Colors.grey, height: 1)),
+        Padding(padding: EdgeInsets.only(top: 8), child: Divider(height: 1)),
         Expanded(
             child: Scrollbar(
                 child: GridView.builder(
