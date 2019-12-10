@@ -1,12 +1,12 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:fl_chart/fl_chart.dart';
+import '../fl_chart.dart';
 import 'package:ingress_assistant/data/glyph_beans.dart';
 import 'package:ingress_assistant/custom/indicator.dart';
 import 'package:ingress_assistant/generated/i18n.dart';
 
-const List<int> colorShades = [300, 400, 500, 600, 700, 800, 900];
+const List<int> colorShades = [200, 300, 400, 500, 600, 700, 800, 900];
 Random random = Random(colorShades.length);
 
 ///统计数据中count字段标识的含义
@@ -90,12 +90,9 @@ bool _checkToShowHorizontalGrid(int maxNum, double value) {
   return false;
 }
 
-FlLine _getDrawingGridLine(double value, BuildContext context) {
-  Brightness brightness = Theme.of(context).brightness;
-  bool isDark = brightness == Brightness.dark;
+FlLine _getDrawingGridLine(double value) {
   if (value == 0) {
-    return FlLine(
-        color: (isDark ? Colors.black : Colors.white), strokeWidth: 1);
+    return const FlLine(color: Colors.transparent, strokeWidth: 1);
   } else {
     return const FlLine(color: Colors.grey, strokeWidth: 0.5);
   }
@@ -180,7 +177,8 @@ class _PieStaticsWidgetState extends State<PieStaticsWidget> {
                   padding: EdgeInsets.symmetric(vertical: 4),
                   child: Indicator(
                       textColor: isTouched
-                          ? Theme.of(context).textTheme.title.color
+                          ? _colorList[i % _colorList.length]
+                              [colorShades[_shadeIdxs[i]]]
                           : Theme.of(context).textTheme.display1.color,
                       color: _colorList[i % _colorList.length]
                           [colorShades[_shadeIdxs[i]]],
@@ -293,9 +291,7 @@ class _BarStaticsWidgetState extends State<BarStaticsWidget> {
         gridData: FlGridData(
             show: true,
             drawHorizontalGrid: true,
-            getDrawingHorizontalGridLine: (value) {
-              return _getDrawingGridLine(value, context);
-            },
+            getDrawingHorizontalGridLine: _getDrawingGridLine,
             checkToShowHorizontalGrid: (value) {
               if (widget.countType == CountType.TIME) {
                 return true;
@@ -398,9 +394,7 @@ class _GroupBarStaticsWidgetState extends State<GroupBarStaticsWidget> {
         barGroups: _staticsBarData(),
         gridData: FlGridData(
             show: true,
-            getDrawingHorizontalGridLine: (value) {
-              return _getDrawingGridLine(value, context);
-            },
+            getDrawingHorizontalGridLine: _getDrawingGridLine,
             checkToShowHorizontalGrid: (value) {
               return _checkToShowHorizontalGrid(maxNum, value);
             })));
@@ -448,10 +442,10 @@ class _LineStaticsWidgetState extends State<LineStaticsWidget> {
           spots: spots,
           isCurved: false,
           barWidth: 1.5,
-          colors: [Colors.black26],
+          colors: [Theme.of(context).textTheme.display1.color],
           dotData: FlDotData(
               show: true,
-              dotColor: Colors.black54,
+              dotColor: Theme.of(context).textTheme.title.color,
               dotSize: 4,
               checkToShowDot: (spot) {
                 return spot.x != 0 && spot.x != widget.staticsData.length - 1;
@@ -464,7 +458,9 @@ class _LineStaticsWidgetState extends State<LineStaticsWidget> {
     return LineChart(LineChartData(
         borderData: FlBorderData(
             show: true,
-            border: Border(bottom: BorderSide(color: Colors.black))),
+            border: Border(
+                bottom: BorderSide(color: Colors.black),
+                left: BorderSide(color: Colors.black))),
         lineTouchData: LineTouchData(
             getTouchedSpotIndicator: (barData, spotIdxes) {
               return spotIdxes.map((spotIdx) {
@@ -523,12 +519,8 @@ class _LineStaticsWidgetState extends State<LineStaticsWidget> {
             show: true,
             drawHorizontalGrid: true,
             drawVerticalGrid: true,
-            getDrawingHorizontalGridLine: (value) {
-              return _getDrawingGridLine(value, context);
-            },
-            getDrawingVerticalGridLine: (value) {
-              return _getDrawingGridLine(value, context);
-            }),
+            getDrawingHorizontalGridLine: _getDrawingGridLine,
+            getDrawingVerticalGridLine: _getDrawingGridLine),
         titlesData: FlTitlesData(
             show: false,
             leftTitles: SideTitles(

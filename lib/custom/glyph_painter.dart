@@ -243,7 +243,8 @@ class GlyphPractisePainter extends GlyphStaticPathPainter {
       path.lineTo(offset.dx, offset.dy);
       //判定绘制的点是否正确
       Point closest = _getClosestPoint(offset);
-      if (closest != null && !_closestPoints.contains(closest)) {
+      if (closest != null &&
+          (_closestPoints.isEmpty || _closestPoints.last != closest)) {
         _closestPoints.add(closest);
         if (!_sequencePoints.contains(closest)) {
           _errorPoints.add(closest);
@@ -257,7 +258,7 @@ class GlyphPractisePainter extends GlyphStaticPathPainter {
     paint.strokeWidth = 3.5;
     paint.color = Colors.lime[800];
     paint.strokeCap = StrokeCap.round;
-    paint.maskFilter = MaskFilter.blur(BlurStyle.solid, 2.5);
+    paint.maskFilter = MaskFilter.blur(BlurStyle.solid, 5);
     canvas.drawPath(path, paint);
     if (paintComplete != null) {
       paintComplete(_errorPoints.isNotEmpty, _closestPoints.length);
@@ -269,7 +270,7 @@ class GlyphPractisePainter extends GlyphStaticPathPainter {
     Point closest;
     _pathPoints.forEach((point) {
       if (sqrt(pow(offset.dx - point.x, 2) + pow(offset.dy - point.y, 2)) <=
-          25) {
+          20) {
         closest = point;
       }
     });

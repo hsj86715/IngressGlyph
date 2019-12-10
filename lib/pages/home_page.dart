@@ -126,7 +126,7 @@ class _HomePageState extends State<HomePage> {
           0,
           IconButton(
               icon: Icon(Icons.search,
-                  size: 24, color: Theme.of(context).iconTheme.color),
+                  size: 24, color: Colors.white),
               onPressed: () {
                 _rememberKey.currentState.handleActionSearch();
               }));
